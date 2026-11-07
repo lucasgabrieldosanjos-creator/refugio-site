@@ -28,7 +28,7 @@ Promise.resolve({ok:false}).then(r=>r.ok?r.json():null).then(c=>{ if(c){ CONFIG 
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- Ícones: texturas reais dos mods ---------- */
-const ico = nome => `<img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/itens/${nome}.png" alt="" aria-hidden="true">`;
+const ico = nome => `<img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/itens/${nome}.png" alt="" aria-hidden="true">`;
 document.querySelectorAll("[data-ico]").forEach(el=>{ el.outerHTML = ico(el.dataset.ico); });
 
 const REDES = {
@@ -263,7 +263,7 @@ ligarTips(bauEl);
 const KIT_IMG = {};
 const KITS = window.RF_KITS;
 /* ================= LOJA ================= */
-const kitSrc = arq => KIT_IMG[arq] || ("https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/kit/"+arq+".png");
+const kitSrc = arq => KIT_IMG[arq] || ("https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/kit/"+arq+".png");
 const LOJA_URL = "/package/";
 const MC = {"0":"#000000","1":"#0000AA","2":"#00AA00","3":"#00AAAA","4":"#AA0000","5":"#AA00AA","6":"#FFAA00","7":"#AAAAAA","8":"#555555","9":"#5555FF","a":"#55FF55","b":"#55FFFF","c":"#FF5555","d":"#FF55FF","e":"#FFFF55","f":"#FFFFFF"};
 function mcTag(partes){ return `<span class="mctag"><span style="color:${MC[7]}">[</span>${partes.map(([c,t])=>`<span style="color:${MC[c]}">${t}</span>`).join("&nbsp;")}<span style="color:${MC[7]}">]</span></span>`; }
@@ -381,7 +381,7 @@ function ordenar(linhas, cols){
 }
 function tabelaHTML(cols, mostrarTrilha){
   const n = cols.length;
-  const cab = `<thead><tr><th class="canto"><span class="sr">Benefício</span></th>${cols.map(c=>`<th scope="col"${c.r.topo?' class="topo"':""}><img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/ranks/${c.r.img}.webp" alt=""><b>${c.r.nome}</b>${mostrarTrilha?`<em>${NOME_TRILHA[c.t]}</em>`:""}<span>${c.r.preco}</span></th>`).join("")}</tr></thead>`;
+  const cab = `<thead><tr><th class="canto"><span class="sr">Benefício</span></th>${cols.map(c=>`<th scope="col"${c.r.topo?' class="topo"':""}><img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/ranks/${c.r.img}.webp" alt=""><b>${c.r.nome}</b>${mostrarTrilha?`<em>${NOME_TRILHA[c.t]}</em>`:""}<span>${c.r.preco}</span></th>`).join("")}</tr></thead>`;
   const corpo = BENEFICIOS.map(b=>`<tbody><tr class="grupo"><th colspan="${n+1}" scope="colgroup">${b.g}</th></tr>${ordenar(b.linhas, cols).map(([nome,vals])=>`<tr><th scope="row">${nome}</th>${cols.map(c=>`<td${c.r.topo?' class="topo"':""}>${valorHTML(valorCol(nome, vals, c), c.r)}</td>`).join("")}</tr>`).join("")}</tbody>`).join("");
   const pe = `<tfoot><tr><th></th>${cols.map(c=>`<td${c.r.topo?' class="topo"':""}><a class="btn btn-ouro" href="${linkCompra(c.r)}" target="_blank" rel="noopener">Comprar</a></td>`).join("")}</tr></tfoot>`;
   return cab + corpo + pe;
@@ -391,7 +391,7 @@ function renderTrilha(){
   const R = TRILHAS[trilha].ranks;
   document.getElementById("trilhaLead").textContent = TRILHAS[trilha].lead;
   document.getElementById("ranks").innerHTML = R.map(r=>`<article class="rank${r.topo?" topo":""}" style="--rc:${r.cor}">
-    <img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/ranks/${r.img}.webp" alt="Brasão do VIP ${r.nome}" loading="lazy">
+    <img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/ranks/${r.img}.webp" alt="Brasão do VIP ${r.nome}" loading="lazy">
     <div class="rank-corpo">
       <h3>${r.nome}</h3>
       <div class="dur">${r.dias} dias</div>
@@ -413,7 +413,7 @@ function renderTrilha(){
 function renderMob(i){
   const c = colsAtuais[i], r = c.r;
   document.querySelectorAll("#mobChips button").forEach((b,k)=>{ b.setAttribute("aria-selected", k===i); b.tabIndex = k===i?0:-1; });
-  document.getElementById("mobLista").innerHTML = `<div class="mob-cab"><img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/ranks/${r.img}.webp" alt=""><div><b>${r.nome}</b><span>${r.preco} · ${r.dias} dias</span></div></div>` +
+  document.getElementById("mobLista").innerHTML = `<div class="mob-cab"><img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/ranks/${r.img}.webp" alt=""><div><b>${r.nome}</b><span>${r.preco} · ${r.dias} dias</span></div></div>` +
     BENEFICIOS.map(b=>`<h4>${b.g}</h4><dl>${ordenar(b.linhas, colsAtuais).map(([nome,vals])=>`<div><dt>${nome}</dt><dd>${valorHTML(valorCol(nome, vals, c), r)}</dd></div>`).join("")}</dl>`).join("") +
     `<a class="btn btn-ouro" style="width:100%;margin-top:18px" href="${linkCompra(r)}" target="_blank" rel="noopener">Comprar ${r.nome}</a>`;
 }
@@ -455,7 +455,7 @@ const EXTRAS = [
   {nome:"Desbanimento", ico:"x_unban", url:"desbanimento", desc:"Só vale após aprovação por ticket no Discord. Abra o ticket antes de comprar.", vars:[["Desbanimento","R$ 35,00"]]}
 ];
 document.getElementById("extras").innerHTML = EXTRAS.map(x=>`<article class="extra">
-  <div class="extra-cab"><span class="slot-mini"><img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@466e68716a9359cd7dcbb608590c9528f1030a91/itens/${x.ico}.png" alt=""></span><h3>${x.nome}</h3></div>
+  <div class="extra-cab"><span class="slot-mini"><img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/itens/${x.ico}.png" alt=""></span><h3>${x.nome}</h3></div>
   <p>${x.desc}</p>
   <ul>${x.vars.map(([n,p])=>`<li><span>${n}</span><b>${p}</b></li>`).join("")}</ul>
   <a class="btn btn-ouro" href="${LOJA_URL+x.url}" target="_blank" rel="noopener">Comprar</a></article>`).join("");
