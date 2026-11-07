@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-07T13:27:34-03:00",
+  "atualizado": "2026-11-07T13:37:36-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": null,
-      "valor": 1931
+      "valor": 1932
     },
     {
       "nome": "Evandrort",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 586
+      "valor": 587
     },
     {
       "nome": "Guaresi",
@@ -146,9 +146,9 @@
       "valor": 785
     },
     {
-      "nome": "EzoReijy",
+      "nome": "MineLuckys",
       "guilda": null,
-      "valor": 775
+      "valor": 782
     }
   ],
   "guildas": [
