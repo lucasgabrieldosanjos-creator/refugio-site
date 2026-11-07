@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-07T11:38:54-03:00",
+  "atualizado": "2026-11-07T11:48:54-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -160,11 +160,6 @@
     {
       "nome": "IMPERIUM",
       "membros": 2,
-      "nivel": 1
-    },
-    {
-      "nome": "TESTE1",
-      "membros": 1,
       "nivel": 1
     },
     {
