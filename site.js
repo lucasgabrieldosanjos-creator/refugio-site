@@ -183,11 +183,22 @@ const RK = {
   guildas:{sub:"nível", guilda:true, dados:[["Ordem do Latão","14 membros","Nível 12","#B8862B"],["Raízes Antigas","9 membros","Nível 11","#18A39E"],["Núcleo ME","11 membros","Nível 9","#5A34C2"],["Cartógrafos","6 membros","Nível 8","#C0477A"],["Os Sem Mapa","4 membros","Nível 5","#4F4870"],["Guarda Rubra","7 membros","Nível 4","#B23A3A"],["Vapor & Cia","3 membros","Nível 3","#6B7A8C"]]}
 };
 const podio = document.getElementById("podio"), rkLista = document.getElementById("rkLista");
-function avatar(r, g){
+/* estilos dos rankings reais (ficam no script para mudar sem reimportar o tema) */
+document.head.insertAdjacentHTML("beforeend", `<style id="rf-rk-css">
+.pod img.cab3d{width:88px;height:94px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 12px 14px rgba(0,0,0,.55));animation:rkFlutua 4s ease-in-out infinite}
+.pod:nth-child(2) img.cab3d{width:116px;height:124px;animation-delay:-2s}
+.pod:nth-child(3) img.cab3d{animation-delay:-1s}
+@keyframes rkFlutua{50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.pod img.cab3d{animation:none}}
+.rk-lista img.cab{display:block;width:40px;height:40px;border-radius:6px;image-rendering:pixelated;background:#2a2150;box-shadow:0 2px 6px rgba(28,21,53,.18)}
+@media (max-width:760px){.pod img.cab3d{width:62px;height:66px}.pod:nth-child(2) img.cab3d{width:80px;height:86px}#abasRk{display:flex;width:100%;overflow:visible}#abasRk button{flex:1 1 auto;padding-left:8px;padding-right:8px;font-size:13px;white-space:nowrap}}
+</style>`);
+function avatar(r, g, noPodio){
   if(g) return iconeGuilda(r[0], r[3]);
   if(!RK.real) return cabeca(r[0]);
-  const im = new Image(); im.className = "cab"; im.alt = ""; im.loading = "lazy";
-  im.src = "https://mc-heads.net/avatar/" + encodeURIComponent(r[0]) + "/64";
+  const im = new Image(); im.alt = ""; im.loading = "lazy"; im.decoding = "async";
+  im.className = noPodio ? "cab3d" : "cab";
+  im.src = noPodio ? "https://mc-heads.net/head/" + encodeURIComponent(r[0]) + "/128" : "https://mc-heads.net/avatar/" + encodeURIComponent(r[0]) + "/64";
   im.onerror = () => im.replaceWith(cabeca(r[0]));
   return im;
 }
@@ -197,8 +208,8 @@ function renderRk(tipo){
   podio.innerHTML = ""; rkLista.innerHTML = "";
   if(d.length < 3){ podio.innerHTML = '<p style="margin:auto;padding:40px;color:rgba(255,255,255,.7)">Ainda não há dados suficientes.</p>'; }
   if(d.length >= 3) [1,0,2].forEach(i=>{ const r = d[i], el = document.createElement("div"); el.className = "pod";
-    el.append(avatar(r, R.guilda)); el.insertAdjacentHTML("beforeend", `<div class="nm">${esc(r[0])}</div><div class="vl">${esc(r[2])}${R.guilda?"":" "+(tipo==="tempo"?"":R.sub)}</div><div class="base">${i+1}</div>`); podio.append(el); });
-  d.slice(3).forEach((r,k)=>{ const li = document.createElement("li");
+    el.append(avatar(r, R.guilda, true)); el.insertAdjacentHTML("beforeend", `<div class="nm">${esc(r[0])}</div><div class="vl">${esc(r[2])}${R.guilda?"":" "+(tipo==="tempo"?"":R.sub)}</div><div class="base">${i+1}</div>`); podio.append(el); });
+  d.slice(3, 7).forEach((r,k)=>{ const li = document.createElement("li");
     li.innerHTML = `<span class="pos">${k+4}</span><span></span><span class="nome">${esc(r[0])}<small>${esc(r[1])}</small></span><span class="val">${esc(r[2])}</span>`;
     li.children[1].replaceWith(avatar(r, R.guilda)); rkLista.append(li); });
   if(d.length <= 3){ const li = document.createElement("li"); li.className = "rk-vazio"; li.style.cssText = "display:block;border:0;padding:48px 24px;text-align:center;color:var(--tinta-2);font-size:15px;line-height:1.5";
