@@ -1,17 +1,50 @@
 {
   "atualizado": "2026-11-06T21:30:00-03:00",
   "tempo": [
-    {"nome": "Lyra_Arcana", "guilda": "Ordem do Latão", "valor": 182},
-    {"nome": "TioReator", "guilda": "Núcleo ME", "valor": 169},
-    {"nome": "bia_explora", "guilda": null, "valor": 151}
+    {
+      "nome": "Lyra_Arcana",
+      "guilda": "Ordem do Latão",
+      "valor": 182
+    },
+    {
+      "nome": "TioReator",
+      "guilda": "Núcleo ME",
+      "valor": 169
+    },
+    {
+      "nome": "bia_explora",
+      "guilda": null,
+      "valor": 151
+    }
   ],
   "pvp": [
-    {"nome": "kaio_ae2", "guilda": "Núcleo ME", "valor": 214}
+    {
+      "nome": "kaio_ae2",
+      "guilda": "Núcleo ME",
+      "valor": 214
+    }
   ],
   "mobs": [
-    {"nome": "PedroForja", "guilda": "Ordem do Latão", "valor": 16977}
+    {
+      "nome": "PedroForja",
+      "guilda": "Ordem do Latão",
+      "valor": 16977
+    }
+  ],
+  "rankup": [
+    {
+      "nome": "Lyra_Arcana",
+      "guilda": "Ordem do Latão",
+      "rank": "Mestre Arcano",
+      "nivel": 12
+    }
   ],
   "guildas": [
-    {"nome": "Ordem do Latão", "membros": 14, "nivel": 5, "cor": "#B8862B"}
+    {
+      "nome": "Ordem do Latão",
+      "membros": 14,
+      "nivel": 5,
+      "cor": "#B8862B"
+    }
   ]
 }

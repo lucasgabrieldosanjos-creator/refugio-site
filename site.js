@@ -155,9 +155,13 @@ mostrar(0);
 
 /* ---------- Abas genéricas ---------- */
 function abas(grupo, aoTrocar){
-  const bs = [...grupo.querySelectorAll("[role=tab]")];
-  function sel(b, foco){ bs.forEach(x=>{ const on = x===b; x.setAttribute("aria-selected", on); x.tabIndex = on?0:-1; }); if(foco) b.focus(); aoTrocar(b); }
-  bs.forEach((b,i)=>{ b.addEventListener("click",()=>sel(b)); b.addEventListener("keydown",e=>{ if(e.key==="ArrowRight"){sel(bs[(i+1)%bs.length],true);e.preventDefault()} if(e.key==="ArrowLeft"){sel(bs[(i-1+bs.length)%bs.length],true);e.preventDefault()} }); });
+  /* a lista de abas é lida na hora, então abas criadas depois (ex.: Rank-up) também funcionam */
+  const bs = () => [...grupo.querySelectorAll("[role=tab]")];
+  function sel(b, foco){ bs().forEach(x=>{ const on = x===b; x.setAttribute("aria-selected", on); x.tabIndex = on?0:-1; }); if(foco) b.focus(); aoTrocar(b); }
+  grupo.addEventListener("click", e=>{ const b = e.target.closest("[role=tab]"); if(b && grupo.contains(b)) sel(b); });
+  grupo.addEventListener("keydown", e=>{ const l = bs(), i = l.indexOf(e.target.closest("[role=tab]")); if(i < 0) return;
+    if(e.key==="ArrowRight"){ sel(l[(i+1)%l.length], true); e.preventDefault(); }
+    if(e.key==="ArrowLeft"){ sel(l[(i-1+l.length)%l.length], true); e.preventDefault(); } });
   return sel;
 }
 
@@ -191,8 +195,12 @@ document.head.insertAdjacentHTML("beforeend", `<style id="rf-rk-css">
 @keyframes rkFlutua{50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.pod img.cab3d{animation:none}}
 .rk-lista img.cab{display:block;width:40px;height:40px;border-radius:6px;image-rendering:pixelated;background:#2a2150;box-shadow:0 2px 6px rgba(28,21,53,.18)}
-@media (max-width:760px){.pod img.cab3d{width:62px;height:66px}.pod:nth-child(2) img.cab3d{width:80px;height:86px}#abasRk{display:flex;width:100%;overflow:visible}#abasRk button{flex:1 1 auto;padding-left:8px;padding-right:8px;font-size:13px;white-space:nowrap}}
+.rk-c{display:none}
+@media (max-width:760px){.rk-l{display:none}.rk-c{display:inline}.pod img.cab3d{width:62px;height:66px}.pod:nth-child(2) img.cab3d{width:80px;height:86px}#abasRk{display:flex;width:100%;overflow:visible}#abasRk button{flex:1 1 auto;padding-left:8px;padding-right:8px;font-size:13px;white-space:nowrap}}
 </style>`);
+const ROTULOS = {tempo:["Tempo jogado","Tempo"], rankup:["Rank-up","Rank-up"], pvp:["PvP","PvP"], mobs:["Mobs abatidos","Mobs"], guildas:["Guildas","Guildas"]};
+function rotular(b){ const r = ROTULOS[b.dataset.rk]; if(r) b.innerHTML = `<span class="rk-l">${r[0]}</span><span class="rk-c">${r[1]}</span>`; }
+document.querySelectorAll("#abasRk [data-rk]").forEach(rotular);
 function avatar(r, g, noPodio){
   if(g) return iconeGuilda(r[0], r[3]);
   if(!RK.real) return cabeca(r[0]);
@@ -226,6 +234,13 @@ fetch(CONFIG.rankings && CONFIG.rankings.url, {cache:"no-store"}).then(r=>r.ok ?
   if(J.tempo) RK.tempo.dados = jog(J.tempo, "h");
   if(J.pvp) RK.pvp.dados = jog(J.pvp);
   if(J.mobs) RK.mobs.dados = jog(J.mobs);
+  if(Array.isArray(J.rankup) && J.rankup.length){
+    RK.rankup = {sub:"", dados: J.rankup.map(x=>[x.nome, x.guilda || "Sem guilda", x.rank ? String(x.rank) : `Rank ${fmt(x.nivel)}`])};
+    if(!document.querySelector("#abasRk [data-rk=rankup]")){
+      const b = document.createElement("button"); b.setAttribute("role","tab"); b.setAttribute("aria-selected","false"); b.tabIndex = -1; b.dataset.rk = "rankup"; rotular(b);
+      document.querySelector("#abasRk [data-rk=tempo]").after(b);
+    }
+  }
   if(J.guildas) RK.guildas.dados = J.guildas.map(g=>[g.nome, `${g.membros} ${g.membros === 1 ? "membro" : "membros"}`, `Nível ${g.nivel}`, g.cor || "#5A34C2"]);
   RK.real = true;
   const aberta = document.querySelector("#abasRk [aria-selected=true]"); renderRk(aberta ? aberta.dataset.rk : "tempo");
