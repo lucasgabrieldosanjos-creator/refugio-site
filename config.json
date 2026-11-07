@@ -49,5 +49,8 @@
       "nome": "CurseForge Servers",
       "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"
     }
-  ]
+  ],
+  "rankings": {
+    "url": "https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"
+  }
 }

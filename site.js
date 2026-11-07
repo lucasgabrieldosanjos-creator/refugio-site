@@ -7,6 +7,7 @@
    ============================================================ */
 let CONFIG = {
   servidor:{nome:"O Refúgio", ip:"atm10.rede-orefugio.com.br", maxJogadores:200},
+  rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
   links:{discord:"#", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
@@ -62,10 +63,14 @@ linksNav.forEach(a=>a.addEventListener("click",()=>{ nav.classList.remove("abert
 
 /* ---------- Toast e copiar IP ---------- */
 const toast = document.getElementById("toast"); let tT;
-function avisar(msg){ toast.textContent = msg; toast.classList.add("on"); clearTimeout(tT); tT = setTimeout(()=>toast.classList.remove("on"), 2200); }
+function avisar(msg, ms=2200){ toast.textContent = msg; toast.classList.add("on"); clearTimeout(tT); tT = setTimeout(()=>toast.classList.remove("on"), ms); }
 document.querySelectorAll(".ip-texto").forEach(e=>e.textContent = IP);
 document.querySelectorAll("[data-copiar]").forEach(b=>b.addEventListener("click", async ()=>{
   try{ await navigator.clipboard.writeText(IP); avisar("IP copiado: " + IP); } catch(e){ avisar("Copie o IP: " + IP); }
+}));
+document.querySelectorAll("[data-jogar]").forEach(b=>b.addEventListener("click", async ()=>{
+  const dica = `No ATM10 ${CONFIG.modpack.versao}, vá em Multijogador › Adicionar servidor e cole o IP.`;
+  try{ await navigator.clipboard.writeText(IP); avisar("IP copiado! " + dica, 5000); } catch(e){ avisar("IP: " + IP + " · " + dica, 6000); }
 }));
 function ligarEmBreve(raiz){ raiz.querySelectorAll("[data-embreve]").forEach(a=>a.addEventListener("click",e=>{ e.preventDefault(); avisar("Essa página vem na próxima etapa."); })); }
 ligarEmBreve(document);
@@ -178,18 +183,41 @@ const RK = {
   guildas:{sub:"nível", guilda:true, dados:[["Ordem do Latão","14 membros","Nível 12","#B8862B"],["Raízes Antigas","9 membros","Nível 11","#18A39E"],["Núcleo ME","11 membros","Nível 9","#5A34C2"],["Cartógrafos","6 membros","Nível 8","#C0477A"],["Os Sem Mapa","4 membros","Nível 5","#4F4870"],["Guarda Rubra","7 membros","Nível 4","#B23A3A"],["Vapor & Cia","3 membros","Nível 3","#6B7A8C"]]}
 };
 const podio = document.getElementById("podio"), rkLista = document.getElementById("rkLista");
-function avatar(r, g){ return g ? iconeGuilda(r[0], r[3]) : cabeca(r[0]); }
+function avatar(r, g){
+  if(g) return iconeGuilda(r[0], r[3]);
+  if(!RK.real) return cabeca(r[0]);
+  const im = new Image(); im.className = "cab"; im.alt = ""; im.loading = "lazy";
+  im.src = "https://mc-heads.net/avatar/" + encodeURIComponent(r[0]) + "/64";
+  im.onerror = () => im.replaceWith(cabeca(r[0]));
+  return im;
+}
+const esc = t => String(t).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 function renderRk(tipo){
   const R = RK[tipo], d = R.dados;
   podio.innerHTML = ""; rkLista.innerHTML = "";
-  [1,0,2].forEach(i=>{ const r = d[i], el = document.createElement("div"); el.className = "pod";
-    el.append(avatar(r, R.guilda)); el.insertAdjacentHTML("beforeend", `<div class="nm">${r[0]}</div><div class="vl">${r[2]}${R.guilda?"":" "+(tipo==="tempo"?"":R.sub)}</div><div class="base">${i+1}</div>`); podio.append(el); });
+  if(d.length < 3){ podio.innerHTML = '<p style="margin:auto;padding:40px;color:rgba(255,255,255,.7)">Ainda não há dados suficientes.</p>'; }
+  if(d.length >= 3) [1,0,2].forEach(i=>{ const r = d[i], el = document.createElement("div"); el.className = "pod";
+    el.append(avatar(r, R.guilda)); el.insertAdjacentHTML("beforeend", `<div class="nm">${esc(r[0])}</div><div class="vl">${esc(r[2])}${R.guilda?"":" "+(tipo==="tempo"?"":R.sub)}</div><div class="base">${i+1}</div>`); podio.append(el); });
   d.slice(3).forEach((r,k)=>{ const li = document.createElement("li");
-    li.innerHTML = `<span class="pos">${k+4}</span><span></span><span class="nome">${r[0]}<small>${r[1]}</small></span><span class="val">${r[2]}</span>`;
+    li.innerHTML = `<span class="pos">${k+4}</span><span></span><span class="nome">${esc(r[0])}<small>${esc(r[1])}</small></span><span class="val">${esc(r[2])}</span>`;
     li.children[1].replaceWith(avatar(r, R.guilda)); rkLista.append(li); });
 }
 const selRk = abas(document.getElementById("abasRk"), b=>renderRk(b.dataset.rk));
 renderRk("tempo");
+/* rankings reais: o servidor publica um rankings.json (ver dados/LEIA-ME.md no GitHub) */
+const fmt = v => typeof v === "number" ? v.toLocaleString("pt-BR") : String(v);
+function haQuanto(iso){ const m = Math.round((Date.now() - new Date(iso)) / 60000); if(!(m >= 0)) return ""; if(m < 2) return "agora mesmo"; if(m < 60) return `há ${m} min`; const h = Math.round(m/60); return h < 24 ? `há ${h} h` : `há ${Math.round(h/24)} dias`; }
+fetch(CONFIG.rankings && CONFIG.rankings.url, {cache:"no-store"}).then(r=>r.ok ? r.json() : Promise.reject()).then(J=>{
+  const jog = (lista, un) => (lista||[]).map(x=>[x.nome, x.guilda || "Sem guilda", un ? `${fmt(x.valor)} ${un}` : fmt(x.valor)]);
+  if(J.tempo) RK.tempo.dados = jog(J.tempo, "h");
+  if(J.pvp) RK.pvp.dados = jog(J.pvp);
+  if(J.mobs) RK.mobs.dados = jog(J.mobs);
+  if(J.guildas) RK.guildas.dados = J.guildas.map(g=>[g.nome, `${g.membros} ${g.membros === 1 ? "membro" : "membros"}`, `Nível ${g.nivel}`, g.cor || "#5A34C2"]);
+  RK.real = true;
+  const aberta = document.querySelector("#abasRk [aria-selected=true]"); renderRk(aberta ? aberta.dataset.rk : "tempo");
+  const nota = document.querySelector(".rk-rodape > span");
+  if(nota) nota.textContent = J.atualizado ? `Dados do servidor, atualizados ${haQuanto(J.atualizado)}.` : "Dados do servidor.";
+}).catch(()=>{});
 document.querySelectorAll("[data-aba=guildas]").forEach(a=>a.addEventListener("click",()=>selRk(document.querySelector('[data-rk=guildas]'))));
 
 /* ---------- Tutorial ---------- */
@@ -840,7 +868,15 @@ function rota(){
 }
 addEventListener("hashchange", rota); rota();
 
-/* ---------- Online (exemplo) ---------- */
-const on = document.getElementById("onlineN");
-if(!reduz) setInterval(()=>{ on.textContent = Math.max(20, Math.min(60, +on.textContent + Math.round((Math.random()-.5)*3))); }, 5000);
+/* ---------- Jogadores online (status real do servidor) ---------- */
+const on = document.getElementById("onlineN"), onTxt = document.getElementById("onlineTxt"), onBox = document.getElementById("onlineBox");
+async function statusServidor(){
+  try{
+    const r = await fetch("https://api.mcstatus.io/v2/status/java/" + encodeURIComponent(CONFIG.servidor.ip), {cache:"no-store"});
+    const j = await r.json();
+    if(j.online){ const n = j.players ? j.players.online : 0; on.textContent = n; onTxt.textContent = n === 1 ? "jogando agora" : "jogando agora"; onBox.classList.remove("off"); onBox.hidden = false; }
+    else { on.textContent = ""; onTxt.textContent = "Servidor offline no momento"; onBox.classList.add("off"); onBox.hidden = false; }
+  } catch(e){ onBox.hidden = true; }
+}
+statusServidor(); setInterval(()=>{ if(!document.hidden) statusServidor(); }, 60000);
 })();
