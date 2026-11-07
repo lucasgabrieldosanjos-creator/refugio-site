@@ -12,7 +12,7 @@ let CONFIG = {
   rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
   forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
-  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
+  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
 let IP = CONFIG.servidor.ip;
@@ -244,6 +244,37 @@ function renderRk(tipo){
 const selRk = abas(document.getElementById("abasRk"), b=>renderRk(b.dataset.rk));
 renderRk("tempo");
 /* rankings reais: o servidor publica um rankings.json (ver dados/LEIA-ME.md no GitHub) */
+/* top votantes (soma de todos os sites), dentro da seção Votar */
+function mostrarVotantes(J){
+  const lista = Array.isArray(J.votos) ? J.votos : (J.votos && J.votos.lista) || [];
+  if(!lista.length) return;
+  const periodo = (J.votos && J.votos.periodo) || J.votos_periodo || "deste mês";
+  if(!document.getElementById("rf-votos-css")) document.head.insertAdjacentHTML("beforeend", `<style id="rf-votos-css">
+.vt-top{padding:22px 24px;border-radius:18px;background:var(--cosmos);color:#fff}
+.vt-top h3{font:700 19px/1.2 var(--display);margin:0 0 4px;color:#FFD36B}
+.vt-top>p{margin:0 0 14px;font-size:14px;color:rgba(255,255,255,.7)}
+.vt-top ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.vt-top li{display:grid;grid-template-columns:26px 34px 1fr auto;gap:12px;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.06)}
+.vt-top li.p1{background:linear-gradient(90deg,rgba(255,201,58,.28),rgba(255,201,58,.06));box-shadow:inset 0 0 0 1px rgba(255,211,107,.45)}
+.vt-top .pos{font:700 15px/1 var(--display);color:rgba(255,255,255,.6);text-align:center}
+.vt-top li.p1 .pos{color:#FFD36B}
+.vt-top img,.vt-top canvas{width:34px;height:34px;border-radius:6px;image-rendering:pixelated;background:#2a2150;display:block}
+.vt-top .nm{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vt-top .nm small{display:block;font-weight:500;font-size:12px;color:rgba(255,255,255,.55)}
+.vt-top .qt{font:700 15px/1 var(--display);color:#FFD36B;white-space:nowrap}
+.vt-top .qt span{font:500 12px var(--corpo);color:rgba(255,255,255,.6);margin-left:3px}
+</style>`);
+  let box = document.getElementById("vtTop");
+  if(!box){ box = document.createElement("div"); box.className = "vt-top"; box.id = "vtTop"; const esq = document.querySelector(".vt-esq"); (esq || document.getElementById("votar")).append(box); }
+  box.innerHTML = `<h3>Top votantes ${esc(periodo)}</h3><p>Soma dos votos em todos os sites.</p><ol></ol>`;
+  const ol = box.querySelector("ol");
+  lista.slice(0, 5).forEach((v, i)=>{
+    const li = document.createElement("li"); if(i === 0) li.className = "p1";
+    const n = +v.valor || 0;
+    li.innerHTML = `<span class="pos">${i + 1}º</span><span></span><span class="nm">${esc(v.nome)}${v.guilda ? `<small>${esc(v.guilda)}</small>` : ""}</span><span class="qt">${n.toLocaleString("pt-BR")}<span>${n === 1 ? "voto" : "votos"}</span></span>`;
+    li.children[1].replaceWith(avatar([v.nome], false, false)); ol.append(li);
+  });
+}
 const fmt = v => typeof v === "number" ? v.toLocaleString("pt-BR") : String(v);
 function haQuanto(iso){ const m = Math.round((Date.now() - new Date(iso)) / 60000); if(!(m >= 0)) return ""; if(m < 2) return "agora mesmo"; if(m < 60) return `há ${m} min`; const h = Math.round(m/60); return h < 24 ? `há ${h} h` : `há ${Math.round(h/24)} dias`; }
 fetch(CONFIG.rankings && CONFIG.rankings.url, {cache:"no-store"}).then(r=>r.ok ? r.json() : Promise.reject()).then(J=>{
@@ -260,6 +291,7 @@ fetch(CONFIG.rankings && CONFIG.rankings.url, {cache:"no-store"}).then(r=>r.ok ?
   }
   if(J.guildas) RK.guildas.dados = J.guildas.map(g=>[g.nome, `${g.membros} ${g.membros === 1 ? "membro" : "membros"}`, `Nível ${g.nivel}`, g.cor || "#5A34C2"]);
   RK.real = true;
+  mostrarVotantes(J);
   const aberta = document.querySelector("#abasRk [aria-selected=true]"); renderRk(aberta ? aberta.dataset.rk : "tempo");
   const nota = document.querySelector(".rk-rodape > span");
   if(nota) nota.textContent = J.atualizado ? `Dados do servidor, atualizados ${haQuanto(J.atualizado)}.` : "Dados do servidor.";
