@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-07T13:37:36-03:00",
+  "atualizado": "2026-11-07T13:47:38-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -14,12 +14,12 @@
     {
       "nome": "TkkFPS",
       "guilda": "IMPERIUM",
-      "valor": 1377
+      "valor": 1378
     },
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1012
+      "valor": 1013
     },
     {
       "nome": "lucasmarcelo65",
@@ -141,14 +141,14 @@
       "valor": 839
     },
     {
+      "nome": "MineLuckys",
+      "guilda": null,
+      "valor": 788
+    },
+    {
       "nome": "RenanJogos007",
       "guilda": null,
       "valor": 785
-    },
-    {
-      "nome": "MineLuckys",
-      "guilda": null,
-      "valor": 782
     }
   ],
   "guildas": [
