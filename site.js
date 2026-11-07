@@ -10,6 +10,7 @@ document.querySelectorAll("a[data-embreve]").forEach(a=>{ if(a.textContent.trim(
 let CONFIG = {
   servidor:{nome:"O Refúgio", ip:"atm10.rede-orefugio.com.br", maxJogadores:200},
   rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
+  wiki:{base:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/wiki/", editar:"https://github.com/lucasgabrieldosanjos-creator/refugio-site/edit/main/wiki/"},
   forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
   links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
@@ -56,7 +57,7 @@ const REDES = {
 document.querySelectorAll("[data-svg]").forEach(el=>{ el.outerHTML = REDES[el.dataset.svg]; });
 
 /* ---------- Navegação ---------- */
-function visaoDe(h){ return h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
+function visaoDe(h){ return h.startsWith("#wiki/") ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
 const nav = document.getElementById("nav"), hero = document.getElementById("inicio"), heroImg = document.getElementById("heroImg");
 const secoes = ["inicio","guildas","rankings","votar","wiki","loja"].map(id=>document.getElementById(id));
 const linksNav = [...document.querySelectorAll("#links a")];
@@ -71,6 +72,7 @@ function aoRolar(){
   if(vh === "regras") atualSec = "regras";
   if(vh === "guia") atualSec = "guildas";
   if(vh === "forum") atualSec = "forum";
+  if(vh === "wiki") atualSec = "wiki";
   linksNav.forEach(a=>a.classList.toggle("ativo", a.getAttribute("href") === "#"+atualSec));
 }
 addEventListener("scroll", aoRolar, {passive:true}); aoRolar();
@@ -318,6 +320,7 @@ const GUIAS = [
   ["Caminho até a ATM Star","Checklist do endgame","#7B52E6"]
 ];
 const lista = document.getElementById("guias"), vazio = document.getElementById("vazio");
+/* a lista é trocada pelo índice da wiki (wiki/indice.json no GitHub) assim que ele carrega */
 const LINK_GUIA = {"Regras do servidor":"#regras","Guia das guildas":"#guia-guildas"};
 lista.innerHTML = GUIAS.map(([t,d,c])=>`<li><a href="${LINK_GUIA[t]||"#"}" ${LINK_GUIA[t]?"":"data-embreve"}><span class="tag" style="background:${c}"></span><span class="gt">${t}</span><span class="gd">${d}</span></a></li>`).join("");
 ligarEmBreve(lista);
@@ -925,6 +928,165 @@ function indiceGuia(){
 addEventListener("scroll", indiceGuia, {passive:true});
 
 
+
+/* ================= Wiki (guias em Markdown no GitHub) ================= */
+let WIKI_IDX = null, wikiPromessa = null;
+function carregarIndiceWiki(){
+  if(!wikiPromessa) wikiPromessa = fetch(CONFIG.wiki.base + "indice.json", {cache:"no-cache"}).then(r=>r.ok ? r.json() : Promise.reject()).then(J=>{ WIKI_IDX = J; return J; });
+  return wikiPromessa;
+}
+const wikiSlug = t => /^[a-z0-9-]{1,60}$/.test(t) ? t : "";
+function wikiLink(g){ return g.url && /^#[\w-]+$/.test(g.url) ? g.url : "#wiki/" + g.slug; }
+carregarIndiceWiki().then(J=>{
+  const guias = (J.guias || []).filter(g=>!g.rascunho);
+  if(!guias.length) return;
+  lista.innerHTML = guias.map(g=>`<li><a href="${wikiLink(g)}"><span class="tag" style="background:${/^#[0-9a-fA-F]{6}$/.test(g.cor || "") ? g.cor : "#7B52E6"}"></span><span class="gt">${esc(g.titulo)}</span><span class="gd">${esc(g.resumo || "")}</span></a></li>`).join("");
+}).catch(()=>{});
+
+/* Markdown simples e seguro: tudo é escapado antes de virar HTML */
+function mdInline(t){
+  t = esc(t);
+  t = t.replace(/`([^`]+)`/g, (m, c)=> c.startsWith("/") ? `<button type="button" class="gcmd" data-copiar="${c}" title="Clique para copiar">${c}</button>` : `<code>${c}</code>`);
+  t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, u)=>{ const src = wikiImg(u); return src ? `<img src="${src}" alt="${alt}" loading="lazy">` : ""; });
+  t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, txt, u)=>{ u = u.replace(/&amp;/g, "&"); if(/^#[\w\/-]*$/.test(u)) return `<a href="${u}">${txt}</a>`; if(/^https:\/\//.test(u)) return `<a href="${esc(u)}" target="_blank" rel="noopener">${txt}</a>`; return txt; });
+  t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
+  return t;
+}
+function wikiImg(u){
+  u = u.replace(/&amp;/g, "&");
+  if(/^(img|itens|kit|ranks|wiki)\/[\w\/.-]+\.(png|webp|jpg|gif)$/.test(u)) return CONFIG.wiki.base.replace(/wiki\/$/, "") + u;
+  if(/^https:\/\/(cdn\.jsdelivr\.net|raw\.githubusercontent\.com|i\.imgur\.com)\//.test(u)) return esc(u);
+  return "";
+}
+function md(texto){
+  const L = texto.replace(/\r/g, "").split("\n"), out = []; let i = 0;
+  const titulos = [];
+  while(i < L.length){
+    let l = L[i];
+    if(!l.trim()){ i++; continue; }
+    let m;
+    if((m = l.match(/^(#{2,3})\s+(.+)/))){ const n = m[1].length, txt = m[2].trim(); const id = "w-" + norm(txt).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); if(n === 2) titulos.push([id, txt]); out.push(`<h${n} id="${id}">${mdInline(txt)}</h${n}>`); i++; continue; }
+    if(/^---+\s*$/.test(l)){ out.push("<hr>"); i++; continue; }
+    if(l.startsWith("```")){ const buf = []; i++; while(i < L.length && !L[i].startsWith("```")) buf.push(L[i++]); i++; out.push(`<pre><code>${esc(buf.join("\n"))}</code></pre>`); continue; }
+    if(l.startsWith(">")){ const buf = []; while(i < L.length && L[i].startsWith(">")) buf.push(L[i++].replace(/^>\s?/, ""));
+      let tipo = "nota"; const m2 = buf[0].match(/^\[!(DICA|AVISO|IMPORTANTE|NOTA)\]\s*/i); if(m2){ tipo = m2[1].toLowerCase(); buf[0] = buf[0].slice(m2[0].length); }
+      const rot = {dica:"Dica", aviso:"Atenção", importante:"Importante", nota:"Nota"}[tipo];
+      out.push(`<aside class="wk-caixa wk-${tipo}"><b>${rot}</b>${buf.filter(x=>x.trim()).map(x=>`<p>${mdInline(x)}</p>`).join("")}</aside>`); continue; }
+    if(/^\|.*\|\s*$/.test(l)){ const rows = []; while(i < L.length && /^\|.*\|\s*$/.test(L[i])) rows.push(L[i++]);
+      const cel = r=>r.trim().replace(/^\||\|$/g, "").split("|").map(c=>c.trim());
+      const temCab = rows[1] && /^\|?\s*:?-{2,}/.test(rows[1]);
+      const cab = temCab ? cel(rows[0]) : null, corpo = rows.slice(temCab ? 2 : 0).map(cel);
+      out.push(`<div class="wk-tabela"><table>${cab ? `<thead><tr>${cab.map(c=>`<th>${mdInline(c)}</th>`).join("")}</tr></thead>` : ""}<tbody>${corpo.map(r=>`<tr>${r.map(c=>`<td>${mdInline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`); continue; }
+    if(/^\s*([-*]|\d+\.)\s+/.test(l)){ const ord = /^\s*\d+\./.test(l), buf = [];
+      while(i < L.length && /^\s*([-*]|\d+\.)\s+/.test(L[i])){ buf.push(L[i].replace(/^\s*([-*]|\d+\.)\s+/, "")); i++; while(i < L.length && /^\s{2,}\S/.test(L[i]) && !/^\s*([-*]|\d+\.)\s+/.test(L[i])) buf[buf.length - 1] += " " + L[i++].trim(); }
+      out.push(`<${ord ? "ol" : "ul"}>${buf.map(x=>`<li>${mdInline(x)}</li>`).join("")}</${ord ? "ol" : "ul"}>`); continue; }
+    const buf = [l]; i++;
+    while(i < L.length && L[i].trim() && !/^(#{2,3}\s|>|\||```|---|\s*([-*]|\d+\.)\s+)/.test(L[i])) buf.push(L[i++]);
+    out.push(`<p>${mdInline(buf.join(" "))}</p>`);
+  }
+  return {html: out.join("\n"), titulos};
+}
+function criarWiki(){
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-wiki-css">
+.wk-topo{background:linear-gradient(135deg,#1d1438 0%,#2c1d63 60%,#3a2380 100%);padding:130px 0 70px}
+.wk-topo::before{background:none}
+.wk-topo::after{background:radial-gradient(60% 120% at 85% 20%,rgba(123,82,230,.45),transparent 60%)}
+.wk-migalha{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px}
+.wk-migalha a{color:#FFD36B;text-decoration:none}
+.wk-grade{display:grid;grid-template-columns:240px minmax(0,1fr) 200px;gap:44px;align-items:start}
+.wk-nav{position:sticky;top:96px;max-height:calc(100vh - 120px);overflow:auto}
+.wk-nav h4{font:700 12px/1 var(--display);letter-spacing:.04em;color:var(--tinta-2);margin:18px 10px 8px}
+.wk-nav h4:first-child{margin-top:0}
+.wk-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.wk-nav a{display:block;padding:8px 10px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;color:var(--tinta-2)}
+.wk-nav a:hover{background:#fff}
+.wk-nav a.ativo{background:#fff;color:var(--tinta);box-shadow:0 0 0 1px var(--linha)}
+.wk-art{min-width:0;font-size:17px;line-height:1.7;color:var(--tinta)}
+.wk-art h2{font:700 clamp(22px,2.4vw,28px)/1.2 var(--display);margin:44px 0 12px;scroll-margin-top:96px}
+.wk-art h3{font:700 19px/1.3 var(--display);margin:28px 0 8px;scroll-margin-top:96px}
+.wk-art p{margin:0 0 16px;max-width:72ch}
+.wk-art ul,.wk-art ol{margin:0 0 18px;padding-left:22px;max-width:70ch}
+.wk-art li{margin:4px 0}
+.wk-art a{color:var(--violeta-texto);font-weight:600}
+.wk-art code{font:500 15px var(--pixel);background:#EDE8F8;padding:2px 6px;border-radius:5px}
+.wk-art pre{background:var(--cosmos);color:#E9E4FF;padding:16px 18px;border-radius:12px;overflow:auto;font-size:14px}
+.wk-art pre code{background:none;padding:0;color:inherit}
+.wk-art img{max-width:100%;border-radius:12px;box-shadow:0 0 0 1px var(--linha);margin:6px 0 16px}
+.wk-art hr{border:0;border-top:1px solid var(--linha);margin:32px 0}
+.wk-art strong{font-weight:700}
+.wk-caixa{margin:0 0 20px;padding:14px 18px;border-radius:12px;background:#fff;box-shadow:inset 4px 0 0 var(--violeta),0 0 0 1px var(--linha);max-width:70ch}
+.wk-caixa b{display:block;font:700 14px/1.2 var(--display);margin-bottom:4px;color:var(--violeta-texto)}
+.wk-caixa p{margin:0 0 6px;font-size:16px}
+.wk-dica{box-shadow:inset 4px 0 0 var(--ciano),0 0 0 1px var(--linha)}.wk-dica b{color:#0E7C78}
+.wk-aviso,.wk-importante{box-shadow:inset 4px 0 0 var(--ouro),0 0 0 1px var(--linha);background:#FFFBEF}.wk-aviso b,.wk-importante b{color:var(--ouro-texto)}
+.wk-tabela{overflow:auto;margin:0 0 20px;border-radius:12px;box-shadow:0 0 0 1px var(--linha);background:#fff}
+.wk-tabela table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.45}
+.wk-tabela th,.wk-tabela td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
+.wk-tabela th{font:700 14px var(--display);background:#F6F4FB}
+.wk-tabela tr:last-child td{border-bottom:0}
+.wk-toc{position:sticky;top:96px;font-size:14px}
+.wk-toc b{display:block;font:700 13px var(--display);margin:0 0 8px;color:var(--tinta-2)}
+.wk-toc a{display:block;padding:5px 0 5px 12px;border-left:2px solid var(--linha);color:var(--tinta-2);text-decoration:none}
+.wk-toc a.ativo{border-color:var(--ouro);color:var(--tinta);font-weight:600}
+.wk-rodape{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:40px;padding-top:18px;border-top:1px solid var(--linha);font-size:14px;color:var(--tinta-2)}
+.wk-rodape a{color:var(--violeta-texto);font-weight:600}
+.wk-carregando{color:var(--tinta-2)}
+@media (max-width:1100px){.wk-grade{grid-template-columns:220px minmax(0,1fr)}.wk-toc{display:none}}
+@media (max-width:760px){.wk-grade{grid-template-columns:1fr}.wk-nav{position:static;max-height:none}.wk-nav-lista{display:none}.wk-nav.aberto .wk-nav-lista{display:block}.wk-art{font-size:16px}}
+.wk-nav-btn{display:none}
+@media (max-width:760px){.wk-nav-btn{display:flex;width:100%;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:12px;border:1px solid var(--linha);background:#fff;font:600 15px var(--corpo);color:var(--tinta)}}
+</style>`);
+  const v = document.createElement("main"); v.id = "viewWiki"; v.hidden = true;
+  v.innerHTML = `
+  <section class="rg-topo wk-topo">
+    <div class="wrap">
+      <p class="wk-migalha"><a href="#wiki">Wiki</a> <span aria-hidden="true">›</span> <span id="wkCat"></span></p>
+      <h1 id="wkTitulo">Wiki do Refúgio</h1>
+      <p id="wkResumo"></p>
+    </div>
+    <div class="hero-borda" aria-hidden="true"></div>
+  </section>
+  <section class="secao" style="padding-top:48px">
+    <div class="wrap wk-grade">
+      <nav class="wk-nav" id="wkNav" aria-label="Guias da wiki"><button class="wk-nav-btn" type="button" id="wkNavBtn" aria-expanded="false">Todos os guias <span aria-hidden="true">▾</span></button><div class="wk-nav-lista" id="wkNavLista"></div></nav>
+      <article class="wk-art" id="wkArt"><p class="wk-carregando">Carregando guia…</p></article>
+      <aside class="wk-toc" id="wkToc" aria-label="Nesta página"></aside>
+    </div>
+  </section>`;
+  const ref = document.getElementById("viewForum") || document.getElementById("viewGuia") || document.querySelector("main:last-of-type");
+  ref.after(v);
+  v.querySelector("#wkNavBtn").addEventListener("click", e=>{ const n = document.getElementById("wkNav"); const a = n.classList.toggle("aberto"); e.currentTarget.setAttribute("aria-expanded", a); });
+  v.addEventListener("click", e=>{ const b = e.target.closest("[data-copiar]"); if(!b) return; navigator.clipboard.writeText(b.dataset.copiar).then(()=>avisar("Comando copiado: " + b.dataset.copiar), ()=>{}); });
+  return v;
+}
+let wikiAberto = "";
+function abrirArtigo(slug){
+  slug = wikiSlug(slug);
+  if(slug === wikiAberto) return; wikiAberto = slug;
+  const art = document.getElementById("wkArt"), toc = document.getElementById("wkToc");
+  art.innerHTML = '<p class="wk-carregando">Carregando guia…</p>'; toc.innerHTML = "";
+  scrollTo({top:0, behavior:"instant"});
+  carregarIndiceWiki().then(J=>{
+    const guias = (J.guias || []).filter(g=>!g.rascunho || g.slug === slug), cats = J.categorias || [];
+    const g = guias.find(x=>x.slug === slug);
+    document.getElementById("wkNavLista").innerHTML = cats.map(c=>{ const gs = guias.filter(x=>x.categoria === c.id && !x.rascunho); return gs.length ? `<h4>${esc(c.nome)}</h4><ul>${gs.map(x=>`<li><a href="${wikiLink(x)}"${x.slug === slug ? ' class="ativo" aria-current="page"' : ""}>${esc(x.titulo)}</a></li>`).join("")}</ul>` : ""; }).join("");
+    document.getElementById("wkNav").classList.remove("aberto");
+    if(!g){ document.getElementById("wkTitulo").textContent = "Guia não encontrado"; document.getElementById("wkResumo").textContent = ""; document.getElementById("wkCat").textContent = ""; art.innerHTML = '<p>Esse guia não existe ou mudou de nome. Escolha outro na lista.</p>'; return; }
+    if(g.url && /^#[\w-]+$/.test(g.url)){ location.hash = g.url; return; }
+    document.getElementById("wkTitulo").textContent = g.titulo; document.getElementById("wkResumo").textContent = g.resumo || "";
+    const cat = cats.find(c=>c.id === g.categoria); document.getElementById("wkCat").textContent = cat ? cat.nome : "";
+    document.title = `${g.titulo} · Wiki do Refúgio`;
+    return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
+      if(wikiAberto !== slug) return;
+      const R = md(txt);
+      art.innerHTML = R.html + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
+      toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
+    });
+  }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });
+}
+document.addEventListener("click", e=>{ const a = e.target.closest("[data-ir]"); if(!a) return; e.preventDefault(); const alvo = document.getElementById(a.dataset.ir); if(alvo) alvo.scrollIntoView({behavior: reduz ? "auto" : "smooth"}); });
+addEventListener("scroll", ()=>{ if(visaoDe(location.hash) !== "wiki") return; let at = null; document.querySelectorAll("#wkArt h2").forEach(h=>{ if(h.getBoundingClientRect().top < 140) at = h.id; }); document.querySelectorAll("#wkToc a").forEach(a=>a.classList.toggle("ativo", a.dataset.ir === at)); }, {passive:true});
+
 /* ================= Fórum (tópicos do canal de fórum do Discord) ================= */
 function criarForum(){
   document.head.insertAdjacentHTML("beforeend", `<style id="rf-forum-css">
@@ -1014,12 +1176,12 @@ function desenharForum(){
 }
 
 /* ================= Rotas: início e loja ================= */
-const viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
+const viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
 let visaoAtual = null;
 function rota(){
   const v = visaoDe(location.hash), mudou = v !== visaoAtual;
   visaoAtual = v;
-  viewHome.hidden = v !== "home"; viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
+  viewHome.hidden = v !== "home"; viewWiki.hidden = v !== "wiki"; if(v === "wiki") abrirArtigo(location.hash.slice(6)); viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
   if(v === "loja"){ if(mudou) scrollTo(0,0); }
   else if(v === "regras"){
     const alvo = location.hash.startsWith("#regra-") ? document.getElementById(location.hash.slice(1)) : null;
@@ -1031,6 +1193,7 @@ function rota(){
     if(alvo) requestAnimationFrame(()=>alvo.scrollIntoView({block:"start", behavior: mudou ? "instant" : (reduz ? "auto" : "smooth")})); else if(mudou) scrollTo({top:0, behavior:"instant"});
     indiceGuia();
   }
+  else if(v === "wiki" || v === "forum"){ /* cada página cuida da própria rolagem */ }
   else if(mudou && location.hash){ const alvo = document.querySelector(location.hash); if(alvo) alvo.scrollIntoView(); }
   aoRolar();
 }
