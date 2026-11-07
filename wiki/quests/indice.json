@@ -1,0 +1,539 @@
+{
+ "grupos": [
+  {
+   "id": "2084F3F6FB861C5B",
+   "nome": "Linha de Missão Principal",
+   "capitulos": [
+    {
+     "slug": "mainquestline-part-1",
+     "titulo": "Capítulo 1: O Começo",
+     "subtitulo": "",
+     "icone": "minecraft:crafting_table",
+     "quests": 35
+    },
+    {
+     "slug": "allthemodium",
+     "titulo": "Capítulo 2: Allthemodium",
+     "subtitulo": "",
+     "icone": "allthemodium:allthemodium_ingot",
+     "quests": 49
+    },
+    {
+     "slug": "chapter-2-the-star",
+     "titulo": "Capítulo 3: A Estrela ATM",
+     "subtitulo": "",
+     "icone": "allthetweaks:atm_star",
+     "quests": 127
+    },
+    {
+     "slug": "achapter-2r-6the-atm-star",
+     "titulo": "Capítulo 4: Criativo",
+     "subtitulo": "Mais Automação da Estrela!",
+     "icone": "modularrouters:creative_module",
+     "quests": 37
+    }
+   ]
+  },
+  {
+   "id": "15E5B587D291A4AA",
+   "nome": "Ferramentas e Equipamentos",
+   "capitulos": [
+    {
+     "slug": "apotheosis-gear",
+     "titulo": "Equipamento Apotheosis",
+     "subtitulo": "",
+     "icone": "apotheosis:godforged_pearl",
+     "quests": 29
+    },
+    {
+     "slug": "artifacts",
+     "titulo": "Artifacts",
+     "subtitulo": "",
+     "icone": "artifacts:umbrella",
+     "quests": 49
+    },
+    {
+     "slug": "basic-armor",
+     "titulo": "Armadura Básica",
+     "subtitulo": "",
+     "icone": "minecraft:diamond_chestplate",
+     "quests": 127
+    },
+    {
+     "slug": "basic-tools",
+     "titulo": "Ferramentas Básicas",
+     "subtitulo": "",
+     "icone": "minecraft:diamond_pickaxe",
+     "quests": 76
+    },
+    {
+     "slug": "mahou-tsukai",
+     "titulo": "Mahou Tsukai",
+     "subtitulo": "",
+     "icone": "mahoutsukai:morgan",
+     "quests": 35
+    },
+    {
+     "slug": "relics",
+     "titulo": "Relics",
+     "subtitulo": "",
+     "icone": "ftbquests:custom_icon",
+     "quests": 25
+    },
+    {
+     "slug": "silent-gear",
+     "titulo": "Silent Gear",
+     "subtitulo": "e Productive Metalworks",
+     "icone": "silentgear:pickaxe_blueprint",
+     "quests": 68
+    }
+   ]
+  },
+  {
+   "id": "1AC60211DE7427FC",
+   "nome": "Armazenamento",
+   "capitulos": [
+    {
+     "slug": "storage",
+     "titulo": "Armazenamento Básico",
+     "subtitulo": "",
+     "icone": "minecraft:chest",
+     "quests": 89
+    },
+    {
+     "slug": "applied-energistics-2",
+     "titulo": "Applied Energistics 2",
+     "subtitulo": "",
+     "icone": "ftbquests:custom_icon",
+     "quests": 73
+    },
+    {
+     "slug": "extended-advanced-ae",
+     "titulo": "Extended & Advanced AE",
+     "subtitulo": "",
+     "icone": "advanced_ae:shattered_singularity",
+     "quests": 55
+    },
+    {
+     "slug": "refined-storage",
+     "titulo": "Refined Storage",
+     "subtitulo": "",
+     "icone": "refinedstorage:creative_controller",
+     "quests": 71
+    }
+   ]
+  },
+  {
+   "id": "3D4E23B1100491AB",
+   "nome": "Logística",
+   "capitulos": [
+    {
+     "slug": "basic-logistics",
+     "titulo": "Logística Básica",
+     "subtitulo": "LaserIO",
+     "icone": "pipez:wrench",
+     "quests": 39
+    },
+    {
+     "slug": "integrated-dynamics",
+     "titulo": "Integrated Dynamics",
+     "subtitulo": "",
+     "icone": "integrateddynamics:crystalized_menril_chunk",
+     "quests": 27
+    },
+    {
+     "slug": "modular-router",
+     "titulo": "Modular Routers",
+     "subtitulo": "",
+     "icone": "modularrouters:modular_router",
+     "quests": 54
+    },
+    {
+     "slug": "pylons",
+     "titulo": "Pylons",
+     "subtitulo": "",
+     "icone": "pylons:infusion_pylon",
+     "quests": 12
+    }
+   ]
+  },
+  {
+   "id": "6614EE2378B8AFB9",
+   "nome": "Recursos",
+   "capitulos": [
+    {
+     "slug": "apotheosis-2",
+     "titulo": "Apothic Spawners",
+     "subtitulo": "e outros Geradores",
+     "icone": "minecraft:spawner",
+     "quests": 35
+    },
+    {
+     "slug": "food-and-farming",
+     "titulo": "Food and Farming",
+     "subtitulo": "",
+     "icone": "minecraft:cake",
+     "quests": 34
+    },
+    {
+     "slug": "hostile-neural-networks",
+     "titulo": "Hostile Neural Networks",
+     "subtitulo": "",
+     "icone": "hostilenetworks:data_model",
+     "quests": 49
+    },
+    {
+     "slug": "elmystical-agriculturerr",
+     "titulo": "Mystical Agriculture",
+     "subtitulo": "",
+     "icone": "mysticalagradditions:insanium_essence",
+     "quests": 189
+    },
+    {
+     "slug": "productive-bees",
+     "titulo": "Productive Bees",
+     "subtitulo": "",
+     "icone": "minecraft:honeycomb",
+     "quests": 251
+    },
+    {
+     "slug": "productive-trees",
+     "titulo": "Productive Trees",
+     "subtitulo": "",
+     "icone": "minecraft:oak_sapling",
+     "quests": 166
+    }
+   ]
+  },
+  {
+   "id": "2B51AC12041E3F89",
+   "nome": "Tecnologia",
+   "capitulos": [
+    {
+     "slug": "create",
+     "titulo": "Create",
+     "subtitulo": "",
+     "icone": "create:large_cogwheel",
+     "quests": 89
+    },
+    {
+     "slug": "create-addons",
+     "titulo": "Addons do Create",
+     "subtitulo": "",
+     "icone": "createaddition:rolling_mill",
+     "quests": 50
+    },
+    {
+     "slug": "draconic-evolution",
+     "titulo": "Draconic Evolution",
+     "subtitulo": "",
+     "icone": "draconicevolution:awakened_core",
+     "quests": 139
+    },
+    {
+     "slug": "immersive-engineering",
+     "titulo": "Immersive Engineering",
+     "subtitulo": "",
+     "icone": "immersiveengineering:hammer",
+     "quests": 126
+    },
+    {
+     "slug": "industrial-foregoing",
+     "titulo": "Industrial Foregoing",
+     "subtitulo": "",
+     "icone": "industrialforegoing:dryrubber",
+     "quests": 77
+    },
+    {
+     "slug": "justdirethings",
+     "titulo": "Just Dire Things",
+     "subtitulo": "",
+     "icone": "justdirethings:fuel_canister",
+     "quests": 153
+    },
+    {
+     "slug": "mekanism",
+     "titulo": "Mekanism",
+     "subtitulo": "",
+     "icone": "mekanism:steel_casing",
+     "quests": 89
+    },
+    {
+     "slug": "mekanism-reactors",
+     "titulo": "Mekanism: Reatores",
+     "subtitulo": "",
+     "icone": "mekanism:ultimate_induction_provider",
+     "quests": 92
+    },
+    {
+     "slug": "oritech",
+     "titulo": "Oritech",
+     "subtitulo": "",
+     "icone": "oritech:powered_furnace_block",
+     "quests": 56
+    },
+    {
+     "slug": "xycraft",
+     "titulo": "XyCraft",
+     "subtitulo": "",
+     "icone": "xycraft_world:xychorium_gem_blue",
+     "quests": 26
+    },
+    {
+     "slug": "pneumaticcraft",
+     "titulo": "PneumaticCraft",
+     "subtitulo": "",
+     "icone": "pneumaticcraft:pneumatic_wrench",
+     "quests": 125
+    },
+    {
+     "slug": "railcraft",
+     "titulo": "RailCraft",
+     "subtitulo": "",
+     "icone": "railcraft:steam_locomotive",
+     "quests": 50
+    }
+   ]
+  },
+  {
+   "id": "6700DB960E16A321",
+   "nome": "Modern Industrialization",
+   "capitulos": [
+    {
+     "slug": "mi-steam",
+     "titulo": "A Era do Vapor: Novo Começo",
+     "subtitulo": "",
+     "icone": "alltheores:bronze_ingot",
+     "quests": 30
+    },
+    {
+     "slug": "mi-electric",
+     "titulo": "A Era Elétrica: Chega de novatos",
+     "subtitulo": "",
+     "icone": "modern_industrialization:stainless_steel_ingot",
+     "quests": 50
+    },
+    {
+     "slug": "mi-digital",
+     "titulo": "A Era Digital",
+     "subtitulo": "",
+     "icone": "modern_industrialization:blastproof_alloy_ingot",
+     "quests": 66
+    },
+    {
+     "slug": "mi-endgame",
+     "titulo": "O Fim do Jogo",
+     "subtitulo": "",
+     "icone": "modern_industrialization:quantum_upgrade",
+     "quests": 25
+    }
+   ]
+  },
+  {
+   "id": "49AECADBA9E79A3B",
+   "nome": "Energia",
+   "capitulos": [
+    {
+     "slug": "basic-power",
+     "titulo": "Energia Básica",
+     "subtitulo": "",
+     "icone": "mekanism:creative_energy_cube",
+     "quests": 34
+    },
+    {
+     "slug": "extreme-reactors",
+     "titulo": "Extreme Reactors",
+     "subtitulo": "",
+     "icone": "bigreactors:reinforced_reactorfuelrod",
+     "quests": 32
+    },
+    {
+     "slug": "generators",
+     "titulo": "Geradores e Fornalhas",
+     "subtitulo": "",
+     "icone": "ironfurnaces:million_furnace",
+     "quests": 46
+    },
+    {
+     "slug": "powah",
+     "titulo": "Powah",
+     "subtitulo": "",
+     "icone": "powah:energizing_orb",
+     "quests": 108
+    }
+   ]
+  },
+  {
+   "id": "02FE661031A105D8",
+   "nome": "Magia",
+   "capitulos": [
+    {
+     "slug": "apothic-enchanting",
+     "titulo": "Apothic Enchanting",
+     "subtitulo": "",
+     "icone": "apothic_enchanting:apothic_enchanting_table",
+     "quests": 58
+    },
+    {
+     "slug": "ars-nouveau",
+     "titulo": "Ars Nouveau",
+     "subtitulo": "",
+     "icone": "ars_nouveau:source_gem",
+     "quests": 129
+    },
+    {
+     "slug": "evilcraft",
+     "titulo": "EvilCraft",
+     "subtitulo": "",
+     "icone": "evilcraft:dark_power_gem",
+     "quests": 44
+    },
+    {
+     "slug": "forbidden-arcanus",
+     "titulo": "Forbidden & Arcanus",
+     "subtitulo": "",
+     "icone": "forbidden_arcanus:hephaestus_forge_tier_1",
+     "quests": 62
+    },
+    {
+     "slug": "iron-spells-and-spellbooks",
+     "titulo": "Iron's Spells 'n Spellbooks",
+     "subtitulo": "",
+     "icone": "irons_spellbooks:scroll",
+     "quests": 102
+    },
+    {
+     "slug": "natures-aura",
+     "titulo": "Nature's Aura",
+     "subtitulo": "",
+     "icone": "naturesaura:gold_leaf",
+     "quests": 24
+    },
+    {
+     "slug": "neo-vitae",
+     "titulo": "Neo Vitae",
+     "subtitulo": "",
+     "icone": "neovitae:crystallarium_maleficum",
+     "quests": 87
+    },
+    {
+     "slug": "occultism",
+     "titulo": "Occultism",
+     "subtitulo": "",
+     "icone": "occultism:ritual_dummy/summon_foliot_crusher",
+     "quests": 63
+    },
+    {
+     "slug": "theurgy",
+     "titulo": "Theurgy",
+     "subtitulo": "",
+     "icone": "theurgy:alchemical_sulfur_sulfur",
+     "quests": 44
+    }
+   ]
+  },
+  {
+   "id": "5A4775CCD6D26C80",
+   "nome": "Exploração",
+   "capitulos": [
+    {
+     "slug": "aether",
+     "titulo": "The Aether",
+     "subtitulo": "",
+     "icone": "aether:angelic_stone",
+     "quests": 72
+    },
+    {
+     "slug": "bumblezone",
+     "titulo": "The Bumblezone",
+     "subtitulo": "",
+     "icone": "minecraft:bee_nest",
+     "quests": 113
+    },
+    {
+     "slug": "auroral",
+     "titulo": "Auroral",
+     "subtitulo": "",
+     "icone": "auroral:aurora_bloom",
+     "quests": 20
+    },
+    {
+     "slug": "cataclysm",
+     "titulo": "Cataclysm",
+     "subtitulo": "",
+     "icone": "cataclysm:the_incinerator",
+     "quests": 109
+    },
+    {
+     "slug": "deeper-and-darker",
+     "titulo": "Deeper and Darker",
+     "subtitulo": "",
+     "icone": "deeperdarker:heart_of_the_deep",
+     "quests": 44
+    },
+    {
+     "slug": "eternal-starlight",
+     "titulo": "Eternal Starlight",
+     "subtitulo": "",
+     "icone": "eternal_starlight:starlight_flower",
+     "quests": 192
+    },
+    {
+     "slug": "ice-fire",
+     "titulo": "Ice and Fire",
+     "subtitulo": "",
+     "icone": "iceandfire:dragon_skull_fire",
+     "quests": 86
+    },
+    {
+     "slug": "twilight-forest",
+     "titulo": "The Twilight Forest",
+     "subtitulo": "",
+     "icone": "twilightforest:moonworm_queen",
+     "quests": 56
+    },
+    {
+     "slug": "undergarden",
+     "titulo": "The Undergarden",
+     "subtitulo": "",
+     "icone": "undergarden:catalyst",
+     "quests": 81
+    }
+   ]
+  },
+  {
+   "id": "",
+   "nome": "Outros",
+   "capitulos": [
+    {
+     "slug": "welcome",
+     "titulo": "Bem-vindo",
+     "subtitulo": "",
+     "icone": "ftbquests:book",
+     "quests": 5
+    },
+    {
+     "slug": "bounty-board",
+     "titulo": "Quadro de Recompensas",
+     "subtitulo": "",
+     "icone": "minecraft:zombie_head",
+     "quests": 49
+    },
+    {
+     "slug": "building-tips",
+     "titulo": "Dicas de Construção",
+     "subtitulo": "",
+     "icone": "framedblocks:framed_cube",
+     "quests": 90
+    },
+    {
+     "slug": "tips-and-tricks",
+     "titulo": "Dicas e Truques",
+     "subtitulo": "",
+     "icone": "minecraft:recovery_compass",
+     "quests": 22
+    }
+   ]
+  }
+ ]
+}

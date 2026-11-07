@@ -937,6 +937,46 @@ function carregarIndiceWiki(){
 }
 const wikiSlug = t => /^[a-z0-9-]{1,60}$/.test(t) ? t : "";
 function wikiLink(g){ return g.url && /^#[\w-]+$/.test(g.url) ? g.url : "#wiki/" + g.slug; }
+const ICONES = "https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/icones/";
+function iconeItem(id, cls){
+  if(!id || !/^[a-z0-9_.-]+:[a-z0-9_.\/-]+$/.test(id)) return `<span class="${cls} qi-vazio" aria-hidden="true"></span>`;
+  return `<img class="${cls}" src="${ICONES + id.replace(":", "__").replace(/\//g, "_")}.png" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:this.className+' qi-vazio'}))">`;
+}
+let QIDX = null;
+function carregarQuestsIdx(){ if(!QIDX) QIDX = fetch(CONFIG.wiki.base + "quests/indice.json", {cache:"no-cache"}).then(r=>r.ok ? r.json() : Promise.reject()); return QIDX; }
+function abrirQuests(cap){
+  cap = /^[a-z0-9-]{1,80}$/.test(cap) ? cap : "";
+  const chave = "quests/" + cap; if(wikiAberto === chave) return; wikiAberto = chave;
+  ["wkInicio","wkPagina"].forEach(i=>document.getElementById(i).hidden = true);
+  document.getElementById("wkQuests").hidden = false; document.getElementById("wkBuscaBox").hidden = true; document.querySelector(".wk-migalha").hidden = false;
+  const box = document.getElementById("wkQBox"); box.innerHTML = '<p class="wk-carregando">Carregando quests…</p>';
+  scrollTo({top:0, behavior:"instant"});
+  carregarQuestsIdx().then(I=>{
+    if(!cap){
+      document.getElementById("wkTitulo").textContent = "Livro de quests"; document.getElementById("wkResumo").textContent = "Todas as quests do ATM10 em português. Escolha um capítulo.";
+      document.getElementById("wkCat").textContent = "Livro de quests"; document.title = "Livro de quests · Wiki do Refúgio";
+      box.innerHTML = I.grupos.map(g=>`<section class="wk-cat"><h2>${esc(g.nome)}</h2><ul class="qc-lista">${g.capitulos.map(c=>`<li><a class="qc" href="#wiki/quests/${esc(c.slug)}">${iconeItem(c.icone, "qc-ic")}<span><b>${esc(c.titulo)}</b><small>${c.quests} ${c.quests === 1 ? "quest" : "quests"}</small></span></a></li>`).join("")}</ul></section>`).join("");
+      return;
+    }
+    const grupo = I.grupos.find(g=>g.capitulos.some(c=>c.slug === cap));
+    return fetch(CONFIG.wiki.base + "quests/" + cap + ".json", {cache:"no-cache"}).then(r=>r.ok ? r.json() : Promise.reject()).then(C=>{
+      if(wikiAberto !== chave) return;
+      document.getElementById("wkTitulo").textContent = C.titulo; document.getElementById("wkResumo").textContent = C.subtitulo || `${C.quests.length} quests neste capítulo.`;
+      document.getElementById("wkCat").innerHTML = `<a href="#wiki/quests">Livro de quests</a>${grupo ? " › " + esc(grupo.nome) : ""}`;
+      document.title = `${C.titulo} · Livro de quests`;
+      const nomeQ = Object.fromEntries(C.quests.map(q=>[q.id, q.titulo]));
+      const nav = grupo ? `<nav class="wk-nav qn-nav" aria-label="Capítulos"><h4>${esc(grupo.nome)}</h4><ul>${grupo.capitulos.map(c=>`<li><a href="#wiki/quests/${esc(c.slug)}"${c.slug === cap ? ' class="ativo" aria-current="page"' : ""}>${esc(c.titulo)}</a></li>`).join("")}</ul><h4>Outros</h4><ul><li><a href="#wiki/quests">Todos os capítulos</a></li></ul></nav>` : "<div></div>";
+      box.innerHTML = `<div class="qn-grade">${nav}<div><label class="qn-busca"><span class="sr">Buscar quest</span><input id="qnBusca" type="search" placeholder="Buscar quest, item ou tarefa neste capítulo"></label><ol class="qn-lista">${C.quests.map((q, n)=>`
+        <li class="qn" id="q-${esc(q.id)}"><div class="qn-cab">${iconeItem(q.icone, "qn-ic")}<div><h3>${esc(q.titulo)}${q.opcional ? ' <span class="qn-op">Opcional</span>' : ""}</h3>${q.subtitulo ? `<p class="qn-sub">${esc(q.subtitulo)}</p>` : ""}</div><span class="qn-n">${n + 1}</span></div>
+        ${q.desc.length ? `<div class="qn-desc">${q.desc.map(p=>`<p>${mdInline(p)}</p>`).join("")}</div>` : ""}
+        ${q.tarefas.length ? `<div class="qn-bloco"><b>Tarefas</b><ul class="qn-itens">${q.tarefas.map(t=>`<li>${t.item ? iconeItem(t.item, "qn-mini") : '<span class="qn-mini qn-tipo" aria-hidden="true">✓</span>'}<span>${esc(t.nome)}</span>${t.qtd > 1 ? `<em>× ${t.qtd.toLocaleString("pt-BR")}${t.unidade ? " baldes" : ""}</em>` : ""}</li>`).join("")}</ul></div>` : ""}
+        ${q.recompensas.length ? `<div class="qn-bloco"><b>Recompensas</b><ul class="qn-itens qn-rec">${q.recompensas.map(r=>`<li>${r.item ? iconeItem(r.item, "qn-mini") : '<span class="qn-mini qn-tipo" aria-hidden="true">★</span>'}<span>${esc(r.nome)}</span>${r.qtd > 1 ? `<em>× ${r.qtd.toLocaleString("pt-BR")}</em>` : ""}</li>`).join("")}</ul></div>` : ""}
+        ${q.deps.filter(d=>nomeQ[d]).length ? `<p class="qn-deps">Depois de: ${q.deps.filter(d=>nomeQ[d]).map(d=>`<a href="#wiki/quests/${esc(cap)}" data-ir="q-${esc(d)}">${esc(nomeQ[d])}</a>`).join(", ")}</p>` : ""}
+        </li>`).join("")}</ol></div></div>`;
+      document.getElementById("qnBusca").addEventListener("input", e=>{ const t = norm(e.target.value.trim()); box.querySelectorAll(".qn").forEach(li=>li.hidden = !!t && !norm(li.textContent).includes(t)); });
+    });
+  }).catch(()=>{ box.innerHTML = "<p>Não deu para carregar o livro de quests agora. Tente de novo em instantes.</p>"; });
+}
 /* cartão de guia (usado na vitrine da home e na página da wiki) */
 function cartaoWiki(g){
   const cor = /^#[0-9a-fA-F]{6}$/.test(g.cor || "") ? g.cor : "#7B52E6";
@@ -1019,6 +1059,39 @@ function criarWiki(){
 .wk-cat h2{font:700 clamp(22px,2.4vw,28px)/1.2 var(--display);margin:0 0 6px}
 .wk-cat>p{margin:0 0 20px;color:var(--tinta-2)}
 .wk-nada{display:none;padding:40px;text-align:center;color:var(--tinta-2);background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--linha)}
+.qc-lista{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.qc{display:flex;gap:14px;align-items:center;padding:14px 16px;background:#fff;border-radius:14px;box-shadow:0 0 0 1px var(--linha);text-decoration:none;color:var(--tinta);height:100%;box-sizing:border-box;transition:box-shadow .2s,transform .2s}
+.qc:hover{transform:translateY(-2px);box-shadow:0 0 0 1px #cfc6e6,0 12px 26px -16px rgba(28,21,53,.35)}
+.qc-ic{width:40px;height:40px;flex:none;image-rendering:pixelated;object-fit:contain}
+.qc b{display:block;font:700 15px/1.25 var(--display)}
+.qc small{color:var(--tinta-2);font-size:13px}
+.qi-vazio{display:inline-block;border-radius:8px;background:repeating-linear-gradient(45deg,#ece7f7 0 6px,#f6f3fc 6px 12px)}
+.qn-grade{display:grid;grid-template-columns:240px minmax(0,1fr);gap:44px;align-items:start}
+.qn-busca input{width:100%;box-sizing:border-box;height:48px;border:1px solid var(--linha);border-radius:12px;padding:0 16px;font:500 15px var(--corpo);background:#fff;color:var(--tinta);margin-bottom:18px}
+.qn-lista{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.qn{background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--linha);padding:20px 22px;scroll-margin-top:96px}
+.qn:target,.qn.alvo{box-shadow:0 0 0 2px var(--ouro)}
+.qn-cab{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center}
+.qn-ic{width:48px;height:48px;image-rendering:pixelated;object-fit:contain}
+.qn h3{font:700 18px/1.25 var(--display);margin:0}
+.qn-sub{margin:4px 0 0;color:var(--tinta-2);font-size:14px;font-style:italic}
+.qn-n{font:700 13px/1 var(--display);color:var(--tinta-2);background:#F6F4FB;border-radius:8px;padding:6px 8px}
+.qn-op{font:600 11px/1 var(--corpo);color:#0E7C78;background:#E3F7F6;border-radius:6px;padding:4px 7px;vertical-align:middle}
+.qn-desc{margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--tinta)}
+.qn-desc p{margin:0 0 10px;max-width:75ch}
+.qn-bloco{margin-top:12px}
+.qn-bloco>b{display:block;font:700 13px/1 var(--display);color:var(--tinta-2);margin-bottom:8px}
+.qn-itens{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.qn-itens li{display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:10px;background:#F6F4FB;font-size:14px}
+.qn-rec li{background:#FFF7E0}
+.qn-itens em{font-style:normal;font-weight:700;color:var(--tinta-2)}
+.qn-mini{width:28px;height:28px;image-rendering:pixelated;object-fit:contain}
+.qn-tipo{display:grid;place-items:center;font-size:14px;color:var(--violeta-texto);background:#fff;border-radius:8px}
+.qn-deps{margin:12px 0 0;font-size:13px;color:var(--tinta-2)}
+.qn-deps a{color:var(--violeta-texto);font-weight:600}
+@media (max-width:1100px){.qc-lista{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.qn-grade{grid-template-columns:1fr}.qn-nav{display:none}.qc-lista{grid-template-columns:repeat(2,minmax(0,1fr))}.qn{padding:16px}}
+@media (max-width:480px){.qc-lista{grid-template-columns:1fr}}
 @media (max-width:980px){.wk-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wk-vitrine{grid-template-columns:1fr;gap:32px}}
 @media (max-width:620px){.wk-cards,.wk-cards-2{grid-template-columns:1fr}}
 .wk-topo::before{background:none}
@@ -1082,6 +1155,7 @@ function criarWiki(){
   <section class="secao" id="wkInicio" style="padding-top:56px" hidden>
     <div class="wrap"><div id="wkCats"></div><p class="wk-nada" id="wkNada">Nenhum guia com essa palavra ainda. Peça o guia no fórum do Discord.</p></div>
   </section>
+  <section class="secao" id="wkQuests" style="padding-top:48px" hidden><div class="wrap" id="wkQBox"></div></section>
   <section class="secao" id="wkPagina" style="padding-top:48px">
     <div class="wrap wk-grade">
       <nav class="wk-nav" id="wkNav" aria-label="Guias da wiki"><button class="wk-nav-btn" type="button" id="wkNavBtn" aria-expanded="false">Todos os guias <span aria-hidden="true">▾</span></button><div class="wk-nav-lista" id="wkNavLista"></div></nav>
@@ -1105,6 +1179,7 @@ function filtrarWiki(){
   document.getElementById("wkNada").style.display = total ? "none" : "block";
 }
 function inicioWiki(){
+  document.getElementById("wkQuests").hidden = true;
   const bq = document.getElementById("wkBusca"); if(bq.value){ bq.value = ""; }
   document.getElementById("wkInicio").hidden = false; document.getElementById("wkPagina").hidden = true; document.getElementById("wkBuscaBox").hidden = false;
   document.getElementById("wkTitulo").textContent = "Wiki do Refúgio";
@@ -1113,14 +1188,17 @@ function inicioWiki(){
   document.title = "Wiki · O Refúgio";
   carregarIndiceWiki().then(J=>{
     const gs = (J.guias || []).filter(g=>!g.rascunho);
-    document.getElementById("wkCats").innerHTML = (J.categorias || []).map(c=>{ const lista = gs.filter(g=>g.categoria === c.id); const col = lista.length <= 2 || lista.length === 4 ? " wk-cards-2" : ""; return lista.length ? `<section class="wk-cat"><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || DESC_CAT[c.id] || "")}</p><ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul></section>` : ""; }).join("");
+    const livro = `<section class="wk-cat"><h2>Livro de quests</h2><p>Todas as quests do ATM10 em português, capítulo por capítulo, com tarefas e recompensas.</p><ul class="wk-cards wk-cards-2">${cartaoWiki({slug:"quests", titulo:"Livro de quests completo", resumo:"Os capítulos do livro de quests do modpack, da primeira quest até a criativa", cor:"#F2B01E", icone:"itens/livro_quests.png", url:""})}${cartaoWiki({slug:"quests/mainquestline-part-1", titulo:"Linha de missão principal", resumo:"O caminho principal do ATM10, do começo até a ATM Star", cor:"#7B52E6", icone:"itens/atm_star.png", url:""})}</ul></section>`;
+    document.getElementById("wkCats").innerHTML = livro + (J.categorias || []).map(c=>{ const lista = gs.filter(g=>g.categoria === c.id); const col = lista.length <= 2 || lista.length === 4 ? " wk-cards-2" : ""; return lista.length ? `<section class="wk-cat"><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || DESC_CAT[c.id] || "")}</p><ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul></section>` : ""; }).join("");
     filtrarWiki();
   }).catch(()=>{ document.getElementById("wkCats").innerHTML = "<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>"; });
 }
 function abrirArtigo(slug){
+  if(/^quests(\/|$)/.test(slug)){ abrirQuests(slug.replace(/^quests\/?/, "")); return; }
   slug = wikiSlug(slug);
   if(slug === wikiAberto) return; wikiAberto = slug;
   if(!slug){ scrollTo({top:0, behavior:"instant"}); inicioWiki(); return; }
+  document.getElementById("wkQuests").hidden = true;
   document.getElementById("wkInicio").hidden = true; document.getElementById("wkPagina").hidden = false; document.getElementById("wkBuscaBox").hidden = true; document.querySelector(".wk-migalha").hidden = false;
   const art = document.getElementById("wkArt"), toc = document.getElementById("wkToc");
   art.innerHTML = '<p class="wk-carregando">Carregando guia…</p>'; toc.innerHTML = "";
