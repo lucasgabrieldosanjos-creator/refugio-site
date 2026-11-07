@@ -8,3 +8,4 @@ Servidos pelo jsDelivr: `https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creato
 - `kit/` ícones dos itens dos kits
 - `ranks/` brasões dos VIPs
 - `kits.js` conteúdo dos kits (FonoKits)
+- `site.js` script do site · `config.json` IP, versão do modpack, links e votação
