@@ -383,7 +383,7 @@ const BENEFICIOS = [
   ]}
 ];
 const ESP = {
-  "Tag VIP e chat do servidor no Discord":[T,"Cargo de Comerciante"], "Mensagens com cor, formatação e links":[T,F], "/cor e /definir (cor do nick e do chat)":[T,T], "/cor2 com cores novas e exclusivas":[F,F],
+  "Tag VIP e chat do servidor no Discord":[T,"Cargo de Comerciante"], "Mensagens com cor, formatação e links":[T,F], "/cor e /definir (cor do nick e do chat)":[T,T], "/cor2 com cores novas e exclusivas":[T,F],
   "Chat em RGB e texto mágico":[F,F], "Sala escritório no Discord":[F,F], "Moedas ao ativar":["50 mil","5 mil"], "Cash ao ativar":[F,F],
   "Bônus na venda de fluidos":["Nível 5","Nível 1"], "Venda de fluidos em massa":[T,T], "Desconto para criar guilda":[F,F], "Salário VIP":[T,F],
   "Lojas próprias: criar, anunciar e definir o spawn":[T,T], "Placas de compra, venda e troca":[T,T],
