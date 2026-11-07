@@ -201,6 +201,9 @@ function renderRk(tipo){
   d.slice(3).forEach((r,k)=>{ const li = document.createElement("li");
     li.innerHTML = `<span class="pos">${k+4}</span><span></span><span class="nome">${esc(r[0])}<small>${esc(r[1])}</small></span><span class="val">${esc(r[2])}</span>`;
     li.children[1].replaceWith(avatar(r, R.guilda)); rkLista.append(li); });
+  if(d.length <= 3){ const li = document.createElement("li"); li.className = "rk-vazio"; li.style.cssText = "display:block;border:0;padding:48px 24px;text-align:center;color:var(--tinta-2);font-size:15px;line-height:1.5";
+    li.textContent = R.guilda ? "As próximas guildas aparecem aqui assim que forem fundadas. Que tal ser a próxima?" : "As próximas posições aparecem aqui conforme mais jogadores entram no ranking.";
+    rkLista.append(li); }
 }
 const selRk = abas(document.getElementById("abasRk"), b=>renderRk(b.dataset.rk));
 renderRk("tempo");
