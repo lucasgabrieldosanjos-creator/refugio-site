@@ -9,15 +9,28 @@ let CONFIG = {
   servidor:{nome:"O Refúgio", ip:"atm10.rede-orefugio.com.br", maxJogadores:200},
   rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
-  links:{discord:"#", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
+  links:{discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
 let IP = CONFIG.servidor.ip;
 const pegar = (obj, caminho) => caminho.split(".").reduce((o,k)=>o==null?o:o[k], obj);
+/* membros online no Discord (contagem pública do convite) */
+let discordContado = false;
+function contarDiscord(){
+  const el = document.querySelector(".rede.discord .online"); if(!el || discordContado) return;
+  const cod = ((CONFIG.links.discord || "").match(/discord\.(?:gg|com\/invite)\/([\w-]+)/) || [])[1];
+  if(!cod){ el.textContent = "Entre na comunidade"; return; }
+  discordContado = true;
+  fetch(`https://discord.com/api/v10/invites/${cod}?with_counts=true`).then(r=>r.ok ? r.json() : Promise.reject()).then(j=>{
+    const on = j.approximate_presence_count, tot = j.approximate_member_count;
+    el.textContent = on != null ? `${on.toLocaleString("pt-BR")} online agora · ${tot.toLocaleString("pt-BR")} membros` : "Entre na comunidade";
+  }).catch(()=>{ el.textContent = "Entre na comunidade"; });
+}
 function aplicarConfig(){
   IP = CONFIG.servidor.ip;
   document.querySelectorAll("[data-cfg]").forEach(el=>{ const v = pegar(CONFIG, el.dataset.cfg); if(v != null) el.textContent = v; });
-    document.querySelectorAll("[data-link]").forEach(a=>{ const v = CONFIG.links[a.dataset.link]; if(v) a.href = v; });
+    document.querySelectorAll("[data-link]").forEach(a=>{ const v = CONFIG.links[a.dataset.link]; if(v) a.href = v; if(/^https?:/.test(a.getAttribute("href") || "")){ a.target = "_blank"; a.rel = "noopener"; } });
+  contarDiscord();
   const sv = document.getElementById("sitesVoto");
   sv.innerHTML = CONFIG.votacao.map((v,k)=>`<li${v.aviso?' class="instavel"':""}><span class="vt-n">${k+1}</span><div><b>${v.nome}</b>${v.aviso?`<span class="vt-aviso">${v.aviso}</span>`:""}</div><a class="btn btn-tinta" href="${v.url}" target="_blank" rel="noopener" data-voto="${k}">Votar</a></li>`).join("");
   sv.querySelectorAll("[data-voto]").forEach(a=>a.addEventListener("click",()=>{ a.closest("li").classList.add("feito"); a.textContent = "Votado"; }));
