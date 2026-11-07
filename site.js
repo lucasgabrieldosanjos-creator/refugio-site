@@ -402,7 +402,7 @@ const linkCompra = r => LOJA_URL + encodeURI(r.url);
 TRILHAS.tech.lead = TRILHAS.magic.lead = "Duas trilhas com os mesmos benefícios. O que muda é o kit de ativação: máquinas e tecnologia, ou magia e exploração.";
 TRILHAS.especiais = {nome:"Classes especiais", lead:"Classes com benefícios próprios, fora da escada de VIPs. O Construtor fica entre o Cientista e o Arconte.", ranks:[
   {id:"construtor", nome:"Construtor", tag:[["6","CONSTRUTOR"]], cor:"#FFAA00", img:"construtor", preco:"R$ 150,00", dias:40, url:"vip-construtor(40d)", kits:["vipconstrutor",...DIARIOS(3),...SEMANAIS(3)]},
-  {id:"comerciante", nome:"Comerciante", tag:null, tagTexto:"Badge de Comerciante", cor:"#C98E2E", img:"comerciante", preco:"R$ 15,00", dias:30, url:"comerciante-(30d)", kits:[]}
+  {id:"comerciante", nome:"Comerciante", tag:null, tagTexto:"Badge de Comerciante", cor:"#C98E2E", img:"comerciante-v2", preco:"R$ 15,00", dias:30, url:"comerciante-(30d)", kits:[]}
 ]};
 let trilha = "tech";
 const NIVEL = {forjador:1,peregrino:1,arquiteto:2,runista:2,cientista:3,arcanista:3,construtor:3.5,arconte:4,ascendente:4,major:5};
