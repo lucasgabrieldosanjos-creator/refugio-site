@@ -12,7 +12,7 @@ let CONFIG = {
   rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
   wiki:{base:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/wiki/", editar:"https://github.com/lucasgabrieldosanjos-creator/refugio-site/edit/main/wiki/"},
   forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
-  modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
+  modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.5", minecraft:"1.21.1", loader:"NeoForge"},
   links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
