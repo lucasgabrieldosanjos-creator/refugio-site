@@ -1,4 +1,6 @@
 (() => {
+/* o Fórum agora tem página própria */
+document.querySelectorAll("a[data-embreve]").forEach(a=>{ if(a.textContent.trim() === "Fórum"){ a.href = "#forum"; a.removeAttribute("data-embreve"); } });
 /* ============================================================
    CONFIGURAÇÃO DO SITE
    Edite o arquivo config.json (ao lado do index.html) e o site
@@ -8,8 +10,9 @@
 let CONFIG = {
   servidor:{nome:"O Refúgio", ip:"atm10.rede-orefugio.com.br", maxJogadores:200},
   rankings:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/rankings.json"},
+  forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.3", minecraft:"1.21.1", loader:"NeoForge"},
-  links:{discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
+  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"#", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
 let IP = CONFIG.servidor.ip;
@@ -53,7 +56,7 @@ const REDES = {
 document.querySelectorAll("[data-svg]").forEach(el=>{ el.outerHTML = REDES[el.dataset.svg]; });
 
 /* ---------- Navegação ---------- */
-function visaoDe(h){ return h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
+function visaoDe(h){ return h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
 const nav = document.getElementById("nav"), hero = document.getElementById("inicio"), heroImg = document.getElementById("heroImg");
 const secoes = ["inicio","guildas","rankings","votar","wiki","loja"].map(id=>document.getElementById(id));
 const linksNav = [...document.querySelectorAll("#links a")];
@@ -67,6 +70,7 @@ function aoRolar(){
   if(loja) atualSec = "vips";
   if(vh === "regras") atualSec = "regras";
   if(vh === "guia") atualSec = "guildas";
+  if(vh === "forum") atualSec = "forum";
   linksNav.forEach(a=>a.classList.toggle("ativo", a.getAttribute("href") === "#"+atualSec));
 }
 addEventListener("scroll", aoRolar, {passive:true}); aoRolar();
@@ -888,13 +892,102 @@ function indiceGuia(){
 }
 addEventListener("scroll", indiceGuia, {passive:true});
 
+
+/* ================= Fórum (tópicos do canal de fórum do Discord) ================= */
+function criarForum(){
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-forum-css">
+.fr-topo::before{background-image:url(${ARTE_FORUM});background-position:center 40%}
+.fr-acoes{display:flex;gap:12px;flex-wrap:wrap}
+.fr-barra{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+.fr-tags{display:flex;gap:8px;flex-wrap:wrap}
+.fr-tag{border:1px solid var(--linha);background:#fff;color:var(--tinta-2);border-radius:999px;padding:7px 14px;font:600 14px/1 var(--corpo);cursor:pointer}
+.fr-tag[aria-pressed=true]{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.fr-busca{margin-left:auto;min-width:240px;flex:0 1 320px;border:1px solid var(--linha);border-radius:12px;padding:11px 14px;font:500 15px var(--corpo);background:#fff;color:var(--tinta)}
+.fr-lista{display:grid;gap:12px;list-style:none;margin:0;padding:0}
+.fr-post a{display:grid;grid-template-columns:48px 1fr auto;gap:16px;align-items:start;padding:18px 20px;background:#fff;border:1px solid var(--linha);border-radius:16px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .2s}
+.fr-post a:hover{border-color:#cfc6e6;box-shadow:0 10px 26px -14px rgba(28,21,53,.35);transform:translateY(-1px)}
+.fr-post a:focus-visible{outline:3px solid var(--violeta);outline-offset:2px}
+.fr-av{width:48px;height:48px;border-radius:50%;background:#e9e4f6;object-fit:cover}
+.fr-tit{font:700 18px/1.25 var(--display);margin:0 0 6px;color:var(--tinta);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fr-fix{font:700 11px/1 var(--corpo);color:var(--ouro-texto);background:#FFF3D1;border-radius:6px;padding:4px 7px}
+.fr-res{margin:0 0 10px;color:var(--tinta-2);font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fr-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--tinta-2)}
+.fr-meta b{color:var(--tinta);font-weight:600}
+.fr-chip{font:600 12px/1 var(--corpo);color:var(--violeta-texto);background:#EFE9FF;border-radius:6px;padding:4px 8px}
+.fr-img{width:96px;height:72px;border-radius:10px;object-fit:cover;background:#eee}
+.fr-vazio{padding:56px 24px;text-align:center;background:#fff;border:1px dashed var(--linha);border-radius:16px;color:var(--tinta-2)}
+.fr-vazio h3{font:700 22px var(--display);color:var(--tinta);margin:0 0 8px}
+@media (max-width:700px){.fr-post a{grid-template-columns:40px 1fr;padding:16px}.fr-av{width:40px;height:40px}.fr-img{display:none}.fr-busca{margin-left:0;flex:1 1 100%}}
+</style>`);
+  const v = document.createElement("main"); v.id = "viewForum"; v.hidden = true;
+  v.innerHTML = `
+  <section class="rg-topo fr-topo">
+    <div class="wrap">
+      <span class="selo" style="background:rgba(88,101,242,.2);color:#C9CEFF;box-shadow:inset 0 0 0 1px rgba(88,101,242,.45)">Ligado ao nosso Discord</span>
+      <h1>Fórum da comunidade</h1>
+      <p>Dúvidas, construções, guias, sugestões e trocas. Os tópicos são criados no canal de fórum do Discord e aparecem aqui sozinhos.</p>
+      <div class="fr-acoes"><a class="btn btn-ouro" id="frCriar" target="_blank" rel="noopener" href="#">Criar tópico no Discord</a><a class="btn btn-linha" style="color:#fff;border-color:rgba(255,255,255,.45);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)" target="_blank" rel="noopener" data-link="discord" href="${CONFIG.links.discord}">Entrar no Discord</a></div>
+    </div>
+    <div class="hero-borda" aria-hidden="true"></div>
+  </section>
+  <section class="secao" style="padding-top:56px">
+    <div class="wrap">
+      <div class="fr-barra"><div class="fr-tags" id="frTags" role="group" aria-label="Filtrar por categoria"></div><input class="fr-busca" id="frBusca" type="search" placeholder="Buscar tópico" aria-label="Buscar tópico"></div>
+      <ol class="fr-lista" id="frLista"></ol>
+      <p class="rk-rodape" style="margin-top:16px"><span id="frNota"></span></p>
+    </div>
+  </section>`;
+  (document.getElementById("viewGuia") || document.querySelector("main:last-of-type")).after(v);
+  return v;
+}
+const ARTE_FORUM = "https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/forum.webp";
+let forumCarregado = false, FORUM = null, frFiltro = "todos";
+const frSeguro = (u, hosts) => { try{ const x = new URL(u); return x.protocol === "https:" && hosts.some(h=>x.hostname === h || x.hostname.endsWith("." + h)) ? x.href : ""; } catch(e){ return ""; } };
+function frQuando(iso){ const m = Math.round((Date.now() - new Date(iso)) / 60000); if(!(m >= 0)) return ""; if(m < 60) return m < 2 ? "agora" : `há ${m} min`; const h = Math.round(m/60); if(h < 24) return `há ${h} h`; const d = Math.round(h/24); return d < 30 ? `há ${d} ${d === 1 ? "dia" : "dias"}` : new Date(iso).toLocaleDateString("pt-BR"); }
+function carregarForum(){
+  if(forumCarregado) return; forumCarregado = true;
+  const criar = document.getElementById("frCriar"); criar.href = CONFIG.links.forumDiscord || CONFIG.links.discord;
+  fetch(CONFIG.forum.url, {cache:"no-store"}).then(r=>r.ok ? r.json() : Promise.reject()).then(J=>{
+    FORUM = J;
+    const canal = J.canal && frSeguro(J.canal.url, ["discord.com"]); if(canal) criar.href = canal;
+    const tags = [{id:"todos", nome:"Todos"}].concat(J.tags || []);
+    document.getElementById("frTags").innerHTML = tags.map(t=>`<button class="fr-tag" type="button" data-tag="${esc(t.id)}" aria-pressed="${t.id === "todos"}">${t.emoji ? esc(t.emoji) + " " : ""}${esc(t.nome)}</button>`).join("");
+    document.getElementById("frTags").addEventListener("click", e=>{ const b = e.target.closest("[data-tag]"); if(!b) return; frFiltro = b.dataset.tag; document.querySelectorAll("#frTags [data-tag]").forEach(x=>x.setAttribute("aria-pressed", x === b)); desenharForum(); });
+    document.getElementById("frBusca").addEventListener("input", desenharForum);
+    document.getElementById("frNota").textContent = J.atualizado ? `Tópicos do Discord, atualizados ${frQuando(J.atualizado)}.` : "";
+    desenharForum();
+  }).catch(()=>{ desenharForum(); });
+}
+function desenharForum(){
+  const ul = document.getElementById("frLista");
+  if(!FORUM || !(FORUM.posts || []).length){
+    ul.innerHTML = `<li class="fr-vazio"><h3>O fórum está chegando</h3><p>Em breve os tópicos do canal de fórum do Discord aparecem aqui. Enquanto isso, entre no Discord e puxe assunto.</p></li>`; return;
+  }
+  const nomeTag = Object.fromEntries((FORUM.tags || []).map(t=>[t.id, t]));
+  const q = document.getElementById("frBusca").value.trim().toLowerCase();
+  const lista = FORUM.posts.filter(p=>(frFiltro === "todos" || (p.tags || []).includes(frFiltro)) && (!q || (p.titulo + " " + (p.resumo || "") + " " + ((p.autor || {}).nome || "")).toLowerCase().includes(q)))
+    .sort((a,b)=>(b.fixado === true) - (a.fixado === true) || new Date(b.ultima_atividade || b.criado) - new Date(a.ultima_atividade || a.criado));
+  if(!lista.length){ ul.innerHTML = `<li class="fr-vazio"><h3>Nenhum tópico encontrado</h3><p>Tente outra palavra ou outra categoria.</p></li>`; return; }
+  ul.innerHTML = lista.slice(0, 60).map(p=>{
+    const url = frSeguro(p.url, ["discord.com"]) || "#", av = frSeguro((p.autor || {}).avatar, ["discordapp.com", "discord.com"]), img = frSeguro(p.imagem, ["discordapp.com", "discordapp.net"]);
+    const n = +p.respostas || 0;
+    return `<li class="fr-post"><a href="${url}" target="_blank" rel="noopener">
+      ${av ? `<img class="fr-av" src="${av}" alt="" loading="lazy">` : `<span class="fr-av" aria-hidden="true"></span>`}
+      <div><h3 class="fr-tit">${p.fixado ? '<span class="fr-fix">Fixado</span>' : ""}${esc(p.titulo || "Sem título")}</h3>
+        ${p.resumo ? `<p class="fr-res">${esc(p.resumo)}</p>` : ""}
+        <div class="fr-meta"><span>por <b>${esc((p.autor || {}).nome || "alguém")}</b></span><span>${frQuando(p.ultima_atividade || p.criado)}</span><span>${n} ${n === 1 ? "resposta" : "respostas"}</span>${(p.tags || []).map(t=>nomeTag[t] ? `<span class="fr-chip">${esc(nomeTag[t].nome)}</span>` : "").join("")}</div></div>
+      ${img ? `<img class="fr-img" src="${img}" alt="" loading="lazy">` : "<span></span>"}
+    </a></li>`;
+  }).join("");
+}
+
 /* ================= Rotas: início e loja ================= */
-const viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
+const viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
 let visaoAtual = null;
 function rota(){
   const v = visaoDe(location.hash), mudou = v !== visaoAtual;
   visaoAtual = v;
-  viewHome.hidden = v !== "home"; viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
+  viewHome.hidden = v !== "home"; viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
   if(v === "loja"){ if(mudou) scrollTo(0,0); }
   else if(v === "regras"){
     const alvo = location.hash.startsWith("#regra-") ? document.getElementById(location.hash.slice(1)) : null;
