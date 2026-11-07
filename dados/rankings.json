@@ -1,0 +1,171 @@
+{
+  "atualizado": "2026-11-07T11:18:22-03:00",
+  "tempo": [
+    {
+      "nome": "Bismuut",
+      "guilda": null,
+      "valor": 1930
+    },
+    {
+      "nome": "Evandrort",
+      "guilda": null,
+      "valor": 1886
+    },
+    {
+      "nome": "TkkFPS",
+      "guilda": "IMPERIUM",
+      "valor": 1377
+    },
+    {
+      "nome": "Dux_queiroz",
+      "guilda": "IMPERIUM",
+      "valor": 1012
+    },
+    {
+      "nome": "lucasmarcelo65",
+      "guilda": "CANECA .-.",
+      "valor": 862
+    },
+    {
+      "nome": "XIII_Thanatos",
+      "guilda": null,
+      "valor": 670
+    },
+    {
+      "nome": "ZecaPagodinBr",
+      "guilda": null,
+      "valor": 585
+    },
+    {
+      "nome": "Guaresi",
+      "guilda": null,
+      "valor": 569
+    },
+    {
+      "nome": "SubeteNoKami",
+      "guilda": null,
+      "valor": 557
+    },
+    {
+      "nome": "litcontroversy",
+      "guilda": null,
+      "valor": 481
+    }
+  ],
+  "pvp": [
+    {
+      "nome": "JustSkyline",
+      "guilda": "Braztugz",
+      "valor": 2
+    },
+    {
+      "nome": "TkkFPS",
+      "guilda": "IMPERIUM",
+      "valor": 1
+    },
+    {
+      "nome": "Dux_queiroz",
+      "guilda": "IMPERIUM",
+      "valor": 1
+    },
+    {
+      "nome": "Dandinter",
+      "guilda": null,
+      "valor": 1
+    },
+    {
+      "nome": "Rimuru_Tempest06",
+      "guilda": null,
+      "valor": 1
+    },
+    {
+      "nome": "Evandrort",
+      "guilda": null,
+      "valor": 1
+    },
+    {
+      "nome": "ZecaPagodinBr",
+      "guilda": null,
+      "valor": 1
+    },
+    {
+      "nome": "scp1471_0",
+      "guilda": null,
+      "valor": 1
+    },
+    {
+      "nome": "mistery5",
+      "guilda": null,
+      "valor": 1
+    }
+  ],
+  "mobs": [
+    {
+      "nome": "JustSkyline",
+      "guilda": "Braztugz",
+      "valor": 3054
+    },
+    {
+      "nome": "Dandinter",
+      "guilda": null,
+      "valor": 2877
+    },
+    {
+      "nome": "ZecaPagodinBr",
+      "guilda": null,
+      "valor": 1654
+    },
+    {
+      "nome": "marcoss4",
+      "guilda": null,
+      "valor": 1237
+    },
+    {
+      "nome": "Dagrao007",
+      "guilda": "Braztugz",
+      "valor": 1223
+    },
+    {
+      "nome": "HaruFenix",
+      "guilda": null,
+      "valor": 991
+    },
+    {
+      "nome": "Rimuru_Tempest06",
+      "guilda": null,
+      "valor": 862
+    },
+    {
+      "nome": "DARKhammer96",
+      "guilda": null,
+      "valor": 839
+    },
+    {
+      "nome": "RenanJogos007",
+      "guilda": null,
+      "valor": 785
+    },
+    {
+      "nome": "EzoReijy",
+      "guilda": null,
+      "valor": 775
+    }
+  ],
+  "guildas": [
+    {
+      "nome": "Braztugz",
+      "membros": 3,
+      "nivel": 1
+    },
+    {
+      "nome": "IMPERIUM",
+      "membros": 2,
+      "nivel": 1
+    },
+    {
+      "nome": "CANECA .-.",
+      "membros": 1,
+      "nivel": 1
+    }
+  ]
+}
