@@ -57,7 +57,7 @@ const REDES = {
 document.querySelectorAll("[data-svg]").forEach(el=>{ el.outerHTML = REDES[el.dataset.svg]; });
 
 /* ---------- Navegação ---------- */
-function visaoDe(h){ return h.startsWith("#wiki/") ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
+function visaoDe(h){ return (h === "#wiki" || h.startsWith("#wiki/")) ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
 const nav = document.getElementById("nav"), hero = document.getElementById("inicio"), heroImg = document.getElementById("heroImg");
 const secoes = ["inicio","guildas","rankings","votar","wiki","loja"].map(id=>document.getElementById(id));
 const linksNav = [...document.querySelectorAll("#links a")];
@@ -937,11 +937,22 @@ function carregarIndiceWiki(){
 }
 const wikiSlug = t => /^[a-z0-9-]{1,60}$/.test(t) ? t : "";
 function wikiLink(g){ return g.url && /^#[\w-]+$/.test(g.url) ? g.url : "#wiki/" + g.slug; }
-carregarIndiceWiki().then(J=>{
-  const guias = (J.guias || []).filter(g=>!g.rascunho);
-  if(!guias.length) return;
-  lista.innerHTML = guias.map(g=>`<li><a href="${wikiLink(g)}"><span class="tag" style="background:${/^#[0-9a-fA-F]{6}$/.test(g.cor || "") ? g.cor : "#7B52E6"}"></span><span class="gt">${esc(g.titulo)}</span><span class="gd">${esc(g.resumo || "")}</span></a></li>`).join("");
-}).catch(()=>{});
+/* cartão de guia (usado na vitrine da home e na página da wiki) */
+function cartaoWiki(g){
+  const cor = /^#[0-9a-fA-F]{6}$/.test(g.cor || "") ? g.cor : "#7B52E6";
+  const ic = g.icone && wikiImg(g.icone);
+  const tipo = g.url ? "Página do site" : "Guia";
+  return `<li><a class="wk-card" href="${wikiLink(g)}" style="--c:${cor}"><span class="wk-ic">${ic ? `<img src="${ic}" alt="" loading="lazy">` : ""}</span><span class="wk-ct"><b>${esc(g.titulo)}</b><span>${esc(g.resumo || "")}</span></span><em>${tipo}</em></a></li>`;
+}
+/* vitrine da wiki na página inicial: poucos destaques e um convite para abrir a wiki */
+(function vitrineWiki(){
+  const sec = document.getElementById("wiki"); if(!sec) return;
+  sec.innerHTML = `<div class="wrap wk-vitrine"><div class="wk-vt-txt"><h2 class="titulo">Wiki do Refúgio</h2><p class="lead">Guias do servidor e dos mods do ATM10, do primeiro dia até a ATM Star. Escritos pela equipe, em português.</p><a class="btn btn-ouro" href="#wiki">Abrir a Wiki</a></div><ul class="wk-cards wk-cards-2" id="wkVitrine"></ul></div>`;
+  carregarIndiceWiki().then(J=>{
+    const gs = (J.guias || []).filter(g=>!g.rascunho), dest = gs.filter(g=>g.destaque);
+    document.getElementById("wkVitrine").innerHTML = (dest.length >= 4 ? dest : gs).slice(0, 4).map(cartaoWiki).join("");
+  }).catch(()=>{ sec.querySelector(".wk-vitrine ul").remove(); });
+})();
 
 /* Markdown simples e seguro: tudo é escapado antes de virar HTML */
 function mdInline(t){
@@ -989,6 +1000,27 @@ function md(texto){
 function criarWiki(){
   document.head.insertAdjacentHTML("beforeend", `<style id="rf-wiki-css">
 .wk-topo{background:linear-gradient(135deg,#1d1438 0%,#2c1d63 60%,#3a2380 100%);padding:130px 0 70px}
+.wk-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.wk-cards-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wk-card{position:relative;display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;height:100%;box-sizing:border-box;padding:20px 20px 40px;background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--linha);text-decoration:none;color:var(--tinta);transition:box-shadow .2s,transform .2s}
+.wk-card:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--c),0 14px 30px -18px var(--c)}
+.wk-card:focus-visible{outline:3px solid var(--violeta);outline-offset:2px}
+.wk-ic{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 16%,#fff);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 35%,#fff)}
+.wk-ic img{width:36px;height:36px;image-rendering:pixelated;object-fit:contain}
+.wk-ct b{display:block;font:700 18px/1.25 var(--display);margin:2px 0 6px}
+.wk-ct span{display:block;font-size:15px;line-height:1.45;color:var(--tinta-2)}
+.wk-card em{position:absolute;left:92px;bottom:14px;font:600 12px/1 var(--corpo);font-style:normal;color:color-mix(in srgb,var(--c) 70%,#1C1535)}
+.wk-vitrine{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}
+.wk-vt-txt .lead{margin-bottom:26px}
+.wk-busca-g{position:relative;max-width:620px;margin-top:26px}
+.wk-busca-g input{width:100%;box-sizing:border-box;height:58px;border:0;border-radius:14px;padding:0 20px 0 52px;font:500 17px var(--corpo);color:var(--tinta);background:#fff;box-shadow:0 18px 40px -20px rgba(0,0,0,.6)}
+.wk-busca-g svg{position:absolute;left:18px;top:50%;translate:0 -50%;width:20px;height:20px;color:var(--tinta-2)}
+.wk-cat{margin:0 0 52px}
+.wk-cat h2{font:700 clamp(22px,2.4vw,28px)/1.2 var(--display);margin:0 0 6px}
+.wk-cat>p{margin:0 0 20px;color:var(--tinta-2)}
+.wk-nada{display:none;padding:40px;text-align:center;color:var(--tinta-2);background:#fff;border-radius:16px;box-shadow:0 0 0 1px var(--linha)}
+@media (max-width:980px){.wk-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wk-vitrine{grid-template-columns:1fr;gap:32px}}
+@media (max-width:620px){.wk-cards,.wk-cards-2{grid-template-columns:1fr}}
 .wk-topo::before{background:none}
 .wk-topo::after{background:radial-gradient(60% 120% at 85% 20%,rgba(123,82,230,.45),transparent 60%)}
 .wk-migalha{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px}
@@ -1043,10 +1075,14 @@ function criarWiki(){
       <p class="wk-migalha"><a href="#wiki">Wiki</a> <span aria-hidden="true">›</span> <span id="wkCat"></span></p>
       <h1 id="wkTitulo">Wiki do Refúgio</h1>
       <p id="wkResumo"></p>
+      <label class="wk-busca-g" id="wkBuscaBox" hidden><span class="sr">Buscar na wiki</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="wkBusca" type="search" placeholder="Buscar guia, mod ou comando" autocomplete="off"></label>
     </div>
     <div class="hero-borda" aria-hidden="true"></div>
   </section>
-  <section class="secao" style="padding-top:48px">
+  <section class="secao" id="wkInicio" style="padding-top:56px" hidden>
+    <div class="wrap"><div id="wkCats"></div><p class="wk-nada" id="wkNada">Nenhum guia com essa palavra ainda. Peça o guia no fórum do Discord.</p></div>
+  </section>
+  <section class="secao" id="wkPagina" style="padding-top:48px">
     <div class="wrap wk-grade">
       <nav class="wk-nav" id="wkNav" aria-label="Guias da wiki"><button class="wk-nav-btn" type="button" id="wkNavBtn" aria-expanded="false">Todos os guias <span aria-hidden="true">▾</span></button><div class="wk-nav-lista" id="wkNavLista"></div></nav>
       <article class="wk-art" id="wkArt"><p class="wk-carregando">Carregando guia…</p></article>
@@ -1056,13 +1092,36 @@ function criarWiki(){
   const ref = document.getElementById("viewForum") || document.getElementById("viewGuia") || document.querySelector("main:last-of-type");
   ref.after(v);
   v.querySelector("#wkNavBtn").addEventListener("click", e=>{ const n = document.getElementById("wkNav"); const a = n.classList.toggle("aberto"); e.currentTarget.setAttribute("aria-expanded", a); });
+  v.querySelector("#wkBusca").addEventListener("input", filtrarWiki);
+  v.querySelector("#wkBusca").addEventListener("keydown", e=>{ if(e.key === "Enter"){ const a = v.querySelector("#wkCats li:not([hidden]) a"); if(a) a.click(); } });
   v.addEventListener("click", e=>{ const b = e.target.closest("[data-copiar]"); if(!b) return; navigator.clipboard.writeText(b.dataset.copiar).then(()=>avisar("Comando copiado: " + b.dataset.copiar), ()=>{}); });
   return v;
 }
-let wikiAberto = "";
+let wikiAberto = null;
+const DESC_CAT = {comeco:"Do download ao primeiro dia no servidor.", servidor:"O que é exclusivo do Refúgio: regras, guildas, votos e mais.", mods:"Os mods mais importantes do ATM10, explicados do zero.", endgame:"Os metais raros e o caminho até a ATM Star."};
+function filtrarWiki(){
+  const q = norm(document.getElementById("wkBusca").value.trim()); let total = 0;
+  document.querySelectorAll("#wkCats .wk-cat").forEach(c=>{ let n = 0; c.querySelectorAll("li").forEach(li=>{ const ok = !q || norm(li.textContent).includes(q); li.hidden = !ok; if(ok) n++; }); c.hidden = !n; total += n; });
+  document.getElementById("wkNada").style.display = total ? "none" : "block";
+}
+function inicioWiki(){
+  const bq = document.getElementById("wkBusca"); if(bq.value){ bq.value = ""; }
+  document.getElementById("wkInicio").hidden = false; document.getElementById("wkPagina").hidden = true; document.getElementById("wkBuscaBox").hidden = false;
+  document.getElementById("wkTitulo").textContent = "Wiki do Refúgio";
+  document.getElementById("wkResumo").textContent = "Guias do servidor e dos mods do ATM10, do primeiro dia até a ATM Star.";
+  document.getElementById("wkCat").textContent = ""; document.querySelector(".wk-migalha").hidden = true;
+  document.title = "Wiki · O Refúgio";
+  carregarIndiceWiki().then(J=>{
+    const gs = (J.guias || []).filter(g=>!g.rascunho);
+    document.getElementById("wkCats").innerHTML = (J.categorias || []).map(c=>{ const lista = gs.filter(g=>g.categoria === c.id); const col = lista.length <= 2 || lista.length === 4 ? " wk-cards-2" : ""; return lista.length ? `<section class="wk-cat"><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || DESC_CAT[c.id] || "")}</p><ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul></section>` : ""; }).join("");
+    filtrarWiki();
+  }).catch(()=>{ document.getElementById("wkCats").innerHTML = "<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>"; });
+}
 function abrirArtigo(slug){
   slug = wikiSlug(slug);
   if(slug === wikiAberto) return; wikiAberto = slug;
+  if(!slug){ scrollTo({top:0, behavior:"instant"}); inicioWiki(); return; }
+  document.getElementById("wkInicio").hidden = true; document.getElementById("wkPagina").hidden = false; document.getElementById("wkBuscaBox").hidden = true; document.querySelector(".wk-migalha").hidden = false;
   const art = document.getElementById("wkArt"), toc = document.getElementById("wkToc");
   art.innerHTML = '<p class="wk-carregando">Carregando guia…</p>'; toc.innerHTML = "";
   scrollTo({top:0, behavior:"instant"});

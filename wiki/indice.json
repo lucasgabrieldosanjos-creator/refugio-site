@@ -1,22 +1,163 @@
 {
   "categorias": [
-    {"id": "comeco", "nome": "Começando"},
-    {"id": "servidor", "nome": "Do servidor"},
-    {"id": "mods", "nome": "Mods do ATM10"},
-    {"id": "endgame", "nome": "Endgame"}
+    {
+      "id": "comeco",
+      "nome": "Começando",
+      "descricao": "Do download ao primeiro dia: como entrar, as regras e os votos."
+    },
+    {
+      "id": "servidor",
+      "nome": "Do servidor",
+      "descricao": "O que é exclusivo do Refúgio: guildas, VIPs e rankings."
+    },
+    {
+      "id": "mods",
+      "nome": "Mods do ATM10"
+    },
+    {
+      "id": "endgame",
+      "nome": "Endgame"
+    }
   ],
   "guias": [
-    {"slug": "como-entrar", "titulo": "Como entrar no servidor", "resumo": "Instalar o ATM10 e conectar pelo SKLauncher ou CurseForge", "categoria": "comeco", "cor": "#F2B01E", "url": "#jogar"},
-    {"slug": "primeiros-passos", "titulo": "Primeiros passos no Refúgio", "resumo": "O que fazer na primeira hora de jogo", "categoria": "comeco", "cor": "#F2B01E", "rascunho": true},
-    {"slug": "regras", "titulo": "Regras do servidor", "resumo": "O que pode e o que dá ban", "categoria": "servidor", "cor": "#4F4870", "url": "#regras"},
-    {"slug": "guia-guildas", "titulo": "Guia das guildas", "resumo": "Fundação, cidade, evolução e Colossos", "categoria": "servidor", "cor": "#7B52E6", "url": "#guia-guildas"},
-    {"slug": "proteger-base", "titulo": "Proteger sua base", "resumo": "Claims de chunk, aliados e chunk loaders", "categoria": "servidor", "cor": "#18B5AF", "rascunho": true},
-    {"slug": "comandos", "titulo": "Comandos do servidor", "resumo": "Home, warp, tpa, guilda e mais", "categoria": "servidor", "cor": "#4F4870", "rascunho": true},
-    {"slug": "economia", "titulo": "Economia: Coins, Dracmas e Cash", "resumo": "Como ganhar, gastar e negociar", "categoria": "servidor", "cor": "#F2B01E", "rascunho": true},
-    {"slug": "mekanism", "titulo": "Mekanism do zero", "resumo": "Energia, aço e processamento de minério de 2x a 5x", "categoria": "mods", "cor": "#F2B01E", "atualizado": "2026-11-07"},
-    {"slug": "ae2", "titulo": "Sistema ME sem dor de cabeça", "resumo": "Canais, armazenamento e autocrafting no AE2", "categoria": "mods", "cor": "#18B5AF", "atualizado": "2026-11-07"},
-    {"slug": "ars-nouveau", "titulo": "Começando no Ars Nouveau", "resumo": "Source, primeiros glifos e como montar um feitiço", "categoria": "mods", "cor": "#7B52E6", "atualizado": "2026-11-07"},
-    {"slug": "allthemodium", "titulo": "Achando Allthemodium", "resumo": "Allthemodium, Vibranium e Unobtainium: onde e como", "categoria": "endgame", "cor": "#7B52E6", "atualizado": "2026-11-07"},
-    {"slug": "atm-star", "titulo": "Caminho até a ATM Star", "resumo": "Os componentes do item final do ATM10", "categoria": "endgame", "cor": "#7B52E6", "atualizado": "2026-11-07"}
+    {
+      "slug": "como-entrar",
+      "titulo": "Como entrar no servidor",
+      "resumo": "Instalar o ATM10 e conectar pelo SKLauncher ou CurseForge",
+      "categoria": "comeco",
+      "cor": "#F2B01E",
+      "url": "#jogar",
+      "icone": "itens/bussola.png",
+      "destaque": true
+    },
+    {
+      "slug": "regras",
+      "titulo": "Regras do servidor",
+      "resumo": "O que pode e o que dá ban",
+      "categoria": "comeco",
+      "cor": "#4F4870",
+      "url": "#regras",
+      "icone": "itens/pergaminho.png"
+    },
+    {
+      "slug": "votacao",
+      "titulo": "Votação e recompensas",
+      "resumo": "Onde votar, o bônus diário de Cash e o /vote",
+      "categoria": "comeco",
+      "cor": "#F2B01E",
+      "icone": "itens/ticket.png",
+      "atualizado": "2026-11-07"
+    },
+    {
+      "slug": "primeiros-passos",
+      "titulo": "Primeiros passos no Refúgio",
+      "resumo": "O que fazer na primeira hora de jogo",
+      "categoria": "comeco",
+      "cor": "#F2B01E",
+      "rascunho": true,
+      "icone": "itens/livro_quests.png"
+    },
+    {
+      "slug": "guia-guildas",
+      "titulo": "Guia das guildas",
+      "resumo": "Fundação, cidade, evolução e Colossos",
+      "categoria": "servidor",
+      "cor": "#7B52E6",
+      "url": "#guia-guildas",
+      "icone": "itens/escudo.png",
+      "destaque": true
+    },
+    {
+      "slug": "vips",
+      "titulo": "VIPs e benefícios",
+      "resumo": "Trilhas Tech e Magic, kits e comparação",
+      "categoria": "servidor",
+      "cor": "#7B52E6",
+      "icone": "itens/coroa.png",
+      "url": "#vips"
+    },
+    {
+      "slug": "rankings",
+      "titulo": "Rankings",
+      "resumo": "Tempo jogado, rank-up, PvP, mobs e guildas",
+      "categoria": "servidor",
+      "cor": "#18B5AF",
+      "icone": "itens/tempo.png",
+      "url": "#rankings"
+    },
+    {
+      "slug": "proteger-base",
+      "titulo": "Proteger sua base",
+      "resumo": "Claims de chunk, aliados e chunk loaders",
+      "categoria": "servidor",
+      "cor": "#18B5AF",
+      "rascunho": true,
+      "icone": "itens/x_chunks.png"
+    },
+    {
+      "slug": "comandos",
+      "titulo": "Comandos do servidor",
+      "resumo": "Home, warp, tpa, guilda e mais",
+      "categoria": "servidor",
+      "cor": "#4F4870",
+      "rascunho": true,
+      "icone": "itens/cartao.png"
+    },
+    {
+      "slug": "economia",
+      "titulo": "Economia: Coins, Dracmas e Cash",
+      "resumo": "Como ganhar, gastar e negociar",
+      "categoria": "servidor",
+      "cor": "#F2B01E",
+      "rascunho": true,
+      "icone": "itens/moeda.png"
+    },
+    {
+      "slug": "mekanism",
+      "titulo": "Mekanism do zero",
+      "resumo": "Energia, aço e processamento de minério de 2x a 5x",
+      "categoria": "mods",
+      "cor": "#F2B01E",
+      "atualizado": "2026-11-07",
+      "icone": "itens/mekanism.png",
+      "destaque": true
+    },
+    {
+      "slug": "ae2",
+      "titulo": "Sistema ME sem dor de cabeça",
+      "resumo": "Canais, armazenamento e autocrafting no AE2",
+      "categoria": "mods",
+      "cor": "#18B5AF",
+      "atualizado": "2026-11-07",
+      "icone": "itens/ae2.png"
+    },
+    {
+      "slug": "ars-nouveau",
+      "titulo": "Começando no Ars Nouveau",
+      "resumo": "Source, primeiros glifos e como montar um feitiço",
+      "categoria": "mods",
+      "cor": "#7B52E6",
+      "atualizado": "2026-11-07",
+      "icone": "itens/ars.png"
+    },
+    {
+      "slug": "allthemodium",
+      "titulo": "Achando Allthemodium",
+      "resumo": "Allthemodium, Vibranium e Unobtainium: onde e como",
+      "categoria": "endgame",
+      "cor": "#7B52E6",
+      "atualizado": "2026-11-07",
+      "icone": "itens/atm_lingote.png"
+    },
+    {
+      "slug": "atm-star",
+      "titulo": "Caminho até a ATM Star",
+      "resumo": "Os componentes do item final do ATM10",
+      "categoria": "endgame",
+      "cor": "#7B52E6",
+      "atualizado": "2026-11-07",
+      "icone": "itens/atm_star.png",
+      "destaque": true
+    }
   ]
 }
