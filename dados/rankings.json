@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-07T20:43:30-03:00",
+  "atualizado": "2026-11-07T20:53:30-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": null,
-      "valor": 1938
+      "valor": 1939
     },
     {
       "nome": "Evandrort",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1019
+      "valor": 1020
     },
     {
       "nome": "lucasmarcelo65",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 593
+      "valor": 594
     },
     {
       "nome": "Guaresi",
@@ -113,7 +113,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 1909
+      "valor": 1911
     },
     {
       "nome": "marcoss4",
@@ -128,7 +128,7 @@
     {
       "nome": "HaruFenix",
       "guilda": null,
-      "valor": 1087
+      "valor": 1088
     },
     {
       "nome": "Rimuru_Tempest06",
@@ -141,14 +141,14 @@
       "valor": 839
     },
     {
+      "nome": "EzoReijy",
+      "guilda": null,
+      "valor": 823
+    },
+    {
       "nome": "MineLuckys",
       "guilda": null,
       "valor": 797
-    },
-    {
-      "nome": "RenanJogos007",
-      "guilda": null,
-      "valor": 785
     }
   ],
   "guildas": [
