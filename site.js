@@ -311,20 +311,20 @@ const MC = {"0":"#000000","1":"#0000AA","2":"#00AA00","3":"#00AAAA","4":"#AA0000
 function mcTag(partes){ return `<span class="mctag"><span style="color:${MC[7]}">[</span>${partes.map(([c,t])=>`<span style="color:${MC[c]}">${t}</span>`).join("&nbsp;")}<span style="color:${MC[7]}">]</span></span>`; }
 const SEMANAIS = n => Array.from({length:n},(_,i)=>"semanal"+(i+1));
 const DIARIOS = n => ["diario_forjador","diario_arquiteto","diario_cientista","diario_arconte","diario_major"].slice(0,n);
-const MAJOR = {id:"major", nome:"ATM Major", tag:[["6","ATM"],["e","MAJOR"]], cor:"#FFAA00", img:"major", preco:"R$ 600,00", dias:80, topo:true};
+const MAJOR = {id:"major", nome:"ATM Major", tag:[["6","ATM"],["e","MAJOR"]], cor:"#FFAA00", img:"major-v2", preco:"R$ 600,00", dias:80, topo:true};
 const TRILHAS = {
   tech:{nome:"Tech", ranks:[
-    {id:"forjador", nome:"Forjador", tag:[["3","FORJADOR"]], cor:"#00AAAA", img:"forjador", preco:"R$ 30,00", dias:30, url:"vip-tecnico", kits:["tech2",...DIARIOS(1),...SEMANAIS(1)]},
-    {id:"arquiteto", nome:"Arquiteto", tag:[["9","ARQUITETO"]], cor:"#5555FF", img:"arquiteto", preco:"R$ 55,00", dias:31, url:"vip-arquiteto-(31d)", kits:["tech3",...DIARIOS(2),...SEMANAIS(2)]},
-    {id:"cientista", nome:"Cientista", tag:[["d","CIENTISTA"]], cor:"#FF55FF", img:"cientista", preco:"R$ 89,00", dias:32, url:"vip-cientista(32d)", kits:["tech4",...DIARIOS(3),...SEMANAIS(3)]},
-    {id:"arconte", nome:"Arconte", tag:[["e","ARCONTE"]], cor:"#FFFF55", img:"arconte", preco:"R$ 200,00", dias:40, url:"vip-mestre(40d)", kits:["tech5",...DIARIOS(4),...SEMANAIS(4)]},
+    {id:"forjador", nome:"Forjador", tag:[["3","FORJADOR"]], cor:"#00AAAA", img:"forjador-v2", preco:"R$ 30,00", dias:30, url:"vip-tecnico", kits:["tech2",...DIARIOS(1),...SEMANAIS(1)]},
+    {id:"arquiteto", nome:"Arquiteto", tag:[["9","ARQUITETO"]], cor:"#5555FF", img:"arquiteto-v2", preco:"R$ 55,00", dias:31, url:"vip-arquiteto-(31d)", kits:["tech3",...DIARIOS(2),...SEMANAIS(2)]},
+    {id:"cientista", nome:"Cientista", tag:[["d","CIENTISTA"]], cor:"#FF55FF", img:"cientista-v2", preco:"R$ 89,00", dias:32, url:"vip-cientista(32d)", kits:["tech4",...DIARIOS(3),...SEMANAIS(3)]},
+    {id:"arconte", nome:"Arconte", tag:[["e","ARCONTE"]], cor:"#FFFF55", img:"arconte-v2", preco:"R$ 200,00", dias:40, url:"vip-mestre(40d)", kits:["tech5",...DIARIOS(4),...SEMANAIS(4)]},
     {...MAJOR, url:"atm-major-(80d)", kits:["tech6",...DIARIOS(5),...SEMANAIS(4)]}
   ]},
   magic:{nome:"Magic & Exploration", ranks:[
-    {id:"peregrino", nome:"Peregrino", tag:[["3","PEREGRINO"]], cor:"#00AAAA", img:"peregrino", preco:"R$ 30,00", dias:30, url:"vip-acolito-(30d)", kits:["magic1",...DIARIOS(1),...SEMANAIS(1)]},
-    {id:"runista", nome:"Runista", tag:[["9","RUNISTA"]], cor:"#5555FF", img:"runista", preco:"R$ 55,00", dias:31, url:"vip-runista-(31d)", kits:["magic2",...DIARIOS(2),...SEMANAIS(2)]},
-    {id:"arcanista", nome:"Arcanista", tag:[["d","ARCANISTA"]], cor:"#FF55FF", img:"arcanista", preco:"R$ 89,00", dias:32, url:"XXIW1In9NH", kits:["magic3",...DIARIOS(3),...SEMANAIS(3)]},
-    {id:"ascendente", nome:"Ascendente", tag:[["e","ASCENDENTE"]], cor:"#FFFF55", img:"ascendente", preco:"R$ 200,00", dias:40, url:"vip-ascendente(40d)", kits:["magic4",...DIARIOS(4),...SEMANAIS(4)]},
+    {id:"peregrino", nome:"Peregrino", tag:[["3","PEREGRINO"]], cor:"#00AAAA", img:"peregrino-v2", preco:"R$ 30,00", dias:30, url:"vip-acolito-(30d)", kits:["magic1",...DIARIOS(1),...SEMANAIS(1)]},
+    {id:"runista", nome:"Runista", tag:[["9","RUNISTA"]], cor:"#5555FF", img:"runista-v2", preco:"R$ 55,00", dias:31, url:"vip-runista-(31d)", kits:["magic2",...DIARIOS(2),...SEMANAIS(2)]},
+    {id:"arcanista", nome:"Arcanista", tag:[["d","ARCANISTA"]], cor:"#FF55FF", img:"arcanista-v2", preco:"R$ 89,00", dias:32, url:"XXIW1In9NH", kits:["magic3",...DIARIOS(3),...SEMANAIS(3)]},
+    {id:"ascendente", nome:"Ascendente", tag:[["e","ASCENDENTE"]], cor:"#FFFF55", img:"ascendente-v2", preco:"R$ 200,00", dias:40, url:"vip-ascendente(40d)", kits:["magic4",...DIARIOS(4),...SEMANAIS(4)]},
     {...MAJOR, url:"IVm8DiTlZe", kits:["tech6",...DIARIOS(5),...SEMANAIS(3)]}
   ]}
 };
@@ -401,7 +401,7 @@ const valorHTML = (v, r) => v === "tag" ? (r.tag ? mcTag(r.tag) : `<span class="
 const linkCompra = r => LOJA_URL + encodeURI(r.url);
 TRILHAS.tech.lead = TRILHAS.magic.lead = "Duas trilhas com os mesmos benefícios. O que muda é o kit de ativação: máquinas e tecnologia, ou magia e exploração.";
 TRILHAS.especiais = {nome:"Classes especiais", lead:"Classes com benefícios próprios, fora da escada de VIPs. O Construtor fica entre o Cientista e o Arconte.", ranks:[
-  {id:"construtor", nome:"Construtor", tag:[["6","CONSTRUTOR"]], cor:"#FFAA00", img:"construtor", preco:"R$ 150,00", dias:40, url:"vip-construtor(40d)", kits:["vipconstrutor",...DIARIOS(3),...SEMANAIS(3)]},
+  {id:"construtor", nome:"Construtor", tag:[["6","CONSTRUTOR"]], cor:"#FFAA00", img:"construtor-v2", preco:"R$ 150,00", dias:40, url:"vip-construtor(40d)", kits:["vipconstrutor",...DIARIOS(3),...SEMANAIS(3)]},
   {id:"comerciante", nome:"Comerciante", tag:null, tagTexto:"Badge de Comerciante", cor:"#C98E2E", img:"comerciante-v2", preco:"R$ 15,00", dias:30, url:"comerciante-(30d)", kits:[]}
 ]};
 let trilha = "tech";
