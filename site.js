@@ -540,12 +540,53 @@ const EQUIPE = {
     {nome:"Ajudantes", cor:"#55FFFF", texto:"Tiram dúvidas dos jogadores no jogo, no Discord e nos tickets.", membros:[{nick:"Evandrort", funcao:"Suporte aos jogadores"}]}
   ]
 };
-(function(){
+function criarEquipe(){
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-equipe-css">
+.rg-topo.eq-topo::before{background-image:url(https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/hero.webp);background-position:center 35%}
+.eq-lider{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;padding:34px 40px;border-radius:22px;background:radial-gradient(80% 140% at 0% 0%,rgba(242,176,30,.22),transparent 60%),var(--cosmos);color:#fff;box-shadow:0 0 0 2px #F2B01E,0 28px 60px -34px rgba(242,176,30,.6)}
+.eq-lider .eq-cab{width:132px;height:132px;image-rendering:pixelated;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+.eq-cargo{display:inline-block;padding:5px 10px;border-radius:6px;font:700 12px/1 var(--display);letter-spacing:.06em;color:#1b1535;background:var(--c)}
+.eq-lider h3{font:700 clamp(28px,3.4vw,40px)/1.05 var(--display);margin:12px 0 2px}
+.eq-lider .eq-real{color:rgba(255,255,255,.66);font-size:15px}
+.eq-lider p{margin:14px 0 0;max-width:62ch;color:rgba(255,255,255,.84);font-size:17px}
+.eq-grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.eq-time{display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--linha);border-top:4px solid var(--c)}
+.eq-time h3{font:700 20px/1.1 var(--display);margin:0}
+.eq-time>p{margin:0;font-size:14px;color:var(--tinta-2)}
+.eq-time ul{list-style:none;margin:auto 0 0;padding:0;display:grid;gap:10px}
+.eq-membro{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#F6F4FB}
+.eq-membro img{width:40px;height:40px;border-radius:6px;image-rendering:pixelated}
+.eq-membro b{display:block;font:700 16px/1.15 var(--display)}
+.eq-membro span{font-size:13px;color:var(--tinta-2)}
+.eq-vaga{padding:12px;border-radius:12px;border:1.5px dashed var(--linha);font-size:14px;color:var(--tinta-2);text-align:center}
+@media (max-width:900px){.eq-grade{grid-template-columns:1fr}}
+@media (max-width:600px){.eq-lider{grid-template-columns:1fr;padding:26px;gap:18px}.eq-lider .eq-cab{width:96px;height:96px}}
+.extra>img{display:block;width:calc(100% + 40px);max-width:none;margin:0 -20px 4px;aspect-ratio:16/9;object-fit:cover;background:#1a0f2b}
+.rede.embreve{cursor:default;opacity:.72}.rede.embreve:hover{transform:none;box-shadow:0 0 0 1px var(--linha)}
+.rede-breve{display:block;width:fit-content;margin-top:8px;padding:4px 9px;border-radius:999px;background:#EDEAF5;color:var(--tinta-2);font:600 12px/1 var(--corpo);font-style:normal}
+.rod-breve{opacity:.6}
+</style>`);
+  const velha = document.getElementById("equipe"); if(velha) velha.remove();
+  const v = document.createElement("main"); v.id = "viewEquipe"; v.hidden = true;
+  v.innerHTML = `
+  <section class="rg-topo eq-topo">
+    <div class="wrap"><h1>A equipe</h1><p>Quem mantém o Refúgio de pé, cuida do servidor e responde você.</p></div>
+    <div class="hero-borda" aria-hidden="true"></div>
+  </section>
+  <section class="secao" style="padding-top:64px">
+    <div class="wrap">
+      <div id="eqLider"></div>
+      <div class="eq-grade" id="eqGrade"></div>
+      <div class="ajuda" style="margin-top:28px"><span class="slot-mini">${ico("ticket")}</span><p><b>Precisa falar com a equipe?</b> Abra um ticket no Discord. Assim o seu caso fica registrado e chega a quem pode resolver. <a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener" style="margin-left:8px;padding:10px 16px">Abrir ticket</a></p></div>
+    </div>
+  </section>`;
+  const home = document.getElementById("viewHome"); home.parentNode.insertBefore(v, home.nextSibling);
   const cab = (n, t) => `https://mc-heads.net/${t}/${encodeURIComponent(n)}/${t === "head" ? 160 : 64}`;
   const L = EQUIPE.lider;
-  document.getElementById("eqLider").innerHTML = `<article class="eq-lider" style="--c:${L.cor}"><img class="eq-cab" src="${cab(L.nick,"head")}" alt="" loading="lazy"><div><span class="eq-cargo">${L.cargo}</span><h3>${L.nick}</h3><div class="eq-real">${L.nome}</div><p>${L.texto}</p></div></article>`;
-  document.getElementById("eqGrade").innerHTML = EQUIPE.times.map(t=>`<article class="eq-time" style="--c:${t.cor}"><h3>${t.nome}</h3><p>${t.texto}</p><ul>${t.membros.length ? t.membros.map(m=>`<li class="eq-membro"><img src="${cab(m.nick,"avatar")}" alt="" loading="lazy"><div><b>${m.nick}</b><span>${m.funcao}</span></div></li>`).join("") : `<li class="eq-vaga">Vagas em breve. Fique de olho no Discord.</li>`}</ul></article>`).join("");
-})();
+  v.querySelector("#eqLider").innerHTML = `<article class="eq-lider" style="--c:${L.cor}"><img class="eq-cab" src="${cab(L.nick,"head")}" alt="" loading="lazy"><div><span class="eq-cargo">${L.cargo}</span><h3>${L.nick}</h3><div class="eq-real">${L.nome}</div><p>${L.texto}</p></div></article>`;
+  v.querySelector("#eqGrade").innerHTML = EQUIPE.times.map(t=>`<article class="eq-time" style="--c:${t.cor}"><h3>${t.nome}</h3><p>${t.texto}</p><ul>${t.membros.length ? t.membros.map(m=>`<li class="eq-membro"><img src="${cab(m.nick,"avatar")}" alt="" loading="lazy"><div><b>${m.nick}</b><span>${m.funcao}</span></div></li>`).join("") : `<li class="eq-vaga">Vagas em breve. Fique de olho no Discord.</li>`}</ul></article>`).join("");
+  return v;
+}
 
 /* Extras */
 const EXTRAS = [
@@ -1452,7 +1493,7 @@ function desenharForum(){
 }
 
 /* ================= Rotas: início e loja ================= */
-const viewRankup = criarRankup(), viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia"), viewEquipe = document.getElementById("viewEquipe");
+const viewRankup = criarRankup(), viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia"), viewEquipe = criarEquipe();
 let visaoAtual = null;
 function rota(){
   const v = visaoDe(location.hash), mudou = v !== visaoAtual;
