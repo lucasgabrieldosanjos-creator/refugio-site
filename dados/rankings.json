@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-08T12:04:53-03:00",
+  "atualizado": "2026-11-08T12:14:55-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -146,14 +146,14 @@
       "valor": 925
     },
     {
+      "nome": "Predela",
+      "guilda": null,
+      "valor": 850
+    },
+    {
       "nome": "DARKhammer96",
       "guilda": null,
       "valor": 839
-    },
-    {
-      "nome": "EzoReijy",
-      "guilda": null,
-      "valor": 823
     }
   ],
   "guildas": [
