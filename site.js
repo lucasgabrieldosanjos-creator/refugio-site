@@ -1312,10 +1312,10 @@ function filtrarWiki(){
   document.querySelectorAll("#wkCats .wk-cat").forEach(c=>{ let n = 0; c.querySelectorAll("li").forEach(li=>{ const ok = !q || norm(li.textContent).includes(q); li.hidden = !ok; if(ok) n++; }); c.hidden = !n && (!!q || !c.hasAttribute("data-fixa")); total += n; });
   document.getElementById("wkNada").style.display = total ? "none" : "block";
 }
-const CONTRIBUIR = `<div class="wk-contrib"><div><h3>Escreva para a wiki</h3><p>Conhece bem um mod, uma farm ou um sistema do servidor? Escreva um guia e ele fica aqui, com o seu nome no topo.</p></div><ol><li>Abra um ticket na modalidade <b>Suporte</b> no Discord.</li><li>Combine o tema do guia com o ADM.</li><li>Escreva o guia e envie pelo ticket.</li><li>Depois da revisão, ele é publicado aqui com o seu nick e a data.</li></ol><a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abrir ticket de suporte</a></div>`;
-function autorWiki(g){
+const CONTRIBUIR = `<div class="wk-contrib"><div><h3>Escreva para a wiki</h3><p>Conhece bem um mod, uma farm ou um sistema do servidor? Escreva um guia e ele fica aqui, com o seu nome no topo.</p></div><ol><li>Abra um ticket na modalidade <b>Suporte</b> no Discord.</li><li>Combine o tema do guia com o ADM.</li><li>Escreva o guia e envie pelo ticket.</li><li>Depois da revisão, ele é publicado aqui com o seu nick e a data, e você ganha +1 no badge <b>[Wiki]</b> de Contribuidor da Wiki, que aparece no chat do jogo.</li></ol><a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abrir ticket de suporte</a></div>`;
+function autorWiki(g, n){
   const dt = /^\d{4}-\d{2}-\d{2}$/.test(g.data || "") ? new Date(g.data + "T12:00:00").toLocaleDateString("pt-BR") : "";
-  return `<div class="wk-autor"><img src="https://mc-heads.net/head/${encodeURIComponent(g.autor)}/96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo">Contribuição da comunidade</span></div>`;
+  return `<div class="wk-autor"><img src="https://mc-heads.net/head/${encodeURIComponent(g.autor)}/96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo" title="Badge [Wiki] no jogo">Contribuidor da Wiki · ${n} ${n === 1 ? "página" : "páginas"}</span></div>`;
 }
 function inicioWiki(){
   document.getElementById("wkQuests").hidden = true;
@@ -1355,7 +1355,7 @@ function abrirArtigo(slug){
     return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
       if(wikiAberto !== slug) return;
       const R = md(txt);
-      art.innerHTML = (g.autor ? autorWiki(g) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
+      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
       toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
     });
   }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });
