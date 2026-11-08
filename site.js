@@ -1,6 +1,49 @@
 (() => {
 /* o Fórum agora tem página própria */
 document.querySelectorAll("a[data-embreve]").forEach(a=>{ if(a.textContent.trim() === "Fórum"){ a.href = "#forum"; a.removeAttribute("data-embreve"); } });
+
+/* Votar: reorganiza a seção (arte ao lado do título; sites e bônus lado a lado) */
+(function arrumarVotar(){
+  const sec = document.getElementById("votar"); if(!sec || sec.querySelector(".vt2-topo")) return;
+  const q = c => sec.querySelector(c);
+  const wrap = q(".wrap"), mold = q(".moldura"), bonus = q(".vt-bonus"), tit = q(".titulo"), lead = q(".lead"), sites = document.getElementById("sitesVoto"), como = q(".vt-como");
+  if(!wrap || !mold || !bonus || !tit || !sites) return;
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-votar2-css">
+.votar .wrap.vt2{display:block}
+.vt2-topo{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;margin-bottom:56px}
+.vt2-topo .lead{margin-bottom:24px}
+.vt2-passos{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:vt}
+.vt2-passos li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center;font-size:15px;color:var(--tinta-2);counter-increment:vt}
+.vt2-passos li::before{content:counter(vt);width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#F2B01E;color:#2A1A00;font:700 14px/1 var(--display)}
+.vt2-grade{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.vt2-col{display:flex;flex-direction:column;gap:14px}
+.vt2-col>h3{font:700 22px/1.15 var(--display);margin:0}
+.vt2-col>p{margin:-8px 0 0;font-size:15px;color:var(--tinta-2)}
+.vt2-col .sites{margin:0}
+.vt2-col .sites li{padding:10px 12px 10px 14px}
+.vt2-lado{gap:18px}
+.vt2-lado .vt-bonus{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:26px 28px}
+.vt2-lado .vt-bonus h3{font-size:21px}
+.vt2-lado .vt-escada{margin:10px 0 18px}
+@media (max-width:980px){.vt2-topo,.vt2-grade{grid-template-columns:1fr;gap:28px}.vt2-topo .moldura{order:2}}
+</style>`);
+  const passos = como ? [...como.querySelectorAll("li")].map(li=>li.innerHTML) : [];
+  const total = document.getElementById("vtTotal");
+  wrap.classList.add("vt2"); wrap.textContent = "";
+  const topo = document.createElement("div"); topo.className = "vt2-topo";
+  const txt = document.createElement("div"); txt.append(tit, lead);
+  if(passos.length){ const ol = document.createElement("ol"); ol.className = "vt2-passos"; ol.innerHTML = passos.map(p=>`<li><span>${p.replace("Vote nos sites acima", "Vote nos sites abaixo")}</span></li>`).join(""); txt.append(ol); }
+  topo.append(mold, txt);
+  const grade = document.createElement("div"); grade.className = "vt2-grade";
+  const colSites = document.createElement("div"); colSites.className = "vt2-col";
+  colSites.innerHTML = `<h3>Onde votar</h3><p>Um voto por dia em cada site. O botão abre a página de votação.</p>`; colSites.append(sites);
+  const colBonus = document.createElement("div"); colBonus.className = "vt2-col vt2-lado vt-esq";
+  colBonus.innerHTML = `<h3>O que você ganha</h3><p>Quanto mais sites você vota no dia, mais você ganha.</p>`;
+  colBonus.append(bonus);
+  grade.append(colSites, colBonus);
+  wrap.append(topo, grade);
+  q(".vt-esq:not(.vt2-lado)")?.remove();
+})();
 /* ============================================================
    CONFIGURAÇÃO DO SITE
    Edite o arquivo config.json (ao lado do index.html) e o site
