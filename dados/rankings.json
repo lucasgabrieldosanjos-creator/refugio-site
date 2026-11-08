@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-07T21:33:39-03:00",
+  "atualizado": "2026-11-07T21:43:43-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 1893
+      "valor": 1894
     },
     {
       "nome": "TkkFPS",
@@ -59,6 +59,11 @@
       "valor": 2
     },
     {
+      "nome": "scp1471_0",
+      "guilda": null,
+      "valor": 2
+    },
+    {
       "nome": "TkkFPS",
       "guilda": "IMPERIUM",
       "valor": 1
@@ -85,11 +90,6 @@
     },
     {
       "nome": "ZecaPagodinBr",
-      "guilda": null,
-      "valor": 1
-    },
-    {
-      "nome": "scp1471_0",
       "guilda": null,
       "valor": 1
     },
