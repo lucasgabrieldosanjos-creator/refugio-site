@@ -57,7 +57,7 @@ const REDES = {
 document.querySelectorAll("[data-svg]").forEach(el=>{ el.outerHTML = REDES[el.dataset.svg]; });
 
 /* ---------- Navegação ---------- */
-function visaoDe(h){ return (h === "#wiki" || h.startsWith("#wiki/")) ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
+function visaoDe(h){ return h === "#rankup" ? "rankup" : (h === "#wiki" || h.startsWith("#wiki/")) ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
 const nav = document.getElementById("nav"), hero = document.getElementById("inicio"), heroImg = document.getElementById("heroImg");
 const secoes = ["inicio","guildas","rankings","votar","wiki","loja"].map(id=>document.getElementById(id));
 const linksNav = [...document.querySelectorAll("#links a")];
@@ -73,6 +73,7 @@ function aoRolar(){
   if(vh === "guia") atualSec = "guildas";
   if(vh === "forum") atualSec = "forum";
   if(vh === "wiki") atualSec = "wiki";
+  if(vh === "rankup") atualSec = "sobre";
   linksNav.forEach(a=>a.classList.toggle("ativo", a.getAttribute("href") === "#"+atualSec));
 }
 addEventListener("scroll", aoRolar, {passive:true}); aoRolar();
@@ -929,6 +930,105 @@ addEventListener("scroll", indiceGuia, {passive:true});
 
 
 
+
+/* ================= Rank-up (página de apresentação, sem revelar requisitos) ================= */
+/* Quantos degraus aparecem abertos; o resto fica escondido ("descubra no jogo"). */
+const RU_ABERTOS = 4;
+const RU_ESCADA = [
+  ["Stone","minecraft:stone"], ["Copper","minecraft:copper_ingot"], ["Iron","minecraft:iron_ingot"], ["Redstone","minecraft:redstone"],
+  ["Gold","minecraft:gold_ingot"], ["Diamond","minecraft:diamond"], ["Netherite","minecraft:netherite_ingot"], ["Steam","modern_industrialization:bronze_boiler"],
+  ["Osmium","mekanism:ingot_osmium"], ["Uraninite","powah:uraninite"], ["Tungsten","modern_industrialization:tungsten_ingot"], ["Allthemodium","allthemodium:allthemodium_ingot"],
+  ["Vibranium","allthemodium:vibranium_ingot"], ["Unobtainium","allthemodium:unobtainium_ingot"], ["Star","allthetweaks:atm_star"]
+];
+function criarRankup(){
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-rankup-css">
+.ru-topo{background:radial-gradient(70% 120% at 80% 0%,rgba(242,176,30,.28),transparent 60%),linear-gradient(135deg,#1d1438 0%,#2a1b5c 55%,#3a2380 100%);padding:140px 0 84px}
+.ru-topo::before{background:none}
+.ru-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:34px;max-width:860px}
+.ru-nums div{padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.ru-nums b{display:block;font:700 clamp(26px,3vw,34px)/1 var(--display);color:#FFD36B}
+.ru-nums span{display:block;margin-top:6px;font-size:14px;color:rgba(255,255,255,.75)}
+.ru-escada{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;counter-reset:ru}
+.ru-deg{position:relative;counter-increment:ru;padding:20px 14px 18px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--linha);text-align:center}
+.ru-deg::before{content:counter(ru);position:absolute;top:10px;left:12px;font:700 12px/1 var(--display);color:var(--tinta-2)}
+.ru-deg img{width:56px;height:56px;image-rendering:pixelated;object-fit:contain;display:block;margin:2px auto 10px}
+.ru-deg b{display:block;font:700 17px/1.2 var(--display)}
+.ru-deg small{display:block;margin-top:4px;font:600 12px/1 var(--pixel);color:var(--tinta-2);letter-spacing:.06em}
+.ru-deg.fechado{background:var(--cosmos);box-shadow:0 0 0 1px rgba(255,255,255,.06)}
+.ru-deg.fechado::before{color:rgba(255,255,255,.45)}
+.ru-deg.fechado img{filter:brightness(0) invert(.18) drop-shadow(0 0 1px rgba(255,255,255,.35))}
+.ru-deg.fechado b{color:rgba(255,255,255,.55);letter-spacing:.2em}
+.ru-deg.fechado small{color:rgba(255,255,255,.4)}
+.ru-deg.topo{background:radial-gradient(90% 90% at 50% 30%,rgba(242,176,30,.35),transparent 70%),var(--cosmos)}
+.ru-deg.topo img{filter:brightness(0) invert(.85) sepia(1) saturate(4) hue-rotate(5deg) drop-shadow(0 0 10px rgba(255,201,58,.8))}
+.ru-deg.topo b{color:#FFD36B;letter-spacing:0}
+.ru-passos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:rp}
+.ru-passos li{counter-increment:rp;padding:22px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--linha)}
+.ru-passos li::before{content:counter(rp);display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--cosmos);color:#FFD36B;font:700 16px/1 var(--display);margin-bottom:12px}
+.ru-passos h3{font:700 18px/1.25 var(--display);margin:0 0 6px}
+.ru-passos p{margin:0;color:var(--tinta-2);font-size:15px;line-height:1.55}
+.ru-ganhos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ru-ganhos li{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--linha);font-size:15px}
+.ru-ganhos img{width:36px;height:36px;image-rendering:pixelated;object-fit:contain;flex:none}
+.ru-ganhos b{display:block;font:700 16px/1.25 var(--display)}
+.ru-ganhos span{color:var(--tinta-2);font-size:14px}
+.ru-fim{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:30px 32px;border-radius:20px;background:var(--cosmos);color:#fff}
+.ru-fim h3{font:700 clamp(22px,2.4vw,28px)/1.2 var(--display);margin:0 0 6px}
+.ru-fim p{margin:0;color:rgba(255,255,255,.75)}
+.ru-fim .acoes{display:flex;gap:12px;flex-wrap:wrap}
+.ru-sec{margin:0 0 64px}
+.ru-sec>h2{font:700 clamp(24px,2.8vw,34px)/1.15 var(--display);margin:0 0 8px}
+.ru-sec>p{margin:0 0 24px;color:var(--tinta-2);max-width:62ch}
+@media (max-width:980px){.ru-escada{grid-template-columns:repeat(3,minmax(0,1fr))}.ru-passos,.ru-ganhos{grid-template-columns:1fr}.ru-nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.ru-escada{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>`);
+  const ic = id=>`<img src="${ICONES + id.replace(":", "__")}.png" alt="" loading="lazy">`;
+  const total = RU_ESCADA.length;
+  const v = document.createElement("main"); v.id = "viewRankup"; v.hidden = true;
+  v.innerHTML = `
+  <section class="rg-topo ru-topo">
+    <div class="wrap">
+      <span class="selo" style="background:rgba(242,176,30,.15);color:#FFD36B;box-shadow:inset 0 0 0 1px rgba(242,176,30,.4)">Só no Refúgio</span>
+      <h1>Rank-up</h1>
+      <p>Da pedra à Estrela. Cada degrau pede progresso de verdade no ATM10 e devolve recompensas que aceleram o próximo.</p>
+      <div class="ru-nums"><div><b>${total}</b><span>ranks</span></div><div><b>${total * 3}</b><span>níveis para subir</span></div><div><b>+1.000</b><span>entregas no caminho</span></div><div><b>Todos</b><span>os níveis dão prêmios</span></div></div>
+    </div>
+    <div class="hero-borda" aria-hidden="true"></div>
+  </section>
+  <section class="secao" style="padding-top:64px">
+    <div class="wrap">
+      <div class="ru-sec"><h2>A escada</h2><p>Cada rank tem três níveis (I, II e III). Os primeiros você conhece aqui. O resto só se revela para quem chega lá.</p>
+        <ol class="ru-escada">${RU_ESCADA.map(([n, id], i)=>{
+          if(i < RU_ABERTOS) return `<li class="ru-deg">${ic(id)}<b>${n}</b><small>I · II · III</small></li>`;
+          if(i === total - 1) return `<li class="ru-deg fechado topo">${ic(id)}<b>O topo</b><small>só para os melhores</small></li>`;
+          return `<li class="ru-deg fechado">${ic(id)}<b>???</b><small>descubra no jogo</small></li>`;
+        }).join("")}</ol></div>
+      <div class="ru-sec"><h2>Como funciona</h2><p>Sem atalho e sem compra: o rank-up mede o quanto você avançou no modpack.</p>
+        <ol class="ru-passos">
+          <li><h3>Junte as entregas</h3><p>Cada nível pede um conjunto de itens do ATM10. Começa no básico e vai até os materiais mais raros do modpack.</p></li>
+          <li><h3>Pague a taxa</h3><p>Além dos itens, cada nível cobra um valor em dinheiro do jogo, que cresce conforme você sobe.</p></li>
+          <li><h3>Suba e receba</h3><p>Use <button type="button" class="gcmd" data-copiar="/rankup">/rankup</button> e leve as recompensas na hora. Todo o servidor fica sabendo.</p></li>
+        </ol></div>
+      <div class="ru-sec"><h2>O que você ganha</h2><p>Os prêmios mudam a cada nível e acompanham a fase do jogo em que você está.</p>
+        <ul class="ru-ganhos">
+          <li>${ic("minecraft:gold_ingot")}<div><b>Dinheiro do jogo</b><span>Para investir na base e na economia</span></div></li>
+          <li>${ic("minecraft:map")}<div><b>Mais terreno protegido</b><span>Claims permanentes a mais conforme sobe</span></div></li>
+          <li>${ic("mekanism:digital_miner")}<div><b>Chunk loaders</b><span>Nos ranks avançados, sua base trabalha sozinha</span></div></li>
+          <li>${ic("minecraft:chest")}<div><b>Itens de cada fase</b><span>Equipamentos e máquinas do momento em que você está</span></div></li>
+          <li>${ic("minecraft:name_tag")}<div><b>Tag no chat</b><span>O símbolo do seu rank ao lado do nome</span></div></li>
+          <li>${ic("minecraft:firework_rocket")}<div><b>Anúncio para todos</b><span>Cada subida aparece no chat do servidor</span></div></li>
+        </ul></div>
+      <div class="ru-fim"><div><h3>Os requisitos só aparecem dentro do jogo</h3><p>Entre no servidor e digite <button type="button" class="gcmd" data-copiar="/rankup info">/rankup info</button> para ver o seu próximo nível.</p></div><div class="acoes"><a class="btn btn-ouro" href="#jogar" data-jogar>Jogar agora</a><a class="btn btn-claro" href="#rankings">Ver quem está no topo</a></div></div>
+    </div>
+  </section>`;
+  const ref = document.getElementById("viewForum") || document.getElementById("viewGuia") || document.querySelector("main:last-of-type");
+  ref.after(v);
+  v.addEventListener("click", e=>{ const b = e.target.closest("[data-copiar]"); if(!b) return; navigator.clipboard.writeText(b.dataset.copiar).then(()=>avisar("Comando copiado: " + b.dataset.copiar), ()=>{}); });
+  return v;
+}
+/* cartão "Rank-up exclusivo" da página inicial leva para a página */
+(function(){ const li = [...document.querySelectorAll(".dif-grade li")].find(x=>/Rank-up/.test(x.textContent)); if(li && !li.querySelector(".ru-link")) li.insertAdjacentHTML("beforeend", '<a class="ru-link" href="#rankup" style="display:inline-block;margin-top:10px;font-weight:600;color:var(--violeta-texto)">Conhecer o rank-up</a>'); })();
+
 /* ================= Wiki (guias em Markdown no GitHub) ================= */
 let WIKI_IDX = null, wikiPromessa = null;
 function carregarIndiceWiki(){
@@ -1313,12 +1413,12 @@ function desenharForum(){
 }
 
 /* ================= Rotas: início e loja ================= */
-const viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
+const viewRankup = criarRankup(), viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
 let visaoAtual = null;
 function rota(){
   const v = visaoDe(location.hash), mudou = v !== visaoAtual;
   visaoAtual = v;
-  viewHome.hidden = v !== "home"; viewWiki.hidden = v !== "wiki"; if(v === "wiki") abrirArtigo(location.hash.slice(6)); viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
+  viewHome.hidden = v !== "home"; viewRankup.hidden = v !== "rankup"; if(v === "rankup" && mudou) scrollTo({top:0, behavior:"instant"}); viewWiki.hidden = v !== "wiki"; if(v === "wiki") abrirArtigo(location.hash.slice(6)); viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
   if(v === "loja"){ if(mudou) scrollTo(0,0); }
   else if(v === "regras"){
     const alvo = location.hash.startsWith("#regra-") ? document.getElementById(location.hash.slice(1)) : null;
@@ -1330,7 +1430,7 @@ function rota(){
     if(alvo) requestAnimationFrame(()=>alvo.scrollIntoView({block:"start", behavior: mudou ? "instant" : (reduz ? "auto" : "smooth")})); else if(mudou) scrollTo({top:0, behavior:"instant"});
     indiceGuia();
   }
-  else if(v === "wiki" || v === "forum"){ /* cada página cuida da própria rolagem */ }
+  else if(v === "wiki" || v === "forum" || v === "rankup"){ /* cada página cuida da própria rolagem */ }
   else if(mudou && location.hash){ const alvo = document.querySelector(location.hash); if(alvo) alvo.scrollIntoView(); }
   aoRolar();
 }

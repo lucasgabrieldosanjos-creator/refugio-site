@@ -86,6 +86,15 @@
       "url": "#rankings"
     },
     {
+      "slug": "rankup",
+      "titulo": "Rank-up",
+      "resumo": "Da pedra à Estrela: o sistema de ranks exclusivo",
+      "categoria": "servidor",
+      "cor": "#F2B01E",
+      "icone": "itens/rankup.png",
+      "url": "#rankup"
+    },
+    {
       "slug": "proteger-base",
       "titulo": "Proteger sua base",
       "resumo": "Claims de chunk, aliados e chunk loaders",
