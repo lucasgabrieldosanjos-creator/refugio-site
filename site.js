@@ -417,8 +417,8 @@ const BENEFICIOS = [
     ["Schematicannon e Time Wand", [F,F,F,F,T]]
   ]},
   {g:"Conforto", linhas:[
-    ["Prioridade para entrar com o servidor cheio", [T,T,T,T,T]],
-    ["Sem kick por AFK", [T,T,T,T,T]],
+    ["Entrar com o servidor cheio", [T,T,T,T,T]],
+    ["Kick por ficar AFK", ["Depois de 1 hora","Nunca","Nunca","Nunca","Nunca"]],
     ["Posição de destaque na lista de jogadores (TAB)", [T,T,T,T,T]]
   ]}
 ];
@@ -432,7 +432,7 @@ const ESP = {
   "Teleporte instantâneo, sem cooldown, e /back":[T,F], "/hat, /compass, /depth, /luz e /phantom":[T,F], "/disposal (lixeira)":[T,T],
   "/enderchest, /near e /workbench":[T,F], "/anvil, /itemname, /repair e /feed":[F,F], "/fly":[T,F], "/repair da armadura inteira":[F,F],
   "/loom, /stonecutter, /grindstone e /smithingtable":[F,F], "Building Gadgets":[T,F], "Schematicannon e Time Wand":[T,F],
-  "Prioridade para entrar com o servidor cheio":[T,F], "Sem kick por AFK":[T,T], "Posição de destaque na lista de jogadores (TAB)":[T,T]
+  "Entrar com o servidor cheio":[T,T], "Kick por ficar AFK":["Nunca","Nunca"], "Posição de destaque na lista de jogadores (TAB)":[T,T]
 };
 const valorDe = (vals, i, nome) => vals === "tag" ? "tag" : trilha === "especiais" ? (ESP[nome] || [F,F])[i] : Array.isArray(vals) ? vals[i] : vals[trilha][i];
 const SIM = '<svg class="ck" viewBox="0 0 24 24" aria-label="Sim"><circle cx="12" cy="12" r="11" fill="#2FA84F"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
