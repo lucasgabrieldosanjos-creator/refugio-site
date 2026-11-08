@@ -387,7 +387,7 @@ const BENEFICIOS = [
     ["Bônus na venda de fluidos", ["Nível 2","Nível 3","Nível 3","Nível 4","Nível 6"], "fluidos"],
     ["Venda de fluidos em massa", [T,T,T,T,T]],
     ["Desconto para criar guilda", [F,F,"25%","50%","Grátis (100%)"]],
-    ["Salário VIP", [T,T,T,T,T]],
+    ["Salário a cada 30 min (sem VIP: 500)", ["20 mil","30 mil","40 mil","50 mil","60 mil"]],
     ["Lojas próprias: criar, anunciar e definir o spawn", [T,T,T,T,T]],
     ["Placas de compra, venda e troca", [T,T,T,T,T]]
   ]},
@@ -425,7 +425,7 @@ const BENEFICIOS = [
 const ESP = {
   "Tag VIP e chat do servidor no Discord":[T,"Cargo de Comerciante"], "Mensagens com cor, formatação e links":[T,F], "/cor e /definir (cor do nick e do chat)":[T,T], "/cor2 com cores novas e exclusivas":[T,F],
   "Chat em RGB e texto mágico":[F,F], "Sala escritório no Discord":[F,F], "Moedas ao ativar":["50 mil","5 mil"], "Cash ao ativar":[F,F],
-  "Bônus na venda de fluidos":["Nível 5","Nível 1"], "Venda de fluidos em massa":[T,T], "Desconto para criar guilda":[F,F], "Salário VIP":[T,F],
+  "Bônus na venda de fluidos":["Nível 5","Nível 1"], "Venda de fluidos em massa":[T,T], "Desconto para criar guilda":[F,F], "Salário a cada 30 min (sem VIP: 500)":["30 mil","2 mil"],
   "Lojas próprias: criar, anunciar e definir o spawn":[T,T], "Placas de compra, venda e troca":[T,T],
   "Kit de ativação":["Kit do Construtor",F], "Kits diários":["3",F], "Kits semanais":["VIP1 a 3",F],
   "Homes":["15",F], "Quarrys na dimensão Mining":["3",F], "Claim-chunks":["60 permanentes","5 temporárias"], "Chunk loaders":["1 temporário",F],
