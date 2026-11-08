@@ -13,7 +13,7 @@ let CONFIG = {
   wiki:{base:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/wiki/", editar:"https://github.com/lucasgabrieldosanjos-creator/refugio-site/edit/main/wiki/"},
   forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.5", minecraft:"1.21.1", loader:"NeoForge"},
-  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
+  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", ticket:"https://discord.gg/cM8F5sTetW", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
 let IP = CONFIG.servidor.ip;
@@ -378,6 +378,7 @@ const BENEFICIOS = [
     ["Mensagens com cor, formatação e links", [T,T,T,T,T]],
     ["/cor e /definir (cor do nick e do chat)", [T,T,T,T,T]],
     ["/cor2 com cores novas e exclusivas", [F,F,T,T,T]],
+    ["/nick: trocar o nick e a cor do nick", [F,F,F,T,T]],
     ["Chat em RGB e texto mágico", [F,F,F,T,T]],
     ["Sala escritório no Discord", [F,F,F,F,T]]
   ]},
@@ -423,7 +424,7 @@ const BENEFICIOS = [
   ]}
 ];
 const ESP = {
-  "Tag VIP e chat do servidor no Discord":[T,"Cargo de Comerciante"], "Mensagens com cor, formatação e links":[T,F], "/cor e /definir (cor do nick e do chat)":[T,T], "/cor2 com cores novas e exclusivas":[T,F],
+  "Tag VIP e chat do servidor no Discord":[T,"Cargo de Comerciante"], "Mensagens com cor, formatação e links":[T,F], "/cor e /definir (cor do nick e do chat)":[T,T], "/cor2 com cores novas e exclusivas":[T,F], "/nick: trocar o nick e a cor do nick":[T,F],
   "Chat em RGB e texto mágico":[F,F], "Sala escritório no Discord":[F,F], "Moedas ao ativar":["50 mil","5 mil"], "Cash ao ativar":[F,F],
   "Bônus na venda de fluidos":["Nível 5","Nível 1"], "Venda de fluidos em massa":[T,T], "Desconto para criar guilda":[F,F], "Salário a cada 30 min (sem VIP: 500)":["40 mil","2 mil"],
   "Lojas próprias: criar, anunciar e definir o spawn":[T,T], "Placas de compra, venda e troca":[T,T],
@@ -530,18 +531,34 @@ tgl.addEventListener("click",()=>{
   if(abre){ renderLivre(); setTimeout(()=>corpoLivre.scrollIntoView({behavior: reduz ? "auto" : "smooth", block:"nearest"}), 350); }
 });
 
+/* Equipe: edite aqui */
+const EQUIPE = {
+  lider: {nick:"AdvancedGames", nome:"Fono Lucas", cargo:"CORE LEADER", cor:"#F2B01E", texto:"Fundador e dono do Refúgio. Desenvolve os mods e sistemas exclusivos do servidor e responde por tudo que faz o Refúgio funcionar, desde o primeiro dia."},
+  times: [
+    {nome:"Administradores", cor:"#FF5555", texto:"Cuidam do servidor fora do jogo. Ligam, reiniciam e desligam o servidor quando é preciso e coordenam a recuperação quando algo dá errado.", membros:[{nick:"Hypnoseey", funcao:"Recuperação e servidor"}]},
+    {nome:"Moderadores", cor:"#55FF55", texto:"Mantêm a ordem no jogo e no Discord, aplicam as regras e acompanham denúncias.", membros:[]},
+    {nome:"Ajudantes", cor:"#55FFFF", texto:"Tiram dúvidas dos jogadores no jogo, no Discord e nos tickets.", membros:[{nick:"Evandrort", funcao:"Suporte aos jogadores"}]}
+  ]
+};
+(function(){
+  const cab = (n, t) => `https://mc-heads.net/${t}/${encodeURIComponent(n)}/${t === "head" ? 160 : 64}`;
+  const L = EQUIPE.lider;
+  document.getElementById("eqLider").innerHTML = `<article class="eq-lider" style="--c:${L.cor}"><img class="eq-cab" src="${cab(L.nick,"head")}" alt="" loading="lazy"><div><span class="eq-cargo">${L.cargo}</span><h3>${L.nick}</h3><div class="eq-real">${L.nome}</div><p>${L.texto}</p></div></article>`;
+  document.getElementById("eqGrade").innerHTML = EQUIPE.times.map(t=>`<article class="eq-time" style="--c:${t.cor}"><h3>${t.nome}</h3><p>${t.texto}</p><ul>${t.membros.length ? t.membros.map(m=>`<li class="eq-membro"><img src="${cab(m.nick,"avatar")}" alt="" loading="lazy"><div><b>${m.nick}</b><span>${m.funcao}</span></div></li>`).join("") : `<li class="eq-vaga">Vagas em breve. Fique de olho no Discord.</li>`}</ul></article>`).join("");
+})();
+
 /* Extras */
 const EXTRAS = [
   {nome:"Chunks permanentes", ico:"x_chunks", arte:"x-chunks", url:"chunks-permanentes", desc:"Proteção de terreno que não expira.", vars:[["5 chunks","R$ 20,00"],["10 chunks","R$ 37,50"],["15 chunks","R$ 50,00"]]},
   {nome:"Chunk loader", ico:"x_loader", arte:"x-loader", url:"chunk-loader", desc:"Mantém suas chunks carregadas enquanto você está online.", vars:[["1 temporário (30 dias)","R$ 35,00"],["4 temporários (40 dias)","R$ 85,00"],["12 permanentes","R$ 224,90"]]},
   {nome:"Cash", ico:"x_cash", arte:"x-cash", url:"pacote-cash", desc:"Creditado direto na sua conta após a compra.", vars:[["50 cash","R$ 17,00"],["150 cash","R$ 37,00"],["300 cash","R$ 50,00"]]},
-  {nome:"Desbanimento", ico:"x_unban", arte:"x-unban", url:"desbanimento", desc:"Só vale após aprovação por ticket no Discord. Abra o ticket antes de comprar.", vars:[["Desbanimento","R$ 35,00"]]}
+  {nome:"Desbanimento", ico:"x_unban", arte:"x-unban", url:"desbanimento", desc:"Só vale após aprovação por ticket no Discord. Abra o ticket antes de comprar.", ticket:true, vars:[["Desbanimento","R$ 35,00"]]}
 ];
 document.getElementById("extras").innerHTML = EXTRAS.map(x=>`<article class="extra">
   <img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/${x.arte}.webp" alt="Emblema ${x.nome}" loading="lazy"><h3>${x.nome}</h3>
   <p>${x.desc}</p>
   <ul>${x.vars.map(([n,p])=>`<li><span>${n}</span><b>${p}</b></li>`).join("")}</ul>
-  <a class="btn btn-ouro" href="${LOJA_URL+x.url}" target="_blank" rel="noopener">Comprar</a></article>`).join("");
+  ${x.ticket?`<a class="btn btn-linha" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">1. Abrir ticket</a>`:""}<a class="btn btn-ouro"${x.ticket?' style="margin-top:0"':""} href="${LOJA_URL+x.url}" target="_blank" rel="noopener">${x.ticket?"2. Comprar":"Comprar"}</a></article>`).join("");
 
 /* Kits individuais */
 function slotItem([arq,nome,q,enc,cor,mod,extra,sub], si){
@@ -728,7 +745,7 @@ function htmlRegras(){
     <h2><span class="rg-num">!</span>Punições e recursos <em class="rg-prop">Proposta</em></h2>
     <p class="rg-intro">Cada regra tem um selo de gravidade. A punição parte desse nível e pode subir com reincidência, intenção ou impacto no servidor.</p>
     <div class="rg-tab">${PUNICOES.map(([g,p,ex])=>`<div class="rg-linha" style="--g:${GRAV[g].cor}"><span class="rg-grav">${GRAV[g].nome}</span><b>${p}</b><span>${ex}</span></div>`).join("")}</div>
-    <article class="rg" id="regra-recurso"><header><span class="rg-id">R</span><h3>Revisão de punição e desbanimento</h3></header><p>Para pedir revisão, abra um ticket no Discord explicando o caso. O desbanimento só pode ser comprado na loja depois que o ticket for aprovado pela staff. Não compre sem abrir o ticket antes.</p></article>
+    <article class="rg" id="regra-recurso"><header><span class="rg-id">R</span><h3>Revisão de punição e desbanimento</h3></header><p>Para pedir revisão, <a data-link="ticket" href="https://discord.gg/cM8F5sTetW">abra um ticket no Discord</a> explicando o caso. O desbanimento só pode ser comprado na loja depois que o ticket for aprovado pela staff. Não compre sem abrir o ticket antes.</p></article>
   </section>`;
 }
 htmlRegras();
@@ -897,7 +914,7 @@ const GSEC = [
     <div class="gd-vitoria"><div><h4>Evento mensal entre as Guildas</h4><p>Previsto para começar entre meados e o fim de novembro. A Guilda campeã terá suas cores na decoração do spawn principal do Refúgio, em um dos lugares mais vistos do servidor.</p><p class="gd-mini">Regras e critérios serão anunciados no Discord.</p></div></div>`},
   {id:"comandos", t:"Comandos do dia a dia", html:`
     <div class="gd-rapidos">${[["/guilda ajuda","Ajuda geral"],["/guilda info","Informações da sua Guilda"],["/guilda membros","Integrantes e cargos"],["/guilda ir","Voltar à cidade"],["/guilda painel","Planejamento e gestão"],["/guilda setor info","Área em que você está"],["/guilda cofre status","Requisitos do próximo nível"],["/guilda banco","Tesouro de Dracmas"],["/guilda manutencao","Reserva semanal de Coins"],["/guilda recompensas","Entregas pendentes"],["/guilda salario","Salários, quando habilitados"],["/guilda direitos","Seus direitos de fundação"]].map(([c,d])=>`<div>${C(c)}<span>${d}</span></div>`).join("")}</div>
-    <p class="gd-nota">Precisa de ajuda? Abra um ticket no Discord com seu nick, a TAG, o comando usado e o aviso recebido, com print se possível.</p>`}
+    <p class="gd-nota">Precisa de ajuda? <a data-link="ticket" href="https://discord.gg/cM8F5sTetW" target="_blank" rel="noopener">Abra um ticket no Discord</a> com seu nick, a TAG, o comando usado e o aviso recebido, com print se possível.</p>`}
 ];
 const COLECOES = {
   A:{nivel:"Exigida desde o nível 2", t:[["Escama Ancestral da Naga","Naga"],["Insígnia do Minoshroom","Minoshroom"],["Selo do Slider","Slider"],["Relíquia do Guardião Esquecido","Guardião Esquecido"],["Pele Ancestral do Yeti","Alpha Yeti"],["Brasão dos Cavaleiros Fantasmas","Cavaleiros Fantasmas"],["Runa do Arquievocador","Archevoker"],["Runa do Necromante","Necromante"],["Carapaça Imperial de Ametista","Caranguejo de Ametista"],["Brasa do Revenant","Ignited Revenant"]]},
