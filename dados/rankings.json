@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-07T23:44:12-03:00",
+  "atualizado": "2026-11-07T23:54:15-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": null,
-      "valor": 1941
+      "valor": 1942
     },
     {
       "nome": "Evandrort",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1022
+      "valor": 1023
     },
     {
       "nome": "lucasmarcelo65",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 596
+      "valor": 597
     },
     {
       "nome": "Guaresi",
@@ -66,6 +66,11 @@
     {
       "nome": "TkkFPS",
       "guilda": "IMPERIUM",
+      "valor": 1
+    },
+    {
+      "nome": "Saitinnn",
+      "guilda": null,
       "valor": 1
     },
     {
@@ -133,7 +138,7 @@
     {
       "nome": "Rimuru_Tempest06",
       "guilda": null,
-      "valor": 869
+      "valor": 884
     },
     {
       "nome": "DARKhammer96",
