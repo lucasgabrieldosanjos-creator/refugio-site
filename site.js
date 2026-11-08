@@ -1245,6 +1245,7 @@ function criarWiki(){
 .wk-tabela{overflow:auto;margin:0 0 20px;border-radius:12px;box-shadow:0 0 0 1px var(--linha);background:#fff}
 .wk-tabela table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.45}
 .wk-tabela th,.wk-tabela td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
+.wk-tabela td:first-child .gcmd{white-space:nowrap}
 .wk-tabela th{font:700 14px var(--display);background:#F6F4FB}
 .wk-tabela tr:last-child td{border-bottom:0}
 .wk-toc{position:sticky;top:96px;font-size:14px}
