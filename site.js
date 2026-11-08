@@ -57,7 +57,7 @@ const REDES = {
 document.querySelectorAll("[data-svg]").forEach(el=>{ el.outerHTML = REDES[el.dataset.svg]; });
 
 /* ---------- Navegação ---------- */
-function visaoDe(h){ return h === "#rankup" ? "rankup" : (h === "#wiki" || h.startsWith("#wiki/")) ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
+function visaoDe(h){ return h === "#equipe" ? "equipe" : h === "#rankup" ? "rankup" : (h === "#wiki" || h.startsWith("#wiki/")) ? "wiki" : h === "#forum" ? "forum" : h === "#vips" ? "loja" : (h === "#regras" || h.startsWith("#regra-")) ? "regras" : (h === "#guia-guildas" || h.startsWith("#gd-")) ? "guia" : "home"; }
 const nav = document.getElementById("nav"), hero = document.getElementById("inicio"), heroImg = document.getElementById("heroImg");
 const secoes = ["inicio","guildas","rankings","votar","wiki","loja"].map(id=>document.getElementById(id));
 const linksNav = [...document.querySelectorAll("#links a")];
@@ -535,7 +535,7 @@ tgl.addEventListener("click",()=>{
 const EQUIPE = {
   lider: {nick:"AdvancedGames", nome:"Fono Lucas", cargo:"CORE LEADER", cor:"#F2B01E", texto:"Fundador e dono do Refúgio. Desenvolve os mods e sistemas exclusivos do servidor e responde por tudo que faz o Refúgio funcionar, desde o primeiro dia."},
   times: [
-    {nome:"Administradores", cor:"#FF5555", texto:"Cuidam do servidor fora do jogo. Ligam, reiniciam e desligam o servidor quando é preciso e coordenam a recuperação quando algo dá errado.", membros:[{nick:"Hypnoseey", funcao:"Recuperação e servidor"}]},
+    {nome:"Administradores", cor:"#FF5555", texto:"Cuidam do funcionamento do Refúgio junto com o Core Leader: acompanham a equipe, resolvem os casos mais graves e mantêm o servidor no ar.", membros:[{nick:"Hypnoseey", funcao:"Recuperação do servidor: liga, reinicia e desliga quando é preciso"}]},
     {nome:"Moderadores", cor:"#55FF55", texto:"Mantêm a ordem no jogo e no Discord, aplicam as regras e acompanham denúncias.", membros:[]},
     {nome:"Ajudantes", cor:"#55FFFF", texto:"Tiram dúvidas dos jogadores no jogo, no Discord e nos tickets.", membros:[{nick:"Evandrort", funcao:"Suporte aos jogadores"}]}
   ]
@@ -1452,12 +1452,12 @@ function desenharForum(){
 }
 
 /* ================= Rotas: início e loja ================= */
-const viewRankup = criarRankup(), viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia");
+const viewRankup = criarRankup(), viewWiki = criarWiki(), viewForum = criarForum(), viewHome = document.getElementById("viewHome"), viewLoja = document.getElementById("viewLoja"), viewRegras = document.getElementById("viewRegras"), viewGuia = document.getElementById("viewGuia"), viewEquipe = document.getElementById("viewEquipe");
 let visaoAtual = null;
 function rota(){
   const v = visaoDe(location.hash), mudou = v !== visaoAtual;
   visaoAtual = v;
-  viewHome.hidden = v !== "home"; viewRankup.hidden = v !== "rankup"; if(v === "rankup" && mudou) scrollTo({top:0, behavior:"instant"}); viewWiki.hidden = v !== "wiki"; if(v === "wiki") abrirArtigo(location.hash.slice(6)); viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
+  viewHome.hidden = v !== "home"; viewEquipe.hidden = v !== "equipe"; if(v === "equipe" && mudou) scrollTo({top:0, behavior:"instant"}); viewRankup.hidden = v !== "rankup"; if(v === "rankup" && mudou) scrollTo({top:0, behavior:"instant"}); viewWiki.hidden = v !== "wiki"; if(v === "wiki") abrirArtigo(location.hash.slice(6)); viewForum.hidden = v !== "forum"; if(v === "forum"){ carregarForum(); if(mudou) scrollTo({top:0, behavior:"instant"}); } viewLoja.hidden = v !== "loja"; viewRegras.hidden = v !== "regras"; viewGuia.hidden = v !== "guia";
   if(v === "loja"){ if(mudou) scrollTo(0,0); }
   else if(v === "regras"){
     const alvo = location.hash.startsWith("#regra-") ? document.getElementById(location.hash.slice(1)) : null;
@@ -1469,7 +1469,7 @@ function rota(){
     if(alvo) requestAnimationFrame(()=>alvo.scrollIntoView({block:"start", behavior: mudou ? "instant" : (reduz ? "auto" : "smooth")})); else if(mudou) scrollTo({top:0, behavior:"instant"});
     indiceGuia();
   }
-  else if(v === "wiki" || v === "forum" || v === "rankup"){ /* cada página cuida da própria rolagem */ }
+  else if(v === "wiki" || v === "forum" || v === "rankup" || v === "equipe"){ /* cada página cuida da própria rolagem */ }
   else if(mudou && location.hash){ const alvo = document.querySelector(location.hash); if(alvo) alvo.scrollIntoView(); }
   aoRolar();
 }
