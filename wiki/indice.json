@@ -16,6 +16,11 @@
    "descricao": "Todos os comandos do servidor, separados por assunto. Clique em um comando para copiar."
   },
   {
+   "id": "jogadores",
+   "nome": "Wiki dos jogadores",
+   "descricao": "Guias escritos pela comunidade do Refúgio. Cada página leva o nome de quem escreveu."
+  },
+  {
    "id": "mods",
    "nome": "Mods do ATM10"
   },
@@ -184,7 +189,7 @@
   {
    "slug": "cmd-utilidades",
    "titulo": "Utilidades e personalização",
-   "resumo": "Kits, blocos portáteis, phantoms e capas",
+   "resumo": "Kits, blocos portáteis, phantoms e skins",
    "categoria": "comandos",
    "cor": "#4F4870",
    "icone": "itens/picareta.png",
@@ -245,6 +250,18 @@
    "atualizado": "2026-11-07",
    "icone": "itens/atm_star.png",
    "destaque": true
+  },
+  {
+   "slug": "jogadores-primeiros-dias",
+   "titulo": "Primeiros dias no Refúgio: o que eu faria de novo",
+   "resumo": "Dicas de quem já passou pelo começo do ATM10",
+   "categoria": "jogadores",
+   "cor": "#18B5AF",
+   "icone": "itens/bussola.png",
+   "autor": "Steve",
+   "data": "2026-11-08",
+   "atualizado": "2026-11-08",
+   "rascunho": true
   }
  ]
 }

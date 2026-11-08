@@ -14,7 +14,13 @@ No site, o link **Sugerir correção no GitHub** no fim de cada guia abre essa m
    `{"slug": "nome-do-guia", "titulo": "Título", "resumo": "Uma frase", "categoria": "mods", "cor": "#F2B01E", "atualizado": "2026-11-07"}`
 3. Para deixar escondido enquanto escreve, acrescente `"rascunho": true`. O guia abre pelo link direto (`#wiki/nome-do-guia`), mas não aparece nas listas.
 
-Categorias: `comeco`, `servidor`, `mods`, `endgame`. Cores usadas: `#F2B01E` (dourado), `#18B5AF` (ciano), `#7B52E6` (roxo), `#4F4870` (cinza).
+Categorias: `comeco`, `servidor`, `comandos`, `jogadores`, `mods`, `endgame`. Cores usadas: `#F2B01E` (dourado), `#18B5AF` (ciano), `#7B52E6` (roxo), `#4F4870` (cinza).
+
+## Guia escrito por um jogador (Wiki dos jogadores)
+Use a categoria `jogadores` e acrescente o nick e a data de quem escreveu:
+`{"slug": "jogadores-nome-do-guia", "titulo": "Título", "resumo": "Uma frase", "categoria": "jogadores", "cor": "#18B5AF", "autor": "NickDoJogador", "data": "2026-11-08"}`
+
+No topo da página aparece "Wiki escrita por", com a cabeça do personagem, o nick e a data. No cartão da lista aparece "por NickDoJogador".
 
 ## O que dá para usar no texto
 - `## Título de seção` e `### Subtítulo` (as seções `##` viram o índice "Nesta página")

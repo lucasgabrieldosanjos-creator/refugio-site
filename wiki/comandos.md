@@ -12,7 +12,7 @@ Todos os comandos do Refúgio, separados por assunto. Clique em qualquer comando
 - [Amigos, correio e missões](#wiki/cmd-amigos-correio): amizades, presentes e recompensas
 - [Lojas, crates e votos](#wiki/cmd-lojas): lojas de jogadores, baús, fluidos e chaves
 - [Guildas](#wiki/cmd-guildas): fundação, território, banco, cofre e Colossos
-- [Utilidades e personalização](#wiki/cmd-utilidades): kits, blocos portáteis, phantoms e capas
+- [Utilidades e personalização](#wiki/cmd-utilidades): kits, blocos portáteis, phantoms e skins
 
 ## Consulta rápida
 

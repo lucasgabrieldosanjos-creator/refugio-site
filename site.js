@@ -1099,7 +1099,7 @@ function abrirQuests(cap){
 function cartaoWiki(g){
   const cor = /^#[0-9a-fA-F]{6}$/.test(g.cor || "") ? g.cor : "#7B52E6";
   const ic = g.icone && wikiImg(g.icone);
-  const tipo = g.url ? "Página do site" : "Guia";
+  const tipo = g.autor ? "por " + esc(g.autor) : g.url ? "Página do site" : "Guia";
   return `<li><a class="wk-card" href="${wikiLink(g)}" style="--c:${cor}"><span class="wk-ic">${ic ? `<img src="${ic}" alt="" loading="lazy">` : ""}</span><span class="wk-ct"><b>${esc(g.titulo)}</b><span>${esc(g.resumo || "")}</span></span><em>${tipo}</em></a></li>`;
 }
 /* vitrine da wiki na página inicial: poucos destaques e um convite para abrir a wiki */
@@ -1242,6 +1242,21 @@ function criarWiki(){
 .wk-caixa p{margin:0 0 6px;font-size:16px}
 .wk-dica{box-shadow:inset 4px 0 0 var(--ciano),0 0 0 1px var(--linha)}.wk-dica b{color:#0E7C78}
 .wk-aviso,.wk-importante{box-shadow:inset 4px 0 0 var(--ouro),0 0 0 1px var(--linha);background:#FFFBEF}.wk-aviso b,.wk-importante b{color:var(--ouro-texto)}
+.wk-contrib{display:grid;grid-template-columns:1fr 1.2fr auto;gap:28px;align-items:center;margin-top:18px;padding:26px 30px;border-radius:18px;background:radial-gradient(70% 140% at 0% 0%,rgba(24,181,175,.25),transparent 60%),var(--cosmos);color:rgba(255,255,255,.82)}
+.wk-contrib h3{font:700 22px/1.1 var(--display);color:#fff;margin:0 0 8px}
+.wk-contrib p{margin:0;font-size:15px}
+.wk-contrib ol{margin:0;padding-left:20px;font-size:14px;display:grid;gap:6px}
+.wk-contrib b{color:#FFD36B}
+@media (max-width:980px){.wk-contrib{grid-template-columns:1fr;gap:18px}}
+.wk-autor{display:flex;align-items:center;gap:16px;margin:0 0 30px;padding:16px 20px;border-radius:14px;background:linear-gradient(90deg,rgba(242,176,30,.14),rgba(242,176,30,.03));box-shadow:inset 0 0 0 1.5px rgba(242,176,30,.55)}
+.wk-autor img{width:56px;height:56px;image-rendering:pixelated;flex:none}
+.wk-autor div{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.wk-autor-rot{font-size:13px;color:var(--tinta-2)}
+.wk-autor b{font:700 20px/1.15 var(--display)}
+.wk-autor div span:last-child:not(.wk-autor-rot){font-size:13px;color:var(--tinta-2)}
+.wk-selo{flex:none;padding:6px 10px;border-radius:999px;background:#F2B01E;color:#1b1535;font:700 12px/1 var(--display)}
+.wk-contrib-mini{margin:28px 0 0;padding:14px 18px;border-radius:12px;background:#F6F4FB;font-size:14px}
+@media (max-width:560px){.wk-autor{flex-wrap:wrap}.wk-selo{order:3}}
 .wk-tabela{overflow:auto;margin:0 0 20px;border-radius:12px;box-shadow:0 0 0 1px var(--linha);background:#fff}
 .wk-tabela table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.45}
 .wk-tabela th,.wk-tabela td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
@@ -1294,8 +1309,13 @@ let wikiAberto = null;
 const DESC_CAT = {comeco:"Do download ao primeiro dia no servidor.", servidor:"O que é exclusivo do Refúgio: regras, guildas, votos e mais.", mods:"Os mods mais importantes do ATM10, explicados do zero.", endgame:"Os metais raros e o caminho até a ATM Star."};
 function filtrarWiki(){
   const q = norm(document.getElementById("wkBusca").value.trim()); let total = 0;
-  document.querySelectorAll("#wkCats .wk-cat").forEach(c=>{ let n = 0; c.querySelectorAll("li").forEach(li=>{ const ok = !q || norm(li.textContent).includes(q); li.hidden = !ok; if(ok) n++; }); c.hidden = !n; total += n; });
+  document.querySelectorAll("#wkCats .wk-cat").forEach(c=>{ let n = 0; c.querySelectorAll("li").forEach(li=>{ const ok = !q || norm(li.textContent).includes(q); li.hidden = !ok; if(ok) n++; }); c.hidden = !n && (!!q || !c.hasAttribute("data-fixa")); total += n; });
   document.getElementById("wkNada").style.display = total ? "none" : "block";
+}
+const CONTRIBUIR = `<div class="wk-contrib"><div><h3>Escreva para a wiki</h3><p>Conhece bem um mod, uma farm ou um sistema do servidor? Escreva um guia e ele fica aqui, com o seu nome no topo.</p></div><ol><li>Abra um ticket na modalidade <b>Suporte</b> no Discord.</li><li>Combine o tema do guia com o ADM.</li><li>Escreva o guia e envie pelo ticket.</li><li>Depois da revisão, ele é publicado aqui com o seu nick e a data.</li></ol><a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abrir ticket de suporte</a></div>`;
+function autorWiki(g){
+  const dt = /^\d{4}-\d{2}-\d{2}$/.test(g.data || "") ? new Date(g.data + "T12:00:00").toLocaleDateString("pt-BR") : "";
+  return `<div class="wk-autor"><img src="https://mc-heads.net/head/${encodeURIComponent(g.autor)}/96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo">Contribuição da comunidade</span></div>`;
 }
 function inicioWiki(){
   document.getElementById("wkQuests").hidden = true;
@@ -1308,7 +1328,7 @@ function inicioWiki(){
   carregarIndiceWiki().then(J=>{
     const gs = (J.guias || []).filter(g=>!g.rascunho);
     const livro = `<section class="wk-cat"><h2>Livro de quests</h2><p>Todas as quests do ATM10 em português, capítulo por capítulo, com tarefas e recompensas.</p><ul class="wk-cards wk-cards-2">${cartaoWiki({slug:"quests", titulo:"Livro de quests completo", resumo:"Os capítulos do livro de quests do modpack, da primeira quest até a criativa", cor:"#F2B01E", icone:"itens/livro_quests.png", url:""})}${cartaoWiki({slug:"quests/mainquestline-part-1", titulo:"Linha de missão principal", resumo:"O caminho principal do ATM10, do começo até a ATM Star", cor:"#7B52E6", icone:"itens/atm_star.png", url:""})}</ul></section>`;
-    document.getElementById("wkCats").innerHTML = livro + (J.categorias || []).map(c=>{ const lista = gs.filter(g=>g.categoria === c.id); const col = lista.length <= 2 || lista.length === 4 ? " wk-cards-2" : ""; return lista.length ? `<section class="wk-cat"><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || DESC_CAT[c.id] || "")}</p><ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul></section>` : ""; }).join("");
+    document.getElementById("wkCats").innerHTML = livro + (J.categorias || []).map(c=>{ const lista = gs.filter(g=>g.categoria === c.id); const col = lista.length <= 2 || lista.length === 4 ? " wk-cards-2" : ""; if(c.id === "jogadores") return `<section class="wk-cat" data-fixa><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || "")}</p>${lista.length ? `<ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul>` : ""}${CONTRIBUIR}</section>`; return lista.length ? `<section class="wk-cat"><h2>${esc(c.nome)}</h2><p>${esc(c.descricao || DESC_CAT[c.id] || "")}</p><ul class="wk-cards${col}">${lista.map(cartaoWiki).join("")}</ul></section>` : ""; }).join("");
     filtrarWiki();
   }).catch(()=>{ document.getElementById("wkCats").innerHTML = "<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>"; });
 }
@@ -1335,7 +1355,7 @@ function abrirArtigo(slug){
     return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
       if(wikiAberto !== slug) return;
       const R = md(txt);
-      art.innerHTML = R.html + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
+      art.innerHTML = (g.autor ? autorWiki(g) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
       toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
     });
   }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });

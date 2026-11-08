@@ -8,9 +8,9 @@ Bancada, bigorna, tear e os outros blocos portáteis funcionam como os blocos de
 
 `/phantom off` faz os phantoms pararem de aparecer para você (para os outros jogadores, nada muda). Use `/phantom status` para conferir.
 
-## Skins e capas
+## Skins
 
-`/capa listar` mostra o catálogo e `/capa usar <id>` aplica uma capa. Se der erro ao aplicar, [abra um ticket no Discord](https://discord.gg/cM8F5sTetW).
+`/skin` mostra o seu visual atual e `/skin reset` volta para o padrão.
 
 | Comando | Para que serve |
 |---|---|
@@ -42,10 +42,6 @@ Bancada, bigorna, tear e os outros blocos portáteis funcionam como os blocos de
 | `/phantom off` | Desabilitar sua preferência de phantoms. |
 | `/phantom toggle` | Alternar a preferência. |
 | `/phantom status` | Consultar sua preferência atual. |
-| `/capa` | Abrir a listagem de capas disponíveis. |
-| `/capa listar` | Listar o catálogo de capas. |
-| `/capa usar <id>` | Solicitar a aplicação de uma capa do catálogo. |
-| `/capa remover` | Solicitar remoção da capa aplicada. |
 | `/skin` | Consultar seu visual atual. |
 | `/skin list` | Consultar as skins cadastradas. |
 | `/skin reset` | Restaurar o visual conforme o provedor instalado. |
