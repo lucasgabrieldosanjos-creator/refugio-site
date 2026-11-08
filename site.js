@@ -532,13 +532,13 @@ tgl.addEventListener("click",()=>{
 
 /* Extras */
 const EXTRAS = [
-  {nome:"Chunks permanentes", ico:"x_chunks", url:"chunks-permanentes", desc:"Proteção de terreno que não expira.", vars:[["5 chunks","R$ 20,00"],["10 chunks","R$ 37,50"],["15 chunks","R$ 50,00"]]},
-  {nome:"Chunk loader", ico:"x_loader", url:"chunk-loader", desc:"Mantém suas chunks carregadas enquanto você está online.", vars:[["1 temporário (30 dias)","R$ 35,00"],["4 temporários (40 dias)","R$ 85,00"],["12 permanentes","R$ 224,90"]]},
-  {nome:"Cash", ico:"x_cash", url:"pacote-cash", desc:"Creditado direto na sua conta após a compra.", vars:[["50 cash","R$ 17,00"],["150 cash","R$ 37,00"],["300 cash","R$ 50,00"]]},
-  {nome:"Desbanimento", ico:"x_unban", url:"desbanimento", desc:"Só vale após aprovação por ticket no Discord. Abra o ticket antes de comprar.", vars:[["Desbanimento","R$ 35,00"]]}
+  {nome:"Chunks permanentes", ico:"x_chunks", arte:"x-chunks", url:"chunks-permanentes", desc:"Proteção de terreno que não expira.", vars:[["5 chunks","R$ 20,00"],["10 chunks","R$ 37,50"],["15 chunks","R$ 50,00"]]},
+  {nome:"Chunk loader", ico:"x_loader", arte:"x-loader", url:"chunk-loader", desc:"Mantém suas chunks carregadas enquanto você está online.", vars:[["1 temporário (30 dias)","R$ 35,00"],["4 temporários (40 dias)","R$ 85,00"],["12 permanentes","R$ 224,90"]]},
+  {nome:"Cash", ico:"x_cash", arte:"x-cash", url:"pacote-cash", desc:"Creditado direto na sua conta após a compra.", vars:[["50 cash","R$ 17,00"],["150 cash","R$ 37,00"],["300 cash","R$ 50,00"]]},
+  {nome:"Desbanimento", ico:"x_unban", arte:"x-unban", url:"desbanimento", desc:"Só vale após aprovação por ticket no Discord. Abra o ticket antes de comprar.", vars:[["Desbanimento","R$ 35,00"]]}
 ];
 document.getElementById("extras").innerHTML = EXTRAS.map(x=>`<article class="extra">
-  <div class="extra-cab"><span class="slot-mini"><img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/itens/${x.ico}.png" alt=""></span><h3>${x.nome}</h3></div>
+  <img src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/${x.arte}.webp" alt="Emblema ${x.nome}" loading="lazy"><h3>${x.nome}</h3>
   <p>${x.desc}</p>
   <ul>${x.vars.map(([n,p])=>`<li><span>${n}</span><b>${p}</b></li>`).join("")}</ul>
   <a class="btn btn-ouro" href="${LOJA_URL+x.url}" target="_blank" rel="noopener">Comprar</a></article>`).join("");
@@ -942,8 +942,9 @@ const RU_ESCADA = [
 ];
 function criarRankup(){
   document.head.insertAdjacentHTML("beforeend", `<style id="rf-rankup-css">
-.ru-topo{background:radial-gradient(70% 120% at 80% 0%,rgba(242,176,30,.28),transparent 60%),linear-gradient(135deg,#1d1438 0%,#2a1b5c 55%,#3a2380 100%);padding:140px 0 84px}
-.ru-topo::before{background:none}
+.ru-topo{padding:140px 0 84px}
+.ru-topo::before{background-image:url(https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/rankup.webp);background-position:62% 50%}
+.ru-topo::after{background:linear-gradient(90deg,rgba(14,10,34,.95) 0%,rgba(14,10,34,.78) 45%,rgba(14,10,34,.2) 100%)}
 .ru-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:34px;max-width:860px}
 .ru-nums div{padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .ru-nums b{display:block;font:700 clamp(26px,3vw,34px)/1 var(--display);color:#FFD36B}
@@ -1194,8 +1195,8 @@ function criarWiki(){
 @media (max-width:480px){.qc-lista{grid-template-columns:1fr}}
 @media (max-width:980px){.wk-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wk-vitrine{grid-template-columns:1fr;gap:32px}}
 @media (max-width:620px){.wk-cards,.wk-cards-2{grid-template-columns:1fr}}
-.wk-topo::before{background:none}
-.wk-topo::after{background:radial-gradient(60% 120% at 85% 20%,rgba(123,82,230,.45),transparent 60%)}
+.wk-topo::before{background-image:url(https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/wiki.webp);background-position:70% 45%}
+.wk-topo::after{background:linear-gradient(90deg,rgba(14,10,34,.95) 0%,rgba(14,10,34,.8) 45%,rgba(14,10,34,.25) 100%)}
 .wk-migalha{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px}
 .wk-migalha a{color:#FFD36B;text-decoration:none}
 .wk-grade{display:grid;grid-template-columns:240px minmax(0,1fr) 200px;gap:44px;align-items:start}
