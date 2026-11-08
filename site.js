@@ -358,7 +358,7 @@ const TRILHAS = {
     {id:"arquiteto", nome:"Arquiteto", tag:[["9","ARQUITETO"]], cor:"#5555FF", img:"arquiteto-v2", preco:"R$ 55,00", dias:31, url:"vip-arquiteto-(31d)", kits:["tech3",...DIARIOS(2),...SEMANAIS(2)]},
     {id:"cientista", nome:"Cientista", tag:[["d","CIENTISTA"]], cor:"#FF55FF", img:"cientista-v2", preco:"R$ 89,00", dias:32, url:"vip-cientista(32d)", kits:["tech4",...DIARIOS(3),...SEMANAIS(3)]},
     {id:"arconte", nome:"Arconte", tag:[["e","ARCONTE"]], cor:"#FFFF55", img:"arconte-v2", preco:"R$ 200,00", dias:40, url:"vip-mestre(40d)", kits:["tech5",...DIARIOS(4),...SEMANAIS(4)]},
-    {...MAJOR, url:"atm-major-(80d)", kits:["tech6",...DIARIOS(5),...SEMANAIS(4)]}
+    {...MAJOR, dias:100, url:"atm-major-(80d)", kits:["tech6",...DIARIOS(5),...SEMANAIS(4)]}
   ]},
   magic:{nome:"Magic & Exploration", ranks:[
     {id:"peregrino", nome:"Peregrino", tag:[["3","PEREGRINO"]], cor:"#00AAAA", img:"peregrino-v2", preco:"R$ 30,00", dias:30, url:"vip-acolito-(30d)", kits:["magic1",...DIARIOS(1),...SEMANAIS(1)]},
