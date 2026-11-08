@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-08T15:35:30-03:00",
+  "atualizado": "2026-11-08T16:05:35-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1038
+      "valor": 1039
     },
     {
       "nome": "lucasmarcelo65",
@@ -33,7 +33,7 @@
     },
     {
       "nome": "ZecaPagodinBr",
-      "guilda": null,
+      "guilda": "Formula Um Zum",
       "valor": 611
     },
     {
@@ -95,7 +95,7 @@
     },
     {
       "nome": "ZecaPagodinBr",
-      "guilda": null,
+      "guilda": "Formula Um Zum",
       "valor": 1
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "nome": "ZecaPagodinBr",
-      "guilda": null,
+      "guilda": "Formula Um Zum",
       "valor": 2040
     },
     {
@@ -169,6 +169,11 @@
     },
     {
       "nome": "CANECA .-.",
+      "membros": 1,
+      "nivel": 1
+    },
+    {
+      "nome": "Formula Um Zum",
       "membros": 1,
       "nivel": 1
     }
