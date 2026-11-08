@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-08T00:54:57-03:00",
+  "atualizado": "2026-11-08T01:04:57-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 597
+      "valor": 598
     },
     {
       "nome": "Guaresi",
@@ -118,7 +118,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": null,
-      "valor": 1950
+      "valor": 1952
     },
     {
       "nome": "marcoss4",
@@ -136,9 +136,14 @@
       "valor": 1194
     },
     {
+      "nome": "Saitinnn",
+      "guilda": null,
+      "valor": 1169
+    },
+    {
       "nome": "Rimuru_Tempest06",
       "guilda": null,
-      "valor": 884
+      "valor": 886
     },
     {
       "nome": "DARKhammer96",
@@ -149,11 +154,6 @@
       "nome": "EzoReijy",
       "guilda": null,
       "valor": 823
-    },
-    {
-      "nome": "Predela",
-      "guilda": null,
-      "valor": 804
     }
   ],
   "guildas": [
