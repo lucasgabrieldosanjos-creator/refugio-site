@@ -56,7 +56,7 @@ let CONFIG = {
   wiki:{base:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/wiki/", editar:"https://github.com/lucasgabrieldosanjos-creator/refugio-site/edit/main/wiki/"},
   forum:{url:"https://raw.githubusercontent.com/lucasgabrieldosanjos-creator/refugio-site/main/dados/forum.json"},
   modpack:{nome:"All the Mods 10", sigla:"ATM10", versao:"8.5", minecraft:"1.21.1", loader:"NeoForge"},
-  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", ticket:"https://discord.gg/cM8F5sTetW", instagram:"#", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
+  links:{forumDiscord:"", discord:"https://discord.gg/6SEqBJyVmr", ticket:"https://discord.gg/cM8F5sTetW", instagram:"https://www.instagram.com/rede_orefugio", tiktok:"#", youtube:"https://www.youtube.com/@CanalORefugio", loja:"#", sklauncher:"https://skmedix.pl/", curseforge:"https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"},
   votacao:[{"nome": "Minecraft-MP", "url": "https://minecraft-mp.com/server/352179/vote/"}, {"nome": "ModdedMinecraftServers", "url": "https://moddedminecraftservers.com/server/o-refugio-atm10.60860/"}, {"nome": "TopG", "url": "https://topg.org/pt/servidores-minecraft/server-678031"}, {"nome": "MinecraftServers.org", "url": "https://minecraftservers.org/vote/681646"}, {"nome": "Minecraft.Buzz", "url": "https://minecraft.buzz/vote/18231"}, {"nome": "Minecraft-ServerList.com", "url": "https://minecraft-serverlist.com/server/3869/vote"}, {"nome": "CurseForge Servers", "url": "https://www.curseforge.com/servers/minecraft/game/o-refugio-atm10/vote"}]
 };
 let IP = CONFIG.servidor.ip;
@@ -88,6 +88,22 @@ Promise.resolve({ok:false}).then(r=>r.ok?r.json():null).then(c=>{ if(c){ CONFIG 
 const reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- Ícones: texturas reais dos mods ---------- */
+/* Redes: liga o Instagram mesmo com o tema antigo importado */
+(function ligarRedes(){
+  const url = CONFIG.links.instagram; if(!url || url === "#") return;
+  document.querySelectorAll(".rede.embreve").forEach(div=>{
+    if(!/Instagram/.test(div.textContent)) return;
+    const a = document.createElement("a"); a.className = "rede"; a.href = url; a.target = "_blank"; a.rel = "noopener"; a.dataset.link = "instagram";
+    a.innerHTML = div.innerHTML; a.querySelector(".rede-breve")?.remove();
+    const sub = a.querySelector("div span"); if(sub) sub.textContent = "@rede_orefugio";
+    div.replaceWith(a);
+  });
+  document.querySelectorAll(".rod-breve").forEach(sp=>{
+    if(!/Instagram/.test(sp.textContent)) return;
+    const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Instagram"; sp.replaceWith(a);
+  });
+  document.querySelectorAll('a[data-link="instagram"]').forEach(a=>{ a.href = url; a.target = "_blank"; a.rel = "noopener"; });
+})();
 const ico = nome => `<img class="ico px" src="https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/itens/${nome}.png" alt="" aria-hidden="true">`;
 document.querySelectorAll("[data-ico]").forEach(el=>{ el.outerHTML = ico(el.dataset.ico); });
 
