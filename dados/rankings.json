@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-09T08:44:39-03:00",
+  "atualizado": "2026-11-09T08:54:39-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1049
+      "valor": 1050
     },
     {
       "nome": "lucasmarcelo65",
@@ -141,6 +141,11 @@
       "valor": 1204
     },
     {
+      "nome": "K4uazinn",
+      "guilda": null,
+      "valor": 976
+    },
+    {
       "nome": "Rimuru_Tempest06",
       "guilda": null,
       "valor": 956
@@ -149,11 +154,6 @@
       "nome": "Predela",
       "guilda": null,
       "valor": 915
-    },
-    {
-      "nome": "K4uazinn",
-      "guilda": null,
-      "valor": 909
     }
   ],
   "guildas": [
