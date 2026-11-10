@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-10T20:25:09-03:00",
+  "atualizado": "2026-11-10T20:35:13-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 625
+      "valor": 626
     },
     {
       "nome": "Guaresi",
@@ -118,17 +118,17 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 2054
+      "valor": 2061
+    },
+    {
+      "nome": "HaruFenix",
+      "guilda": null,
+      "valor": 1905
     },
     {
       "nome": "Saitinnn",
       "guilda": null,
       "valor": 1895
-    },
-    {
-      "nome": "HaruFenix",
-      "guilda": null,
-      "valor": 1871
     },
     {
       "nome": "marcoss4",
@@ -148,7 +148,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 978
+      "valor": 987
     },
     {
       "nome": "Rimuru_Tempest06",
