@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-10T19:35:05-03:00",
+  "atualizado": "2026-11-10T20:05:08-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -54,13 +54,13 @@
   ],
   "pvp": [
     {
-      "nome": "JustSkyline",
-      "guilda": "Braztugz",
-      "valor": 2
-    },
-    {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
+      "valor": 3
+    },
+    {
+      "nome": "JustSkyline",
+      "guilda": "Braztugz",
       "valor": 2
     },
     {
@@ -100,7 +100,7 @@
     },
     {
       "nome": "pasteldevento13",
-      "guilda": null,
+      "guilda": "Formula Um Zum",
       "valor": 1
     }
   ],
@@ -148,7 +148,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 960
+      "valor": 966
     },
     {
       "nome": "Rimuru_Tempest06",
@@ -168,12 +168,12 @@
       "nivel": 1
     },
     {
-      "nome": "CANECA .-.",
-      "membros": 1,
+      "nome": "Formula Um Zum",
+      "membros": 3,
       "nivel": 1
     },
     {
-      "nome": "Formula Um Zum",
+      "nome": "CANECA .-.",
       "membros": 1,
       "nivel": 1
     }
