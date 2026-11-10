@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-10T10:05:05-03:00",
+  "atualizado": "2026-11-10T10:15:06-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 1979
+      "valor": 1980
     },
     {
       "nome": "Evandrort",
@@ -131,14 +131,14 @@
       "valor": 1419
     },
     {
+      "nome": "HaruFenix",
+      "guilda": null,
+      "valor": 1239
+    },
+    {
       "nome": "Dagrao007",
       "guilda": "Braztugz",
       "valor": 1223
-    },
-    {
-      "nome": "HaruFenix",
-      "guilda": null,
-      "valor": 1213
     },
     {
       "nome": "K4uazinn",
