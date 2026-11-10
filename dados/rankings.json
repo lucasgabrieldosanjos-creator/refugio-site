@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-09T22:56:16-03:00",
+  "atualizado": "2026-11-09T23:16:18-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 1970
+      "valor": 1971
     },
     {
       "nome": "Evandrort",
@@ -14,12 +14,12 @@
     {
       "nome": "TkkFPS",
       "guilda": "IMPERIUM",
-      "valor": 1404
+      "valor": 1405
     },
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1063
+      "valor": 1064
     },
     {
       "nome": "lucasmarcelo65",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 622
+      "valor": 623
     },
     {
       "nome": "Guaresi",
@@ -151,9 +151,9 @@
       "valor": 958
     },
     {
-      "nome": "Predela",
+      "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 915
+      "valor": 946
     }
   ],
   "guildas": [
