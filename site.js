@@ -285,10 +285,27 @@ function avatar(r, g, noPodio){
   if(!RK.real) return cabeca(r[0]);
   const im = new Image(); im.alt = ""; im.loading = "lazy"; im.decoding = "async";
   im.className = noPodio ? "cab3d" : "cab";
-  im.src = noPodio ? "https://mc-heads.net/head/" + encodeURIComponent(r[0]) + "/128" : "https://mc-heads.net/avatar/" + encodeURIComponent(r[0]) + "/64";
-  im.onerror = () => im.replaceWith(cabeca(r[0]));
+  pedirCabeca(im, r[0], noPodio ? "3d" : "2d", noPodio ? 128 : 64);
   return im;
 }
+/* Cabeças de skin: tenta vários serviços (o mc-heads.net caiu em 10/11/2026); se nenhum responder, desenha uma cabeça */
+const CAB_VAZIO = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const CAB_PROMESSAS = new Map();
+function fontesCabeca(nick, tipo, tam){
+  const n = encodeURIComponent(nick);
+  return tipo === "3d"
+    ? [`https://minotar.net/cube/${n}/${tam}`, `https://visage.surgeplay.com/head/${tam}/${n}`, `https://mc-heads.net/head/${n}/${tam}`]
+    : [`https://minotar.net/helm/${n}/${tam}`, `https://visage.surgeplay.com/face/${tam}/${n}`, `https://mc-heads.net/avatar/${n}/${tam}`];
+}
+function testarImagem(u){ return new Promise(res=>{ const t = new Image(); const to = setTimeout(()=>{ t.onload = t.onerror = null; res(false); }, 4000); t.onload = ()=>{ clearTimeout(to); res(t.naturalWidth > 0); }; t.onerror = ()=>{ clearTimeout(to); res(false); }; t.src = u; }); }
+function pedirCabeca(img, nick, tipo, tam){
+  const k = tipo + "|" + nick + "|" + tam;
+  let p = CAB_PROMESSAS.get(k);
+  if(!p){ p = (async()=>{ for(const u of fontesCabeca(nick, tipo, tam)) if(await testarImagem(u)) return u; return null; })(); CAB_PROMESSAS.set(k, p); }
+  if(!img.getAttribute("src")) img.src = CAB_VAZIO;
+  p.then(u=>{ img.src = u || cabeca(nick).toDataURL(); });
+}
+function ligarCabecas(raiz){ raiz.querySelectorAll("img[data-cab]").forEach(im=>{ if(im.dataset.cabFeito) return; im.dataset.cabFeito = "1"; pedirCabeca(im, im.dataset.cab, im.dataset.cabTipo || "2d", +(im.dataset.cabTam || 64)); }); }
 const esc = t => String(t).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 function renderRk(tipo){
   const R = RK[tipo], d = R.dados;
@@ -640,10 +657,11 @@ function criarEquipe(){
     </div>
   </section>`;
   const home = document.getElementById("viewHome"); home.parentNode.insertBefore(v, home.nextSibling);
-  const cab = (n, t) => `https://mc-heads.net/${t}/${encodeURIComponent(n)}/${t === "head" ? 160 : 64}`;
+  const cab = (n, t) => `data-cab="${esc(n)}" data-cab-tipo="${t === "head" ? "3d" : "2d"}" data-cab-tam="${t === "head" ? 160 : 64}"`;
   const L = EQUIPE.lider;
-  v.querySelector("#eqLider").innerHTML = `<article class="eq-lider" style="--c:${L.cor}"><img class="eq-cab" src="${cab(L.nick,"head")}" alt="" loading="lazy"><div><span class="eq-cargo">${L.cargo}</span><h3>${L.nick}</h3><div class="eq-real">${L.nome}</div><p>${L.texto}</p></div></article>`;
-  v.querySelector("#eqGrade").innerHTML = EQUIPE.times.map(t=>`<article class="eq-time" style="--c:${t.cor}"><h3>${t.nome}</h3><p>${t.texto}</p><ul>${t.membros.length ? t.membros.map(m=>`<li class="eq-membro"><img src="${cab(m.nick,"avatar")}" alt="" loading="lazy"><div><b>${m.nick}</b><span>${m.funcao}</span></div></li>`).join("") : `<li class="eq-vaga">Vagas em breve. Fique de olho no Discord.</li>`}</ul></article>`).join("");
+  v.querySelector("#eqLider").innerHTML = `<article class="eq-lider" style="--c:${L.cor}"><img class="eq-cab" ${cab(L.nick,"head")} alt=""><div><span class="eq-cargo">${L.cargo}</span><h3>${L.nick}</h3><div class="eq-real">${L.nome}</div><p>${L.texto}</p></div></article>`;
+  v.querySelector("#eqGrade").innerHTML = EQUIPE.times.map(t=>`<article class="eq-time" style="--c:${t.cor}"><h3>${t.nome}</h3><p>${t.texto}</p><ul>${t.membros.length ? t.membros.map(m=>`<li class="eq-membro"><img ${cab(m.nick,"avatar")} alt=""><div><b>${m.nick}</b><span>${m.funcao}</span></div></li>`).join("") : `<li class="eq-vaga">Vagas em breve. Fique de olho no Discord.</li>`}</ul></article>`).join("");
+  ligarCabecas(v);
   return v;
 }
 
@@ -1415,7 +1433,7 @@ function filtrarWiki(){
 const CONTRIBUIR = `<div class="wk-contrib"><div><h3>Escreva para a wiki</h3><p>Conhece bem um mod, uma farm ou um sistema do servidor? Escreva um guia e ele fica aqui, com o seu nome no topo.</p></div><ol><li>Abra um ticket na modalidade <b>Suporte</b> no Discord.</li><li>Combine o tema do guia com o ADM.</li><li>Escreva o guia e envie pelo ticket.</li><li>Depois da revisão, ele é publicado aqui com o seu nick e a data, e você ganha +1 no badge <b>[Wiki]</b> de Contribuidor da Wiki, que aparece no chat do jogo.</li></ol><a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abrir ticket de suporte</a></div>`;
 function autorWiki(g, n){
   const dt = /^\d{4}-\d{2}-\d{2}$/.test(g.data || "") ? new Date(g.data + "T12:00:00").toLocaleDateString("pt-BR") : "";
-  return `<div class="wk-autor"><img src="https://mc-heads.net/head/${encodeURIComponent(g.autor)}/96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo" title="Badge [Wiki] no jogo">Contribuidor da Wiki · ${n} ${n === 1 ? "página" : "páginas"}</span></div>`;
+  return `<div class="wk-autor"><img data-cab="${esc(g.autor)}" data-cab-tipo="3d" data-cab-tam="96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo" title="Badge [Wiki] no jogo">Contribuidor da Wiki · ${n} ${n === 1 ? "página" : "páginas"}</span></div>`;
 }
 function inicioWiki(){
   document.getElementById("wkQuests").hidden = true;
@@ -1455,7 +1473,7 @@ function abrirArtigo(slug){
     return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
       if(wikiAberto !== slug) return;
       const R = md(txt);
-      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`;
+      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`; ligarCabecas(art);
       toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
     });
   }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });
