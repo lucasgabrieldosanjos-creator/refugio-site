@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-10T23:05:35-03:00",
+  "atualizado": "2026-11-10T23:15:37-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1086
+      "valor": 1087
     },
     {
       "nome": "lucasmarcelo65",
@@ -136,14 +136,14 @@
       "valor": 1452
     },
     {
+      "nome": "DARKhammer96",
+      "guilda": null,
+      "valor": 1350
+    },
+    {
       "nome": "Dagrao007",
       "guilda": "Braztugz",
       "valor": 1223
-    },
-    {
-      "nome": "DARKhammer96",
-      "guilda": null,
-      "valor": 1217
     },
     {
       "nome": "K4uazinn",
