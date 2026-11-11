@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-11T15:45:48-03:00",
+  "atualizado": "2026-11-11T15:55:51-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 1930
+      "valor": 1931
     },
     {
       "nome": "TkkFPS",
@@ -89,6 +89,11 @@
       "valor": 1
     },
     {
+      "nome": "DARKhammer96",
+      "guilda": null,
+      "valor": 1
+    },
+    {
       "nome": "Rimuru_Tempest06",
       "guilda": null,
       "valor": 1
@@ -96,11 +101,6 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 1
-    },
-    {
-      "nome": "pasteldevento13",
-      "guilda": "Formula Um Zum",
       "valor": 1
     }
   ],
@@ -123,7 +123,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 2010
+      "valor": 2032
     },
     {
       "nome": "HaruFenix",
