@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-11T20:05:34-03:00",
+  "atualizado": "2026-11-11T20:15:36-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2000
+      "valor": 2001
     },
     {
       "nome": "Evandrort",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 639
+      "valor": 640
     },
     {
       "nome": "Guaresi",
@@ -118,7 +118,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 2350
+      "valor": 2374
     },
     {
       "nome": "ZecaPagodinBr",
