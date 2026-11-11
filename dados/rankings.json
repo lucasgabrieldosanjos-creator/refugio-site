@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-11T14:15:33-03:00",
+  "atualizado": "2026-11-11T14:25:36-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1093
+      "valor": 1094
     },
     {
       "nome": "lucasmarcelo65",
@@ -121,14 +121,14 @@
       "valor": 2269
     },
     {
+      "nome": "DARKhammer96",
+      "guilda": null,
+      "valor": 1997
+    },
+    {
       "nome": "HaruFenix",
       "guilda": null,
       "valor": 1984
-    },
-    {
-      "nome": "DARKhammer96",
-      "guilda": null,
-      "valor": 1970
     },
     {
       "nome": "Saitinnn",
