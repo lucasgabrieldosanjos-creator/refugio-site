@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-12T14:46:52-03:00",
+  "atualizado": "2026-11-12T14:56:52-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2015
+      "valor": 2016
     },
     {
       "nome": "Evandrort",
@@ -111,12 +111,12 @@
       "valor": 3154
     },
     {
-      "nome": "Dandinter",
+      "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 2877
+      "valor": 2940
     },
     {
-      "nome": "DARKhammer96",
+      "nome": "Dandinter",
       "guilda": null,
       "valor": 2877
     },
