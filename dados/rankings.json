@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-12T21:36:03-03:00",
+  "atualizado": "2026-11-12T21:46:04-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -106,13 +106,13 @@
   ],
   "mobs": [
     {
-      "nome": "JustSkyline",
-      "guilda": "Braztugz",
-      "valor": 3154
-    },
-    {
       "nome": "DARKhammer96",
       "guilda": null,
+      "valor": 3199
+    },
+    {
+      "nome": "JustSkyline",
+      "guilda": "Braztugz",
       "valor": 3154
     },
     {
