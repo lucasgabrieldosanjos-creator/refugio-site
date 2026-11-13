@@ -1,15 +1,15 @@
 {
-  "atualizado": "2026-11-13T20:15:44-03:00",
+  "atualizado": "2026-11-13T20:25:45-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2039
+      "valor": 2040
     },
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 1959
+      "valor": 1960
     },
     {
       "nome": "TkkFPS",
