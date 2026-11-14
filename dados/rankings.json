@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-14T14:35:58-03:00",
+  "atualizado": "2026-11-14T14:46:01-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -34,7 +34,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 651
+      "valor": 652
     },
     {
       "nome": "Guaresi",
@@ -49,7 +49,7 @@
     {
       "nome": "EzoReijy",
       "guilda": null,
-      "valor": 492
+      "valor": 493
     }
   ],
   "pvp": [
@@ -111,14 +111,14 @@
       "valor": 3283
     },
     {
+      "nome": "ZensOFFz",
+      "guilda": null,
+      "valor": 3163
+    },
+    {
       "nome": "JustSkyline",
       "guilda": "Braztugz",
       "valor": 3154
-    },
-    {
-      "nome": "ZensOFFz",
-      "guilda": null,
-      "valor": 3138
     },
     {
       "nome": "Dandinter",
