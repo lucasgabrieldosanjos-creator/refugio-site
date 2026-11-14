@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-14T15:16:06-03:00",
+  "atualizado": "2026-11-14T15:26:08-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1141
+      "valor": 1142
     },
     {
       "nome": "lucasmarcelo65",
@@ -106,14 +106,14 @@
   ],
   "mobs": [
     {
+      "nome": "ZensOFFz",
+      "guilda": null,
+      "valor": 3310
+    },
+    {
       "nome": "DARKhammer96",
       "guilda": null,
       "valor": 3285
-    },
-    {
-      "nome": "ZensOFFz",
-      "guilda": null,
-      "valor": 3268
     },
     {
       "nome": "JustSkyline",
