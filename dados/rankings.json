@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-14T16:46:17-03:00",
+  "atualizado": "2026-11-14T16:56:18-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -59,6 +59,11 @@
       "valor": 5
     },
     {
+      "nome": "TkkFPS",
+      "guilda": "IMPERIUM",
+      "valor": 4
+    },
+    {
       "nome": "JustSkyline",
       "guilda": "Braztugz",
       "valor": 2
@@ -67,11 +72,6 @@
       "nome": "scp1471_0",
       "guilda": null,
       "valor": 2
-    },
-    {
-      "nome": "TkkFPS",
-      "guilda": "IMPERIUM",
-      "valor": 1
     },
     {
       "nome": "Saitinnn",
@@ -108,7 +108,7 @@
     {
       "nome": "ZensOFFz",
       "guilda": null,
-      "valor": 3637
+      "valor": 3675
     },
     {
       "nome": "DARKhammer96",
@@ -151,9 +151,9 @@
       "valor": 1223
     },
     {
-      "nome": "K4uazinn",
+      "nome": "Rimuru_Tempest06",
       "guilda": null,
-      "valor": 990
+      "valor": 991
     }
   ],
   "guildas": [
