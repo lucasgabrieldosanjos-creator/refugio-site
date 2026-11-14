@@ -288,14 +288,14 @@ function avatar(r, g, noPodio){
   pedirCabeca(im, r[0], noPodio ? "3d" : "2d", noPodio ? 128 : 64);
   return im;
 }
-/* Cabeças de skin: tenta vários serviços (o mc-heads.net caiu em 10/11/2026); se nenhum responder, desenha uma cabeça */
+/* Cabeças de skin: mc-heads, depois Visage; o minotar fica por último porque às vezes devolve a skin padrão */
 const CAB_VAZIO = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 const CAB_PROMESSAS = new Map();
 function fontesCabeca(nick, tipo, tam){
   const n = encodeURIComponent(nick);
   return tipo === "3d"
-    ? [`https://minotar.net/cube/${n}/${tam}`, `https://visage.surgeplay.com/head/${tam}/${n}`, `https://mc-heads.net/head/${n}/${tam}`]
-    : [`https://minotar.net/helm/${n}/${tam}`, `https://visage.surgeplay.com/face/${tam}/${n}`, `https://mc-heads.net/avatar/${n}/${tam}`];
+    ? [`https://mc-heads.net/head/${n}/${tam}`, `https://visage.surgeplay.com/head/${tam}/${n}`, `https://minotar.net/cube/${n}/${tam}`]
+    : [`https://mc-heads.net/avatar/${n}/${tam}`, `https://visage.surgeplay.com/face/${tam}/${n}`, `https://minotar.net/helm/${n}/${tam}`];
 }
 function testarImagem(u){ return new Promise(res=>{ const t = new Image(); const to = setTimeout(()=>{ t.onload = t.onerror = null; res(false); }, 4000); t.onload = ()=>{ clearTimeout(to); res(t.naturalWidth > 0); }; t.onerror = ()=>{ clearTimeout(to); res(false); }; t.src = u; }); }
 function pedirCabeca(img, nick, tipo, tam){
@@ -1473,7 +1473,7 @@ function abrirArtigo(slug){
     return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
       if(wikiAberto !== slug) return;
       const R = md(txt);
-      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.wiki.editar + slug}.md" target="_blank" rel="noopener">Sugerir correção no GitHub</a></div>`; ligarCabecas(art);
+      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Achou um erro? Avise por ticket</a></div>`; ligarCabecas(art);
       toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
     });
   }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });
