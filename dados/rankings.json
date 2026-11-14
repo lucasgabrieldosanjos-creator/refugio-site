@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-14T13:25:48-03:00",
+  "atualizado": "2026-11-14T13:35:50-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -116,14 +116,14 @@
       "valor": 3154
     },
     {
+      "nome": "ZensOFFz",
+      "guilda": null,
+      "valor": 2880
+    },
+    {
       "nome": "Dandinter",
       "guilda": null,
       "valor": 2877
-    },
-    {
-      "nome": "ZensOFFz",
-      "guilda": null,
-      "valor": 2822
     },
     {
       "nome": "Saitinnn",
