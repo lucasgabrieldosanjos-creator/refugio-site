@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-15T11:15:19-03:00",
+  "atualizado": "2026-11-15T11:35:20-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -27,13 +27,13 @@
       "valor": 862
     },
     {
-      "nome": "XIII_Thanatos",
-      "guilda": null,
+      "nome": "ZecaPagodinBr",
+      "guilda": "Formula Um Zum",
       "valor": 670
     },
     {
-      "nome": "ZecaPagodinBr",
-      "guilda": "Formula Um Zum",
+      "nome": "XIII_Thanatos",
+      "guilda": null,
       "valor": 670
     },
     {
