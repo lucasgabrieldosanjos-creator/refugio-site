@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-15T13:15:42-03:00",
+  "atualizado": "2026-11-15T13:25:42-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -49,7 +49,7 @@
     {
       "nome": "EzoReijy",
       "guilda": null,
-      "valor": 499
+      "valor": 500
     }
   ],
   "pvp": [
@@ -133,7 +133,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 2355
+      "valor": 2357
     },
     {
       "nome": "HaruFenix",
