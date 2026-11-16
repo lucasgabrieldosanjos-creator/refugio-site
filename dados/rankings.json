@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-16T14:55:27-03:00",
+  "atualizado": "2026-11-16T15:25:29-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 1986
+      "valor": 1987
     },
     {
       "nome": "TkkFPS",
@@ -65,7 +65,7 @@
     },
     {
       "nome": "JustSkyline",
-      "guilda": "Braztugz",
+      "guilda": null,
       "valor": 2
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "nome": "JustSkyline",
-      "guilda": "Braztugz",
+      "guilda": null,
       "valor": 3154
     },
     {
@@ -147,7 +147,7 @@
     },
     {
       "nome": "Dagrao007",
-      "guilda": "Braztugz",
+      "guilda": null,
       "valor": 1223
     },
     {
@@ -157,11 +157,6 @@
     }
   ],
   "guildas": [
-    {
-      "nome": "Braztugz",
-      "membros": 3,
-      "nivel": 1
-    },
     {
       "nome": "IMPERIUM",
       "membros": 3,
