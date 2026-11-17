@@ -259,7 +259,7 @@ function cabeca(nome){
   return c;
 }
 /* emblemas das guildas (nome em minúsculas → imagem em https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/) */
-const EMBLEMAS_GUILDA = {"imperium":"https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/guilda-imperium.webp"};
+const EMBLEMAS_GUILDA = {"imperium":"https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/guilda-imperium.webp", "caneca .-.":"https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/guilda-caneca.webp", "caneca":"https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/guilda-caneca.webp", "mug":"https://cdn.jsdelivr.net/gh/lucasgabrieldosanjos-creator/refugio-site@main/img/guilda-caneca.webp"};
 function iconeGuilda(n,c){ const em = EMBLEMAS_GUILDA[String(n).trim().toLowerCase()]; if(em){ const i = new Image(); i.className = "gico gimg"; i.src = em; i.alt = "Emblema da guilda " + n; i.decoding = "async"; return i; } const s = document.createElement("span"); s.className = "gico"; s.style.background = c; s.textContent = n.split(" ").filter(w=>w.length>2).map(w=>w[0]).join("").slice(0,2); return s; }
 const RK = {
   tempo:{sub:"horas no mês", dados:[["Lyra_Arcana","Ordem do Latão","182 h"],["TioReator","Núcleo ME","169 h"],["bia.explora","Cartógrafos","151 h"],["Miguelzin_","Raízes Antigas","138 h"],["kaio_ae2","Núcleo ME","124 h"],["Duda_Runas","Raízes Antigas","117 h"],["PedroForja","Ordem do Latão","109 h"]]},
@@ -270,7 +270,7 @@ const RK = {
 const podio = document.getElementById("podio"), rkLista = document.getElementById("rkLista");
 /* estilos dos rankings reais (ficam no script para mudar sem reimportar o tema) */
 document.head.insertAdjacentHTML("beforeend", `<style id="rf-rk-css">
-img.gico.gimg{object-fit:cover;background:#0a0b12;box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 2px rgba(80,120,255,.35)}
+img.gico.gimg{object-fit:cover;background:#0a0b12;box-shadow:0 8px 20px rgba(0,0,0,.4),0 0 0 2px rgba(255,255,255,.22)}
 .pod img.cab3d{width:88px;height:94px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 12px 14px rgba(0,0,0,.55));animation:rkFlutua 4s ease-in-out infinite}
 .pod:nth-child(2) img.cab3d{width:116px;height:124px;animation-delay:-2s}
 .pod:nth-child(3) img.cab3d{animation-delay:-1s}
