@@ -1531,8 +1531,9 @@ function filtrarWiki(){
 }
 const CONTRIBUIR = `<div class="wk-contrib"><div><h3>Escreva para a wiki</h3><p>Conhece bem um mod, uma farm ou um sistema do servidor? Escreva um guia e ele fica aqui, com o seu nome no topo.</p></div><ol><li>Abra um ticket na modalidade <b>Suporte</b> no Discord.</li><li>Combine o tema do guia com o ADM.</li><li>Escreva o guia e envie pelo ticket.</li><li>Depois da revisão, ele é publicado aqui com o seu nick e a data, e você ganha +1 no badge <b>[Wiki]</b> de Contribuidor da Wiki, que aparece no chat do jogo.</li></ol><a class="btn btn-ouro" href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abrir ticket de suporte</a></div>`;
 function autorWiki(g, n){
+  if(!document.getElementById("rf-apelido-css")) document.head.insertAdjacentHTML("beforeend", '<style id="rf-apelido-css">.wk-apelido{font-weight:500;font-size:.85em;color:var(--tinta-2)}</style>');
   const dt = /^\d{4}-\d{2}-\d{2}$/.test(g.data || "") ? new Date(g.data + "T12:00:00").toLocaleDateString("pt-BR") : "";
-  return `<div class="wk-autor"><img data-cab="${esc(g.autor)}" data-cab-tipo="3d" data-cab-tam="96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo" title="Badge [Wiki] no jogo">Contribuidor da Wiki · ${n} ${n === 1 ? "página" : "páginas"}</span></div>`;
+  return `<div class="wk-autor"><img data-cab="${esc(g.skin || g.autor)}" data-cab-tipo="3d" data-cab-tam="96" alt="" width="56" height="56"><div><span class="wk-autor-rot">Wiki escrita por:</span><b>${esc(g.autor)}${g.apelido ? ` <small class="wk-apelido">(${esc(g.apelido)})</small>` : ""}</b>${dt ? `<span>Data: ${dt}</span>` : ""}</div><span class="wk-selo" title="Badge [Wiki] no jogo">Contribuidor da Wiki · ${n} ${n === 1 ? "página" : "páginas"}</span></div>`;
 }
 function inicioWiki(){
   document.getElementById("wkQuests").hidden = true;
