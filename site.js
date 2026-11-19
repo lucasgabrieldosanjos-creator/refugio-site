@@ -1239,6 +1239,7 @@ function mdInline(t){
   t = t.replace(/`([^`]+)`/g, (m, c)=> c.startsWith("/") ? `<button type="button" class="gcmd" data-copiar="${c}" title="Clique para copiar">${c}</button>` : `<code>${c}</code>`);
   t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, u)=>{ const src = wikiImg(u); return src ? `<img src="${src}" alt="${alt}" loading="lazy">` : ""; });
   t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, txt, u)=>{ u = u.replace(/&amp;/g, "&"); if(/^#[\w\/-]*$/.test(u)) return `<a href="${u}">${txt}</a>`; if(/^https:\/\//.test(u)) return `<a href="${esc(u)}" target="_blank" rel="noopener">${txt}</a>`; return txt; });
+  t = t.replace(/\{\{item\s+([a-z0-9_]+:[a-z0-9_\/]+)\s*\}\}/g, (m, id)=>`<span class="rc-it" data-it="${id}">${iconeItem(id, "rc-ii")}</span>`);
   t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
   return t;
 }
@@ -1257,6 +1258,8 @@ function md(texto){
     let m;
     if((m = l.match(/^(#{2,3})\s+(.+)/))){ const n = m[1].length, txt = m[2].trim(); const id = "w-" + norm(txt).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); if(n === 2) titulos.push([id, txt]); out.push(`<h${n} id="${id}">${mdInline(txt)}</h${n}>`); i++; continue; }
     if(/^---+\s*$/.test(l)){ out.push("<hr>"); i++; continue; }
+    if(RX_RECEITA.test(l)){ const buf = []; while(i < L.length && (RX_RECEITA.test(L[i]) || (!L[i].trim() && RX_RECEITA.test(L[i + 1] || "")))){ const m3 = L[i].match(RX_RECEITA); if(m3) buf.push(m3[1]); i++; }
+      out.push(`<div class="rc-grupo">${buf.map(k=>`<div class="rc rc-carregando" data-rc="${k}"></div>`).join("")}</div>`); continue; }
     if(l.startsWith("```")){ const buf = []; i++; while(i < L.length && !L[i].startsWith("```")) buf.push(L[i++]); i++; out.push(`<pre><code>${esc(buf.join("\n"))}</code></pre>`); continue; }
     if(l.startsWith(">")){ const buf = []; while(i < L.length && L[i].startsWith(">")) buf.push(L[i++].replace(/^>\s?/, ""));
       let tipo = "nota"; const m2 = buf[0].match(/^\[!(DICA|AVISO|IMPORTANTE|NOTA)\]\s*/i); if(m2){ tipo = m2[1].toLowerCase(); buf[0] = buf[0].slice(m2[0].length); }
@@ -1271,11 +1274,104 @@ function md(texto){
       while(i < L.length && /^\s*([-*]|\d+\.)\s+/.test(L[i])){ buf.push(L[i].replace(/^\s*([-*]|\d+\.)\s+/, "")); i++; while(i < L.length && /^\s{2,}\S/.test(L[i]) && !/^\s*([-*]|\d+\.)\s+/.test(L[i])) buf[buf.length - 1] += " " + L[i++].trim(); }
       out.push(`<${ord ? "ol" : "ul"}>${buf.map(x=>`<li>${mdInline(x)}</li>`).join("")}</${ord ? "ol" : "ul"}>`); continue; }
     const buf = [l]; i++;
-    while(i < L.length && L[i].trim() && !/^(#{2,3}\s|>|\||```|---|\s*([-*]|\d+\.)\s+)/.test(L[i])) buf.push(L[i++]);
+    while(i < L.length && L[i].trim() && !/^(#{2,3}\s|>|\||```|---|\{\{receita\s|\s*([-*]|\d+\.)\s+)/.test(L[i])) buf.push(L[i++]);
     out.push(`<p>${mdInline(buf.join(" "))}</p>`);
   }
   return {html: out.join("\n"), titulos};
 }
+/* ================= Receitas na wiki: {{receita mod:tipo/nome}} e {{item mod:id}} ================= */
+const RX_RECEITA = /^\{\{receita\s+([a-z0-9_]+:[a-z0-9_\/]+)\s*\}\}\s*$/;
+let RECEITAS = null;
+function carregarReceitas(){ if(!RECEITAS) RECEITAS = fetch(CONFIG.wiki.base + "receitas.json", {cache:"no-cache"}).then(r=>r.ok ? r.json() : Promise.reject()).catch(e=>{ RECEITAS = null; throw e; }); return RECEITAS; }
+function cssReceitas(){
+  if(document.getElementById("rf-receitas-css")) return;
+  document.head.insertAdjacentHTML("beforeend", `<style id="rf-receitas-css">
+.rc-grupo{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 26px}
+.rc{flex:0 1 auto;min-width:0;background:#f7f4fd;border:1px solid var(--linha);border-radius:14px;padding:14px 16px 12px;font-size:14px;line-height:1.4;color:var(--tinta)}
+.rc-carregando{width:250px;height:150px;background:linear-gradient(90deg,#f3effb,#ebe5f8,#f3effb);background-size:200% 100%;animation:rcPulso 1.4s linear infinite}
+@keyframes rcPulso{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.rc-carregando{animation:none}}
+.rc-ritual{flex-basis:100%}
+.rc-tit{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0 0 10px}
+.rc-tit b{font:700 15px/1.3 var(--display)}
+.rc-tag{font-size:12px;font-weight:600;color:var(--violeta-texto);background:#ebe4fb;border-radius:999px;padding:2px 9px}
+.rc-tag.rc-ouro{color:#7a5300;background:#fbefd0}
+.rc-corpo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rc-grade{display:grid;grid-template-columns:repeat(3,40px);gap:3px}
+.rc-s{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;box-sizing:border-box;background:#2b2342;border-radius:7px;box-shadow:inset 0 2px 0 rgba(0,0,0,.35),inset 0 -1px 0 rgba(255,255,255,.08);vertical-align:middle}
+.rc-s.cheio{cursor:help}
+.rc-s.cheio:hover,.rc-s.cheio:focus-visible,.rc-s.ativo{outline:2px solid #b89bff;outline-offset:1px}
+.wk-art .rc-s img,.wk-art .rc-it img{margin:0;border-radius:0;box-shadow:none;max-width:none}
+.rc-s img,.rc-s .qi-vazio{width:30px;height:30px;image-rendering:pixelated;object-fit:contain}
+.rc-s .qi-vazio{border-radius:5px}
+.rc-s.grande{width:52px;height:52px}
+.rc-s.grande img{width:38px;height:38px}
+.rc-s.ouro{background:#4a3410;box-shadow:inset 0 0 0 2px #d9a730}
+.rc-q{position:absolute;right:3px;bottom:1px;font:700 12px/1 var(--display);color:#fff;text-shadow:1px 1px 0 #000}
+.rc-seta{font:700 22px/1 var(--display);color:#9a8dc0}
+.rc-fogo{font-size:24px;line-height:1}
+.rc-col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.rc-col small{font-size:12px;color:var(--tinta-2)}
+.rc-lin{display:grid;grid-template-columns:repeat(4,40px);gap:3px}
+.rc-pilula{display:inline-block;max-width:220px;padding:8px 12px;border-radius:10px;background:#2b2342;color:#efe9ff;font-weight:600;font-size:13px}
+.rc-extra{margin:10px 0 0;font-size:13px;color:var(--tinta-2)}
+.rc-extra b{color:var(--tinta)}
+.rc-nome{margin-top:10px;min-height:1.4em;font-size:13px;font-weight:600;color:var(--violeta-texto)}
+.rc-it{display:inline-block;vertical-align:-5px;margin:0 2px}
+.rc-it .rc-ii{width:22px;height:22px;image-rendering:pixelated;object-fit:contain}
+.rc-it .qi-vazio{width:22px;height:22px}
+@media (max-width:560px){.rc{flex-basis:100%}.rc-lin{grid-template-columns:repeat(4,36px)}.rc-s{width:36px;height:36px}.rc-grade{grid-template-columns:repeat(3,36px)}.rc-s img{width:27px;height:27px}}
+</style>`);
+}
+function montarReceitas(raiz){
+  const caixas = raiz.querySelectorAll(".rc[data-rc]"), itens = raiz.querySelectorAll("[data-it]");
+  if(!caixas.length && !itens.length) return;
+  cssReceitas();
+  carregarReceitas().then(J=>{
+    const IT = J.itens || {}, nome = id=>(IT[id] && IT[id].n) || id.split(":")[1].replace(/_/g, " ");
+    const segs = s=>{ if(!s) return ""; const m = Math.floor(s / 60), r = s % 60; return m ? `${m} min${r ? " " + r + " s" : ""}` : `${r} s`; };
+    const slot = (x, extra)=>{
+      if(!x) return `<span class="rc-s${extra ? " " + extra : ""}"></span>`;
+      const n = nome(x.id) + (x.tag ? " (ou equivalente)" : "") + (x.q > 1 ? ` ×${x.q}` : "");
+      return `<span class="rc-s cheio${extra ? " " + extra : ""}" tabindex="0" data-n="${esc(n)}" title="${esc(n)}" aria-label="${esc(n)}">${iconeItem(x.id, "rc-img")}${x.q > 1 ? `<span class="rc-q">${x.q}</span>` : ""}</span>`;
+    };
+    itens.forEach(el=>{ const n = nome(el.dataset.it); el.title = n; el.setAttribute("aria-label", n); el.setAttribute("role", "img"); });
+    caixas.forEach(el=>{
+      const R = (J.receitas || {})[el.dataset.rc];
+      el.classList.remove("rc-carregando");
+      if(!R){ el.remove(); return; }
+      let h = "";
+      if(R.t === "bancada"){
+        h = `<div class="rc-tit"><b>${esc(nome(R.r.id))}</b><span class="rc-tag">${R.s ? "Bancada, sem forma" : "Bancada"}</span></div>
+          <div class="rc-corpo"><div class="rc-grade">${R.g.map(x=>slot(x)).join("")}</div><span class="rc-seta" aria-hidden="true">→</span>${slot(R.r, "grande")}</div>`;
+      } else if(R.t === "fogo" || R.t === "triturar"){
+        h = `<div class="rc-tit"><b>${esc(nome(R.r.id))}</b><span class="rc-tag">${R.t === "fogo" ? "Fogo Espiritual" : "Triturador"}</span></div>
+          <div class="rc-corpo">${slot(R.e)}<span class="rc-fogo" aria-hidden="true">${R.t === "fogo" ? "🔥" : "⚒"}</span>${slot(R.r, "grande")}</div>`;
+      } else if(R.t === "ritual"){
+        const tit = (R.n || "").replace(/^Ritual:\s*/i, "");
+        h = `<div class="rc-tit"><b>${esc(tit)}</b><span class="rc-tag">Ritual</span><span class="rc-tag">Pentáculo: ${esc(R.p)}</span>${R.s ? `<span class="rc-tag rc-ouro">${segs(R.s)}</span>` : ""}</div>
+          <div class="rc-corpo">
+            <div class="rc-col"><small>Tigelas de sacrifício</small><div class="rc-lin">${R.g.map(x=>slot(x)).join("")}</div></div>
+            <span class="rc-seta" aria-hidden="true">→</span>
+            <div class="rc-col"><small>Tigela dourada</small>${slot(R.a, "ouro")}</div>
+            <span class="rc-seta" aria-hidden="true">→</span>
+            <div class="rc-col"><small>Resultado</small>${R.r ? slot(R.r, "grande") : `<span class="rc-pilula">${esc(tit.replace(/^(Invocar|Invocação de|Invocação do|Invocação da)\s+/i, ""))}</span>`}</div>
+          </div>${R.x ? `<p class="rc-extra"><b>Sacrifício:</b> ${esc(R.x)} (mate perto da tigela dourada para terminar)</p>` : ""}`;
+      }
+      el.innerHTML = h + `<div class="rc-nome" aria-live="polite"></div>`;
+      el.classList.add("rc-" + R.t);
+    });
+  }).catch(()=>{ caixas.forEach(el=>{ el.classList.remove("rc-carregando"); el.innerHTML = '<p class="rc-extra">Não deu para carregar esta receita agora. No jogo, aperte R sobre o item para ver.</p>'; }); });
+}
+function mostrarNomeReceita(e){
+  const s = e.target.closest && e.target.closest(".rc-s.cheio"); if(!s) return;
+  const rc = s.closest(".rc"); if(!rc) return;
+  rc.querySelectorAll(".rc-s.ativo").forEach(x=>x.classList.remove("ativo")); s.classList.add("ativo");
+  const alvo = rc.querySelector(".rc-nome"); if(alvo) alvo.textContent = s.dataset.n;
+}
+document.addEventListener("click", mostrarNomeReceita);
+document.addEventListener("mouseover", mostrarNomeReceita);
+document.addEventListener("focusin", mostrarNomeReceita);
 function criarWiki(){
   document.head.insertAdjacentHTML("beforeend", `<style id="rf-wiki-css">
 .wk-topo{background:linear-gradient(135deg,#1d1438 0%,#2c1d63 60%,#3a2380 100%);padding:130px 0 70px}
@@ -1476,7 +1572,7 @@ function abrirArtigo(slug){
     return fetch(CONFIG.wiki.base + slug + ".md", {cache:"no-cache"}).then(r=>r.ok ? r.text() : Promise.reject()).then(txt=>{
       if(wikiAberto !== slug) return;
       const R = md(txt);
-      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Achou um erro? Avise por ticket</a></div>`; ligarCabecas(art);
+      art.innerHTML = (g.autor ? autorWiki(g, Math.max(1, (J.guias || []).filter(x=>x.autor === g.autor && !x.rascunho).length)) : "") + R.html + (g.autor ? `<p class="wk-contrib-mini">Quer ver o seu nome numa página da wiki e ganhar o badge [Wiki] no jogo? <a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Abra um ticket de suporte</a> e combine o seu guia com o ADM.</p>` : "") + `<div class="wk-rodape"><span>${g.atualizado ? "Atualizado em " + esc(new Date(g.atualizado + "T12:00:00").toLocaleDateString("pt-BR")) : ""}</span><a href="${CONFIG.links.ticket}" target="_blank" rel="noopener">Achou um erro? Avise por ticket</a></div>`; ligarCabecas(art); montarReceitas(art);
       toc.innerHTML = R.titulos.length > 1 ? `<b>Nesta página</b>${R.titulos.map(([id, t])=>`<a href="#wiki/${slug}" data-ir="${id}">${esc(t)}</a>`).join("")}` : "";
     });
   }).catch(()=>{ art.innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>'; });
