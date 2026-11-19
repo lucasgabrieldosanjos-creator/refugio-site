@@ -1287,7 +1287,7 @@ function cssReceitas(){
   if(document.getElementById("rf-receitas-css")) return;
   document.head.insertAdjacentHTML("beforeend", `<style id="rf-receitas-css">
 .rc-grupo{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 26px}
-.rc{flex:0 1 auto;min-width:0;background:#f7f4fd;border:1px solid var(--linha);border-radius:14px;padding:14px 16px 12px;font-size:14px;line-height:1.4;color:var(--tinta)}
+.rc{flex:0 1 auto;min-width:0;background:#fff;border:1px solid var(--linha);border-radius:14px;padding:14px 16px 12px;font-size:14px;line-height:1.4;color:var(--tinta)}
 .rc-carregando{width:250px;height:150px;background:linear-gradient(90deg,#f3effb,#ebe5f8,#f3effb);background-size:200% 100%;animation:rcPulso 1.4s linear infinite}
 @keyframes rcPulso{to{background-position:-200% 0}}
 @media (prefers-reduced-motion:reduce){.rc-carregando{animation:none}}
@@ -1298,22 +1298,22 @@ function cssReceitas(){
 .rc-tag.rc-ouro{color:#7a5300;background:#fbefd0}
 .rc-corpo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .rc-grade{display:grid;grid-template-columns:repeat(3,40px);gap:3px}
-.rc-s{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;box-sizing:border-box;background:#2b2342;border-radius:7px;box-shadow:inset 0 2px 0 rgba(0,0,0,.35),inset 0 -1px 0 rgba(255,255,255,.08);vertical-align:middle}
+.rc-s{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;box-sizing:border-box;background:#e6e0f4;border-radius:6px;box-shadow:inset 2px 2px 0 #c3b8de,inset -2px -2px 0 #fff;vertical-align:middle}
 .rc-s.cheio{cursor:help}
-.rc-s.cheio:hover,.rc-s.cheio:focus-visible,.rc-s.ativo{outline:2px solid #b89bff;outline-offset:1px}
+.rc-s.cheio:hover,.rc-s.cheio:focus-visible,.rc-s.ativo{outline:2px solid var(--violeta);outline-offset:1px}
 .wk-art .rc-s img,.wk-art .rc-it img{margin:0;border-radius:0;box-shadow:none;max-width:none}
 .rc-s img,.rc-s .qi-vazio{width:30px;height:30px;image-rendering:pixelated;object-fit:contain}
 .rc-s .qi-vazio{border-radius:5px}
 .rc-s.grande{width:52px;height:52px}
 .rc-s.grande img{width:38px;height:38px}
-.rc-s.ouro{background:#4a3410;box-shadow:inset 0 0 0 2px #d9a730}
-.rc-q{position:absolute;right:3px;bottom:1px;font:700 12px/1 var(--display);color:#fff;text-shadow:1px 1px 0 #000}
+.rc-s.ouro{background:#fbefd0;box-shadow:inset 2px 2px 0 #e8c56a,inset -2px -2px 0 #fffaf0}
+.rc-q{position:absolute;right:3px;bottom:2px;font:700 12px/1 var(--display);color:#fff;text-shadow:1px 1px 0 #3a3a3a}
 .rc-seta{font:700 22px/1 var(--display);color:#9a8dc0}
 .rc-fogo{font-size:24px;line-height:1}
 .rc-col{display:flex;flex-direction:column;gap:6px;min-width:0}
 .rc-col small{font-size:12px;color:var(--tinta-2)}
 .rc-lin{display:grid;grid-template-columns:repeat(4,40px);gap:3px}
-.rc-pilula{display:inline-block;max-width:220px;padding:8px 12px;border-radius:10px;background:#2b2342;color:#efe9ff;font-weight:600;font-size:13px}
+.rc-pilula{display:inline-block;max-width:220px;padding:8px 12px;border-radius:10px;background:#e6e0f4;color:var(--violeta-texto);font-weight:700;font-size:13px}
 .rc-extra{margin:10px 0 0;font-size:13px;color:var(--tinta-2)}
 .rc-extra b{color:var(--tinta)}
 .rc-nome{margin-top:10px;min-height:1.4em;font-size:13px;font-weight:600;color:var(--violeta-texto)}
