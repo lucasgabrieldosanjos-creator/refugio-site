@@ -171,11 +171,11 @@
     {
       "slug": "cmd-lojas",
       "titulo": "Lojas, crates e votos",
-      "resumo": "Lojas de jogadores, baús, fluidos e chaves",
+      "resumo": "Lojas de jogadores, baús, busca de itens, fluidos e chaves",
       "categoria": "comandos",
       "cor": "#7B52E6",
       "icone": "itens/x_cash.png",
-      "atualizado": "2026-11-08"
+      "atualizado": "2026-11-20"
     },
     {
       "slug": "cmd-guildas",

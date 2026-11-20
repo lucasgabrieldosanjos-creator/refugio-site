@@ -6,6 +6,7 @@ Há três recursos diferentes: o cadastro de um local comercial, as lojas de ba�
 |---|---|
 | /lojas e /loja | Cadastro, visita e divulgação dos locais comerciais dos jogadores |
 | /qs | Lojas de compra/venda ligadas a baús/inventários |
+| /procuraritem | Busca de um item nas ofertas das lojas |
 | /cashshop e /shop | Loja de produtos comprados com Cash |
 
 ### Cadastrar seu local
@@ -17,6 +18,10 @@ Vá ao ponto de chegada, use `/loja cadastrar Minha Loja`, confira `/loja info` 
 Segure o item de referência, aponte para o inventário correto e use `/qs create 100`, por exemplo. O preço do exemplo é ilustrativo. Confira o painel, o item, a quantidade por pacote e o tipo da loja antes de negociar.
 
 `/qs sell` significa que **a loja vende ao visitante**. `/qs buy` significa que **a loja compra do visitante**. Alguns ajustes exigem que você olhe para a loja e seja o proprietário.
+
+### Procurar um item
+
+Quer saber se alguém vende ou compra um item? Use `/procuraritem <item>`. Enquanto digita o nome, aperte **TAB** para ver sugestões de itens do Minecraft e dos mods. As sugestões aparecem mesmo para itens que ainda não têm nenhuma oferta.
 
 ### Vender fluidos
 
@@ -44,6 +49,7 @@ Consulte as chaves em `/crates` e as recompensas de uma caixa em `/crates previe
 | `/loja anunciar item [texto]` | Divulgar um item da mão com a loja. |
 | `/qs` | Abrir a ajuda de lojas de baú. |
 | `/qs browse [pagina]` | Navegar pelas lojas registradas. |
+| `/procuraritem <item>` | Procurar as ofertas de um item nas lojas dos jogadores. Aperte TAB para ver sugestões de itens do Minecraft e dos mods. |
 | `/qs view <id>` | Consultar os detalhes de uma loja. |
 | `/qs create <preco>` | Criar loja que vende ao visitante. |
 | `/qs sell [preco]` | Mudar para venda ou criar uma loja de venda. |
