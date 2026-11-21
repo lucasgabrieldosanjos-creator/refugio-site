@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-21T17:28:54-03:00",
+  "atualizado": "2026-11-21T17:38:55-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 757
+      "valor": 758
     },
     {
       "nome": "XIII_Thanatos",
@@ -151,9 +151,9 @@
       "valor": 1223
     },
     {
-      "nome": "Dux_queiroz",
-      "guilda": "IMPERIUM",
-      "valor": 1082
+      "nome": "EzoReijy",
+      "guilda": null,
+      "valor": 1161
     }
   ],
   "guildas": [
