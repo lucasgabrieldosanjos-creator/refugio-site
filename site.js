@@ -430,7 +430,7 @@ const MC = {"0":"#000000","1":"#0000AA","2":"#00AA00","3":"#00AAAA","4":"#AA0000
 function mcTag(partes){ return `<span class="mctag"><span style="color:${MC[7]}">[</span>${partes.map(([c,t])=>`<span style="color:${MC[c]}">${t}</span>`).join("&nbsp;")}<span style="color:${MC[7]}">]</span></span>`; }
 const SEMANAIS = n => Array.from({length:n},(_,i)=>"semanal"+(i+1));
 const DIARIOS = n => ["diario_forjador","diario_arquiteto","diario_cientista","diario_arconte","diario_major"].slice(0,n);
-const MAJOR = {id:"major", nome:"ATM Major", tag:[["6","ATM"],["e","MAJOR"]], cor:"#FFAA00", img:"major-v2", preco:"R$ 600,00", dias:80, topo:true};
+const MAJOR = {id:"major", nome:"ATM Major", tag:[["6","ATM"],["e","MAJOR"]], cor:"#FFAA00", img:"major-v2", preco:"R$ 600,00", dias:100, topo:true};
 const TRILHAS = {
   tech:{nome:"Tech", ranks:[
     {id:"forjador", nome:"Forjador", tag:[["3","FORJADOR"]], cor:"#00AAAA", img:"forjador-v2", preco:"R$ 30,00", dias:30, url:"vip-tecnico", kits:["tech2",...DIARIOS(1),...SEMANAIS(1)]},
