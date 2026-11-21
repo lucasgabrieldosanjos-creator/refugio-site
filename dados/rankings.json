@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-21T13:22:23-03:00",
+  "atualizado": "2026-11-21T13:32:25-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2174
+      "valor": 2175
     },
     {
       "nome": "Evandrort",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Formula Um Zum",
-      "valor": 753
+      "valor": 754
     },
     {
       "nome": "XIII_Thanatos",
@@ -153,7 +153,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1077
+      "valor": 1082
     }
   ],
   "guildas": [
