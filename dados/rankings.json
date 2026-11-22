@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-22T15:35:55-03:00",
+  "atualizado": "2026-11-22T15:55:58-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2190
+      "valor": 2191
     },
     {
       "nome": "Evandrort",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 777
+      "valor": 778
     },
     {
       "nome": "XIII_Thanatos",
@@ -49,7 +49,7 @@
     {
       "nome": "EzoReijy",
       "guilda": null,
-      "valor": 512
+      "valor": 513
     }
   ],
   "pvp": [
