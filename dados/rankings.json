@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-22T20:35:58-03:00",
+  "atualizado": "2026-11-22T20:46:01-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2193
+      "valor": 2194
     },
     {
       "nome": "Evandrort",
@@ -49,7 +49,7 @@
     {
       "nome": "EzoReijy",
       "guilda": null,
-      "valor": 515
+      "valor": 516
     }
   ],
   "pvp": [
@@ -143,7 +143,7 @@
     {
       "nome": "EzoReijy",
       "guilda": null,
-      "valor": 1513
+      "valor": 1622
     },
     {
       "nome": "marcoss4",
