@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-24T02:36:05-03:00",
+  "atualizado": "2026-11-24T02:56:07-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 2048
+      "valor": 2049
     },
     {
       "nome": "TkkFPS",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 806
+      "valor": 807
     },
     {
       "nome": "XIII_Thanatos",
