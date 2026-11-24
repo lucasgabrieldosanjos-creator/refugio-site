@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-24T16:25:54-03:00",
+  "atualizado": "2026-11-24T16:55:59-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2225
+      "valor": 2226
     },
     {
       "nome": "Evandrort",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 818
+      "valor": 819
     },
     {
       "nome": "XIII_Thanatos",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1269
+      "valor": 1271
     }
   ],
   "guildas": [
