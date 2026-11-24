@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-24T15:45:52-03:00",
+  "atualizado": "2026-11-24T15:55:53-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2224
+      "valor": 2225
     },
     {
       "nome": "Evandrort",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 817
+      "valor": 818
     },
     {
       "nome": "XIII_Thanatos",
@@ -118,7 +118,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 3297
+      "valor": 3298
     },
     {
       "nome": "JustSkyline",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1248
+      "valor": 1257
     }
   ],
   "guildas": [
