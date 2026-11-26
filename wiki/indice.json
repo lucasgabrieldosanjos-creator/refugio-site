@@ -184,16 +184,16 @@
       "categoria": "comandos",
       "cor": "#7B52E6",
       "icone": "itens/escudo.png",
-      "atualizado": "2026-11-08"
+      "atualizado": "2026-11-26"
     },
     {
       "slug": "cmd-utilidades",
       "titulo": "Utilidades e personalização",
-      "resumo": "Kits, blocos portáteis, phantoms e skins",
+      "resumo": "Kits, blocos portáteis, renomear itens, Ilhas do Caos, phantoms e skins",
       "categoria": "comandos",
       "cor": "#4F4870",
       "icone": "itens/picareta.png",
-      "atualizado": "2026-11-08"
+      "atualizado": "2026-11-26"
     },
     {
       "slug": "economia",

@@ -4,6 +4,8 @@ O que cada membro pode fazer depende do cargo e das funções que recebeu. O pas
 
 Primeiro consulte `/guilda direitos` e os requisitos de fundação. Solicite a criação com uma TAG de 2 a 5 letras/números e um nome. Confira a prévia antes de confirmar. As formas por Cash e Dracmas seguem as condições exibidas.
 
+Quer mudar de nome? O Grão-Mestre pode trocar o nome e a sigla da guilda com `/guilda renomear <sigla> <nome>`. A troca custa 200.000 Coins e pede confirmação.
+
 Depois, use o acesso ao Mundo das Guildas, escolha o local e faça `/guilda terreno definir`, seguido de `/guilda terreno confirmar`. A fundação e a escolha do terreno são etapas diferentes.
 
 ## Entrar em uma equipe
@@ -46,6 +48,7 @@ Transfira liderança ou dissolva a Guilda somente depois de conferir a prévia. 
 | `/guilda terreno` | Ver as instruções para escolher terreno. |
 | `/guilda terreno definir` | Preparar a escolha do terreno no local atual. |
 | `/guilda terreno confirmar` | Confirmar o terreno proposto. |
+| `/guilda renomear <sigla> <nome>` | Trocar o nome e a sigla da Guilda (só o Grão-Mestre, custa 200.000 Coins e pede confirmação). |
 | `/guilda info` | Consultar sua Guilda. |
 | `/guilda nucleo` | Consultar o núcleo e sua localização. |
 | `/guilda ir` | Teleportar para o núcleo da sua Guilda. |

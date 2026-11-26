@@ -8,6 +8,20 @@ Bancada, bigorna, tear e os outros blocos portáteis funcionam como os blocos de
 
 `/phantom off` faz os phantoms pararem de aparecer para você (para os outros jogadores, nada muda). Use `/phantom status` para conferir.
 
+## Renomear itens
+
+Segure o item e use `/renomearitem <nome>` (ou `/itemname <nome>`) para dar um nome novo a ele, sem precisar de bigorna nem gastar experiência.
+
+## Ilhas do Caos (Draconic Evolution)
+
+Encontrou uma ilha com o cristal central intacto, mas sem o Guardião do Caos? A primeira luta volta sozinha: em modo sobrevivência, chegue a até 15 blocos do cristal central e o Guardião aparece, de graça.
+
+Já derrotou o Guardião daquela ilha? Use `/renascerdragao` perto do cristal central intacto e confirme a revanche, que custa 150.000 Coins. Os 14 cristais de combate reaparecem antes do Guardião.
+
+## Badge Wiki
+
+Clique na badge [Wiki] de alguém no chat, ou use `/badgewiki <jogador>`, para ver as páginas da Wiki que essa pessoa escreveu.
+
 ## Skins
 
 `/skin` mostra o seu visual atual e `/skin reset` volta para o padrão.
@@ -25,6 +39,10 @@ Bancada, bigorna, tear e os outros blocos portáteis funcionam como os blocos de
 | `/repair` | Reparar o item aceito pelo comando. **VIP Arconte, Ascendente ou superior.** |
 | `/repair all` | Reparar itens elegíveis do inventário. **ATM Major.** |
 | `/feed` | Recuperar alimentação conforme as regras. **VIP Arconte, Ascendente ou superior.** |
+| `/renomearitem <nome>` | Dar um novo nome ao item da mão. **VIP Arconte, Ascendente ou superior.** |
+| `/itemname <nome>` | O mesmo que `/renomearitem`. **VIP Arconte, Ascendente ou superior.** |
+| `/renascerdragao` | Chamar a revanche do Guardião do Caos perto do cristal central intacto (custa 150.000 Coins e pede confirmação). |
+| `/badgewiki <jogador>` | Ver as páginas da Wiki escritas por um jogador. |
 | `/ext` | Apagar o fogo do seu personagem. |
 | `/fly [on/off]` | Alternar voo autorizado. **VIP Cientista, Arconte, Ascendente, ATM Major e Construtor.** |
 | `/workbench` | Abrir bancada portátil. **VIP Arquiteto, Runista ou superior.** |

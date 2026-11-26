@@ -487,7 +487,7 @@ const BENEFICIOS = [
     ["/hat, /compass, /depth, /luz e /phantom", [T,T,T,T,T]],
     ["/disposal (lixeira)", [T,T,T,T,T]],
     ["/enderchest, /near e /workbench", [F,T,T,T,T]],
-    ["/anvil, /itemname, /repair e /feed", [F,F,F,T,T]],
+    ["/anvil, /renomearitem (/itemname), /repair e /feed", [F,F,F,T,T]],
     ["/fly", {tech:[F,F,T,T,T], magic:[F,F,F,T,T]}],
     ["/repair da armadura inteira", [F,F,F,F,T]],
     ["/loom, /stonecutter, /grindstone e /smithingtable", [F,F,F,F,T]]
@@ -510,7 +510,7 @@ const ESP = {
   "Kit de ativação":["Kit do Construtor",F], "Kits diários":["3",F], "Kits semanais":["VIP1 a 3",F],
   "Homes":["15",F], "Quarrys na dimensão Mining":["3",F], "Claim-chunks":["60 permanentes","5 temporárias"], "Chunk loaders":["1 temporário",F],
   "Teleporte instantâneo, sem cooldown, e /back":[T,F], "/hat, /compass, /depth, /luz e /phantom":[T,F], "/disposal (lixeira)":[T,T],
-  "/enderchest, /near e /workbench":[T,F], "/anvil, /itemname, /repair e /feed":[F,F], "/fly":[T,F], "/repair da armadura inteira":[F,F],
+  "/enderchest, /near e /workbench":[T,F], "/anvil, /renomearitem (/itemname), /repair e /feed":[F,F], "/fly":[T,F], "/repair da armadura inteira":[F,F],
   "/loom, /stonecutter, /grindstone e /smithingtable":[F,F], "Building Gadgets":[T,F], "Schematicannon e Time Wand":[T,F],
   "Entrar com o servidor cheio":[T,T], "Kick por ficar AFK":["Nunca","Nunca"], "Posição de destaque na lista de jogadores (TAB)":[T,T]
 };
