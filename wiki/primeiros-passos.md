@@ -1,7 +1,7 @@
 Acabou de chegar no Refúgio e não sabe por onde começar? Este guia leva você do primeiro login até a primeira base protegida, na ordem certa. Siga os passos com calma: em menos de uma hora você já está jogando tranquilo.
 
 > [!DICA]
-> Ainda não instalou o modpack? Veja primeiro [Como entrar no servidor](#jogar). Você precisa do **ATM10 na versão 8.5**.
+> Ainda não instalou o modpack? Veja primeiro [Como entrar no servidor](#jogar). Você precisa do **ATM10 na versão 8.6**.
 
 ## 1. Crie sua conta e faça login
 
