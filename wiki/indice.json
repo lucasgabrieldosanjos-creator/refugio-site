@@ -60,12 +60,13 @@
     },
     {
       "slug": "primeiros-passos",
-      "titulo": "Primeiros passos no Refúgio",
-      "resumo": "O que fazer na primeira hora de jogo",
+      "titulo": "Guia do iniciante",
+      "resumo": "Do primeiro login à primeira base protegida, passo a passo",
       "categoria": "comeco",
       "cor": "#F2B01E",
-      "rascunho": true,
-      "icone": "itens/livro_quests.png"
+      "icone": "itens/livro_quests.png",
+      "destaque": true,
+      "atualizado": "2026-11-26"
     },
     {
       "slug": "guia-guildas",
@@ -107,11 +108,11 @@
     {
       "slug": "proteger-base",
       "titulo": "Proteger sua base",
-      "resumo": "Claims de chunk, aliados e chunk loaders",
+      "resumo": "Claims do FTB Chunks, chunk loaders e times do FTB Teams",
       "categoria": "servidor",
       "cor": "#18B5AF",
-      "rascunho": true,
-      "icone": "itens/x_chunks.png"
+      "icone": "itens/x_chunks.png",
+      "atualizado": "2026-11-26"
     },
     {
       "slug": "comandos",
@@ -198,11 +199,11 @@
     {
       "slug": "economia",
       "titulo": "Economia: Coins, Dracmas e Cash",
-      "resumo": "Como ganhar, gastar e negociar",
+      "resumo": "Coins, Cash e Dracmas, como ganhar e como criar a sua loja",
       "categoria": "servidor",
       "cor": "#F2B01E",
-      "rascunho": true,
-      "icone": "itens/moeda.png"
+      "icone": "itens/moeda.png",
+      "atualizado": "2026-11-26"
     },
     {
       "slug": "mekanism",

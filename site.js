@@ -1237,7 +1237,7 @@ function cartaoWiki(g){
 function mdInline(t){
   t = esc(t);
   t = t.replace(/`([^`]+)`/g, (m, c)=> c.startsWith("/") ? `<button type="button" class="gcmd" data-copiar="${c}" title="Clique para copiar">${c}</button>` : `<code>${c}</code>`);
-  t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, u)=>{ const src = wikiImg(u); return src ? `<img src="${src}" alt="${alt}" loading="lazy">` : ""; });
+  t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, u)=>{ const src = wikiImg(u); return src ? `<a class="wk-img" href="${src}" target="_blank" rel="noopener" title="Abrir a imagem em tamanho real"><img src="${src}" alt="${alt}" loading="lazy"></a>` : ""; });
   t = t.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, txt, u)=>{ u = u.replace(/&amp;/g, "&"); if(/^#[\w\/-]*$/.test(u)) return `<a href="${u}">${txt}</a>`; if(/^https:\/\//.test(u)) return `<a href="${esc(u)}" target="_blank" rel="noopener">${txt}</a>`; return txt; });
   t = t.replace(/\{\{item\s+([a-z0-9_]+:[a-z0-9_\/]+)\s*\}\}/g, (m, id)=>`<span class="rc-it" data-it="${id}">${iconeItem(id, "rc-ii")}</span>`);
   t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
