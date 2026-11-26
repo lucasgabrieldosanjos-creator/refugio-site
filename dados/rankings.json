@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-26T20:45:37-03:00",
+  "atualizado": "2026-11-26T20:55:39-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 2069
+      "valor": 2070
     },
     {
       "nome": "TkkFPS",
@@ -34,7 +34,7 @@
     {
       "nome": "XIII_Thanatos",
       "guilda": null,
-      "valor": 679
+      "valor": 680
     },
     {
       "nome": "Guaresi",
@@ -113,7 +113,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 5715
+      "valor": 5740
     },
     {
       "nome": "Saitinnn",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1345
+      "valor": 1362
     }
   ],
   "guildas": [
