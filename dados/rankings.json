@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-25T21:46:04-03:00",
+  "atualizado": "2026-11-25T21:56:06-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1359
+      "valor": 1360
     },
     {
       "nome": "lucasmarcelo65",
@@ -118,7 +118,7 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 3793
+      "valor": 3808
     },
     {
       "nome": "JustSkyline",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1279
+      "valor": 1299
     }
   ],
   "guildas": [
