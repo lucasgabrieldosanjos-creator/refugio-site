@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-27T19:05:23-03:00",
+  "atualizado": "2026-11-27T19:15:24-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -69,6 +69,11 @@
       "valor": 2
     },
     {
+      "nome": "Rimuru_Tempest06",
+      "guilda": "Singularity",
+      "valor": 2
+    },
+    {
       "nome": "scp1471_0",
       "guilda": null,
       "valor": 2
@@ -91,11 +96,6 @@
     {
       "nome": "DARKhammer96",
       "guilda": null,
-      "valor": 1
-    },
-    {
-      "nome": "Rimuru_Tempest06",
-      "guilda": "Singularity",
       "valor": 1
     },
     {
