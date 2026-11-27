@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-27T12:45:12-03:00",
+  "atualizado": "2026-11-27T13:35:15-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -34,7 +34,7 @@
     {
       "nome": "XIII_Thanatos",
       "guilda": null,
-      "valor": 689
+      "valor": 690
     },
     {
       "nome": "Guaresi",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1409
+      "valor": 1418
     }
   ],
   "guildas": [
