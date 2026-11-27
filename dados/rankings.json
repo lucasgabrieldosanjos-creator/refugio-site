@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-27T19:45:28-03:00",
+  "atualizado": "2026-11-27T19:55:31-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -19,7 +19,7 @@
     {
       "nome": "Dux_queiroz",
       "guilda": "IMPERIUM",
-      "valor": 1395
+      "valor": 1396
     },
     {
       "nome": "lucasmarcelo65",
@@ -29,7 +29,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 843
+      "valor": 844
     },
     {
       "nome": "XIII_Thanatos",
@@ -74,6 +74,11 @@
       "valor": 2
     },
     {
+      "nome": "Leozin_Jks",
+      "guilda": null,
+      "valor": 2
+    },
+    {
       "nome": "scp1471_0",
       "guilda": null,
       "valor": 2
@@ -95,11 +100,6 @@
     },
     {
       "nome": "DARKhammer96",
-      "guilda": null,
-      "valor": 1
-    },
-    {
-      "nome": "Evandrort",
       "guilda": null,
       "valor": 1
     }
