@@ -1,10 +1,10 @@
 {
-  "atualizado": "2026-11-27T13:35:15-03:00",
+  "atualizado": "2026-11-27T13:45:16-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
       "guilda": "IMPERIUM",
-      "valor": 2274
+      "valor": 2275
     },
     {
       "nome": "Evandrort",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1418
+      "valor": 1420
     }
   ],
   "guildas": [
