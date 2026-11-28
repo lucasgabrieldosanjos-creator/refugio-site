@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-28T12:15:20-03:00",
+  "atualizado": "2026-11-28T12:25:21-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 2091
+      "valor": 2092
     },
     {
       "nome": "TkkFPS",
@@ -128,7 +128,7 @@
     {
       "nome": "ZecaPagodinBr",
       "guilda": "Singularity",
-      "valor": 3134
+      "valor": 3147
     },
     {
       "nome": "Dandinter",
