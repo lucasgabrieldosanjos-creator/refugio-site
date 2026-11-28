@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-28T12:25:21-03:00",
+  "atualizado": "2026-11-28T12:35:21-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -121,14 +121,14 @@
       "valor": 4504
     },
     {
+      "nome": "ZecaPagodinBr",
+      "guilda": "Singularity",
+      "valor": 3167
+    },
+    {
       "nome": "JustSkyline",
       "guilda": null,
       "valor": 3154
-    },
-    {
-      "nome": "ZecaPagodinBr",
-      "guilda": "Singularity",
-      "valor": 3147
     },
     {
       "nome": "Dandinter",
