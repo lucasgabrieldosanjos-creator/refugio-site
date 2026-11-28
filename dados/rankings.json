@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-28T16:25:51-03:00",
+  "atualizado": "2026-11-28T16:45:57-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -141,6 +141,11 @@
       "valor": 2633
     },
     {
+      "nome": "Synx_0y",
+      "guilda": null,
+      "valor": 1667
+    },
+    {
       "nome": "EzoReijy",
       "guilda": null,
       "valor": 1630
@@ -149,11 +154,6 @@
       "nome": "Simbiotico",
       "guilda": null,
       "valor": 1524
-    },
-    {
-      "nome": "marcoss4",
-      "guilda": null,
-      "valor": 1500
     }
   ],
   "guildas": [
