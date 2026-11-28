@@ -1,5 +1,5 @@
 {
-  "atualizado": "2026-11-27T21:15:44-03:00",
+  "atualizado": "2026-11-27T21:25:46-03:00",
   "tempo": [
     {
       "nome": "Bismuut",
@@ -9,7 +9,7 @@
     {
       "nome": "Evandrort",
       "guilda": null,
-      "valor": 2083
+      "valor": 2084
     },
     {
       "nome": "TkkFPS",
@@ -138,7 +138,7 @@
     {
       "nome": "HaruFenix",
       "guilda": null,
-      "valor": 2567
+      "valor": 2568
     },
     {
       "nome": "EzoReijy",
@@ -153,7 +153,7 @@
     {
       "nome": "Simbiotico",
       "guilda": null,
-      "valor": 1494
+      "valor": 1498
     }
   ],
   "guildas": [
